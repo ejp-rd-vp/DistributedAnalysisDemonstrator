@@ -20,16 +20,14 @@ Are there any other individuals with the same mutation or allelic variant?
 ---
 ### Question 2: Phenotype
 What is their phenotype?
-<br><center><img src="wip.png" alt="Data Plumber Crafting a SPARQL Query" style="width:30%;"></center>
-
+![Data Plumber Crafting a SPARQL Query](wip.png)
 ---
 ### Question 3: Genotype-Phenotype Correlation
 Is it possible to establish any genotype-phenotype correlation?
-<br><center><<img src="wip.png" alt="Data Plumber Crafting a SPARQL Query" style="width:30%;"></center>
+![Data Plumber Crafting a SPARQL Query](wip.png)
 
 ---
 ### Question 4: Variant Frequency in Populations
 What is the variant frequency across different populations?
-<br><center><<img src="wip.png" alt="Data Plumber Crafting a SPARQL Query" style="width:30%;"></center>
-
+![Data Plumber Crafting a SPARQL Query](wip.png)
 ---
