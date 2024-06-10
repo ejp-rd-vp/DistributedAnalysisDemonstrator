@@ -1,0 +1,36 @@
+PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?gene ?geneLabel ?mutation ?mutationCode ?disease ?diseaseCode ?diseaseDisplay
+WHERE {
+  # Identify the gene
+  ?gene rdf:type fhir:Observation ;
+        fhir:Observation.code ?geneCode ;
+        fhir:Observation.value ?geneLabel .
+  ?geneCode fhir:code "FBX011" .
+
+  # Find the mutation associated with the gene
+  ?mutation rdf:type fhir:Observation ;
+            fhir:Observation.code ?mutationCode ;
+            fhir:Observation.subject ?gene ;
+            fhir:Observation.value ?mutationDisplay .
+
+  # Find diseases related to the mutation
+  ?disease rdf:type fhir:Condition ;
+           fhir:Condition.evidence ?mutationEvidence ;
+           fhir:Condition.code ?diseaseCode .
+  ?mutationEvidence fhir:ConditionEvidence.detail ?mutation .
+
+  # Retrieve labels and codes for mutation and disease
+  ?mutationCode fhir:code ?mutationCodeValue .
+  ?mutationDisplay fhir:valueString ?mutationLabel .
+  ?diseaseCode fhir:code ?diseaseCodeValue .
+  ?diseaseCode fhir:display ?diseaseDisplay .
+
+  # Ensure the labels are in English
+  FILTER(LANG(?geneLabel) = "en") .
+  FILTER(LANG(?mutationLabel) = "en") .
+  FILTER(LANG(?diseaseDisplay) = "en") .
+}
+

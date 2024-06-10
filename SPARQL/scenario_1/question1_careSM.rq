@@ -1,0 +1,42 @@
+PREFIX sio: <http://semanticscience.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX caresm: <http://example.com/caresm/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?gene ?geneLabel ?mutation ?disease
+WHERE {
+  # Identify the gene associated with the mutation
+  ?gene rdf:type sio:SIO_000115 ;  # Identifier for the gene
+        rdfs:label "FBX011"@en .
+
+  # Find the mutation associated with the gene
+  ?mutation rdf:type sio:SIO_000115 ;  # Identifier for the mutation
+           sio:denotes ?gene .
+
+  # Find the individual related to the mutation and disease
+  ?individual rdf:type sio:SIO_000498 ;  # Individual
+              sio:denotes ?mutation ;
+              sio:has-role ?role .
+
+  # Find the role realized in a process
+  ?role rdf:type sio:SIO_000016 ;
+        sio:realized-in ?process .
+
+  # Find the process overlapping with a specific process and related to disease
+  ?process rdf:type sio:SIO_000006 ;
+           sio:overlaps-with ?specific_process ;
+           sio:has-input ?input ;
+           sio:has-target ?disease ;
+           sio:has-output ?output .
+
+  # Find the specific process, input, and output related to the process
+  ?specific_process rdf:type sio:SIO_000006 .
+  ?input rdf:type sio:SIO_000015 .
+  ?disease rdf:type sio:SIO_000015 ;  # Disease
+            rdfs:label ?diseaseLabel .
+  ?output rdf:type sio:SIO_000015 .
+
+  # Ensure the labels are in English
+  FILTER(LANG(?diseaseLabel) = "en") .
+}
+

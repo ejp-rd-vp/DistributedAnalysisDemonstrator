@@ -1,0 +1,23 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?gene ?geneLabel ?mutation ?mutationLabel ?disease ?diseaseLabel
+WHERE {
+  # Identify the gene
+  ?gene rdf:type obo:NCIT_C16612 ;  # Gene
+        rdfs:label "FBX011"@en .
+
+  # Find the mutation that is a sequence variant of the gene
+  ?mutation rdf:type obo:NCIT_C45576 ;  # Genetic Mutation
+           obo:GENO_0000418 ?gene ;  # sequence variant of the gene
+           rdfs:label ?mutationLabel .
+
+  # Find diseases related to the mutation
+  ?disease rdfs:subClassOf obo:MONDO_0000001 ;  # Disease or disorder
+           obo:RO_0002200 ?mutation ;  # has phenotypic consequence (association)
+           rdfs:label ?diseaseLabel .
+
+  # Get the gene label
+  ?gene rdfs:label ?geneLabel .
+}

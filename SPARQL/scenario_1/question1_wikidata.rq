@@ -1,0 +1,21 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?gene ?mutation ?disease
+WHERE {
+  # Identify the gene associated with the mutation
+  ?gene wdt:P31 wd:Q7187 ;  # Instance of Gene
+        rdfs:label "FBX011"@en .
+
+  # Find the mutation associated with the gene
+  ?mutation wdt:P31 wd:Q718634 ;  # Instance of Genetic variant
+           wdt:P3433 ?gene .  # Connected to the FBX011 gene
+
+  # Find diseases related to the mutation
+  ?disease wdt:P31 wd:Q12136 ;  # Instance of Disease
+           wdt:P2293 ?mutation .  # Genetic association with the mutation
+
+  # Ensure the labels are in English
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
