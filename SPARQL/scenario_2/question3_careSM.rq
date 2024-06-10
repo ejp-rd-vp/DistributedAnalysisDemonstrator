@@ -1,0 +1,31 @@
+PREFIX sio: <http://semanticscience.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX caresm: <http://example.com/caresm/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?population ?populationLabel ?mutation ?mutationLabel ?frequency ?frequencyLabel
+WHERE {
+  # Identify the mutation of interest
+  ?mutation rdf:type sio:SIO_000115 ;  # Identifier
+            rdfs:label "MAPK1 gene mutation"@en ;
+            sio:denotes ?gene .
+
+  # Find populations with this mutation
+  ?observation rdf:type sio:SIO_000498 ;  # Observation
+               sio:has-input ?mutation ;
+               sio:has-output ?frequency ;
+               sio:has-agent ?population .
+
+  # Get the labels for the mutation, frequency, and population
+  ?mutation rdfs:label ?mutationLabel .
+  ?frequency rdf:type sio:SIO_001367 ;  # Frequency
+             rdfs:label ?frequencyLabel .
+  ?population rdf:type sio:SIO_000015 ;  # Population
+              rdfs:label ?populationLabel .
+
+  # Ensure the labels are in English
+  FILTER(LANG(?mutationLabel) = "en") .
+  FILTER(LANG(?frequencyLabel) = "en") .
+  FILTER(LANG(?populationLabel) = "en") .
+}
+

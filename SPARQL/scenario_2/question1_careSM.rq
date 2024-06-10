@@ -1,0 +1,20 @@
+PREFIX sio: <http://semanticscience.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX caresm: <http://example.com/caresm/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?individual ?individualLabel
+WHERE {
+  # Identify the mutation of interest
+  ?mutation rdf:type sio:SIO_000115 ;
+            rdfs:label "MAPK1_mutation"@en .
+
+  # Find individuals with the same mutation
+  ?individual rdf:type sio:SIO_000498 ;  # Individual
+              sio:denotes ?mutation ;
+              rdfs:label ?individualLabel .
+
+  # Ensure the labels are in English
+  FILTER(LANG(?individualLabel) = "en") .
+}
+

@@ -1,0 +1,13 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sio: <http://semanticscience.org/resource/>
+
+SELECT ?individual ?phenotype ?natural_history
+WHERE {
+  ?individual sio:SIO_000115 ?variant ;
+              sio:SIO_000628 ?phenotype ;
+              sio:SIO_000628 ?natural_history .
+  ?variant rdfs:label "MAPK1 gene mutation" .
+  ?phenotype rdfs:label ?phenotype_label .
+  ?natural_history rdfs:label ?natural_history_label .
+}
+ORDER BY ?individual

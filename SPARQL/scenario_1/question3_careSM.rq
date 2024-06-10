@@ -1,0 +1,35 @@
+PREFIX sio: <http://semanticscience.org/ontology/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX caresm: <http://example.com/caresm/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?individual ?individualLabel ?phenotype ?phenotypeLabel ?prognosis ?prognosisLabel
+WHERE {
+  # Identify the gene of interest
+  ?gene rdf:type sio:SIO_000115 ;
+        rdfs:label "FBX011"@en .
+
+  # Find mutations associated with the gene
+  ?mutation rdf:type sio:SIO_000115 ;
+            sio:denotes ?gene .
+
+  # Find individuals with these mutations
+  ?individual rdf:type sio:SIO_000498 ;  # Individual
+              sio:denotes ?mutation ;
+              rdfs:label ?individualLabel .
+
+  # Find the phenotype of these individuals
+  ?individual sio:has-attribute ?phenotype .
+  ?phenotype rdf:type sio:SIO_000614 ;  # Phenotype
+             rdfs:label ?phenotypeLabel .
+
+  # Find the prognosis related to these individuals
+  ?individual sio:has-attribute ?prognosis .
+  ?prognosis rdf:type sio:SIO_000614 ;  # Prognosis
+             rdfs:label ?prognosisLabel .
+
+  # Ensure the labels are in English
+  FILTER(LANG(?individualLabel) = "en") .
+  FILTER(LANG(?phenotypeLabel) = "en") .
+  FILTER(LANG(?prognosisLabel) = "en") .
+}
