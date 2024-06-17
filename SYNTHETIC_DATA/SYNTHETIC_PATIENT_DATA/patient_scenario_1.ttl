@@ -1,0 +1,199 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://example.org/fhir/Patient/12345> a fhir:Patient ;
+    fhir:id "12345" ;
+    fhir:identifier [ fhir:value "12345" ] ;
+    fhir:name [
+        fhir:given "John" ;
+        fhir:family "Doe"
+    ] ;
+    fhir:gender "male" ;
+    fhir:birthDate "2015-05-15"^^xsd:date .
+
+<http://example.org/fhir/Condition/67890> a fhir:Condition ;
+    fhir:id "67890" ;
+    fhir:subject <http://example.org/fhir/Patient/12345> ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://snomed.info/sct" ;
+            fhir:code "726513001" ;
+            fhir:display "Mental retardation"
+        ],
+        [
+            fhir:system "http://snomed.info/sct" ;
+            fhir:code "260230000" ;
+            fhir:display "Facial dysmorphism"
+        ]
+    ] ;
+    fhir:verificationStatus [ fhir:code "confirmed" ] ;
+    fhir:clinicalStatus [ fhir:code "active" ] ;
+    fhir:category [
+        fhir:coding [
+            fhir:system "http://terminology.hl7.org/CodeSystem/condition-category" ;
+            fhir:code "problem-list-item" ;
+            fhir:display "Problem List Item"
+        ]
+    ] ;
+    fhir:onsetDateTime "2023-05-10T12:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/Observation/13579> a fhir:Observation ;
+    fhir:id "13579" ;
+    fhir:status "final" ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://loinc.org" ;
+            fhir:code "81247-9" ;
+            fhir:display "Array CGH Analysis"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/12345> ;
+    fhir:valueCodeableConcept [
+        fhir:coding [
+            fhir:system "http://snomed.info/sct" ;
+            fhir:code "260385009" ;
+            fhir:display "Negative"
+        ]
+    ] ;
+    fhir:effectiveDateTime "2023-05-10T15:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/DiagnosticReport/24680> a fhir:DiagnosticReport ;
+    fhir:id "24680" ;
+    fhir:status "final" ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://loinc.org" ;
+            fhir:code "81255-2" ;
+            fhir:display "Whole Exome Sequencing (WES)"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/12345> ;
+    fhir:result <http://example.org/fhir/Observation/13579> ;
+    fhir:conclusion "A de novo, likely pathogenic, rare variant in FBX011 gene" ;
+    fhir:effectiveDateTime "2023-06-01T10:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/Condition/12346> a fhir:Condition ;
+    fhir:id "12346" ;
+    fhir:subject <http://example.org/fhir/Patient/12345> ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://snomed.info/sct" ;
+            fhir:code "414916001" ;
+            fhir:display "Asthma"
+        ]
+    ] ;
+    fhir:verificationStatus [ fhir:code "confirmed" ] ;
+    fhir:clinicalStatus [ fhir:code "active" ] ;
+    fhir:category [
+        fhir:coding [
+            fhir:system "http://terminology.hl7.org/CodeSystem/condition-category" ;
+            fhir:code "encounter-diagnosis" ;
+            fhir:display "Encounter Diagnosis"
+        ]
+    ] ;
+    fhir:onsetDateTime "2017-08-01T12:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/Condition/12347> a fhir:Condition ;
+    fhir:id "12347" ;
+    fhir:subject <http://example.org/fhir/Patient/12345> ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://snomed.info/sct" ;
+            fhir:code "10509002" ;
+            fhir:display "Otitis media"
+        ]
+    ] ;
+    fhir:verificationStatus [ fhir:code "confirmed" ] ;
+    fhir:clinicalStatus [ fhir:code "resolved" ] ;
+    fhir:category [
+        fhir:coding [
+            fhir:system "http://terminology.hl7.org/CodeSystem/condition-category" ;
+            fhir:code "problem-list-item" ;
+            fhir:display "Problem List Item"
+        ]
+    ] ;
+    fhir:onsetDateTime "2019-11-10T12:00:00Z"^^xsd:dateTime ;
+    fhir:abatementDateTime "2019-11-20T12:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/Observation/13580> a fhir:Observation ;
+    fhir:id "13580" ;
+    fhir:status "final" ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://loinc.org" ;
+            fhir:code "4548-4" ;
+            fhir:display "Hemoglobin A1c/Hemoglobin.total in Blood"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/12345> ;
+    fhir:valueQuantity [
+        fhir:value 5.4 ;
+        fhir:unit "%" ;
+        fhir:system "http://unitsofmeasure.org" ;
+        fhir:code "%"
+    ] ;
+    fhir:effectiveDateTime "2022-05-10T10:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/Observation/13581> a fhir:Observation ;
+    fhir:id "13581" ;
+    fhir:status "final" ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://loinc.org" ;
+            fhir:code "39156-5" ;
+            fhir:display "Body Mass Index"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/12345> ;
+    fhir:valueQuantity [
+        fhir:value 18.5 ;
+        fhir:unit "kg/m2" ;
+        fhir:system "http://unitsofmeasure.org" ;
+        fhir:code "kg/m2"
+    ] ;
+    fhir:effectiveDateTime "2023-01-10T10:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/MedicationRequest/24681> a fhir:MedicationRequest ;
+    fhir:id "24681" ;
+    fhir:status "active" ;
+    fhir:intent "order" ;
+    fhir:medicationCodeableConcept [
+        fhir:coding [
+            fhir:system "http://www.nlm.nih.gov/research/umls/rxnorm" ;
+            fhir:code "860975" ;
+            fhir:display "Albuterol 90 mcg/actuation"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/12345> ;
+    fhir:authoredOn "2023-05-10T12:00:00Z"^^xsd:dateTime ;
+    fhir:requester [ fhir:reference "Practitioner/67890" ] .
+
+<http://example.org/fhir/Practitioner/67890> a fhir:Practitioner ;
+    fhir:id "67890" ;
+    fhir:identifier [ fhir:value "67890" ] ;
+    fhir:name [
+        fhir:given "Alice" ;
+        fhir:family "Smith"
+    ] ;
+    fhir:gender "female" .
+
+<http://example.org/fhir/Encounter/56789> a fhir:Encounter ;
+    fhir:id "56789" ;
+    fhir:status "finished" ;
+    fhir:class [ fhir:code "outpatient" ] ;
+    fhir:type [
+        fhir:coding [
+            fhir:system "http://snomed.info/sct" ;
+            fhir:code "185349003" ;
+            fhir:display "Encounter for check-up"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/12345> ;
+    fhir:participant [ fhir:individual <http://example.org/fhir/Practitioner/67890> ] ;
+    fhir:period [
+        fhir:start "2023-05-10T09:00:00Z"^^xsd:dateTime ;
+        fhir:end "2023-05-10T09:30:00Z"^^xsd:dateTime
+    ] .
+
+

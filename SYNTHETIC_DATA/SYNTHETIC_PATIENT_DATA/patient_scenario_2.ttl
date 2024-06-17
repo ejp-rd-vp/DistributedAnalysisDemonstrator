@@ -1,0 +1,172 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://example.org/fhir/Patient/54321> a fhir:Patient ;
+    fhir:id "54321" ;
+    fhir:identifier [ fhir:value "54321" ] ;
+    fhir:name [
+        fhir:given "Jane" ;
+        fhir:family "Doe"
+    ] ;
+    fhir:gender "female" ;
+    fhir:birthDate "2014-08-20"^^xsd:date .
+
+<http://example.org/fhir/Condition/98765> a fhir:Condition ;
+    fhir:id "98765" ;
+    fhir:subject <http://example.org/fhir/Patient/54321> ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://snomed.info/sct" ;
+            fhir:code "82630006" ;
+            fhir:display "Noonan-like syndrome"
+        ]
+    ] ;
+    fhir:verificationStatus [ fhir:code "confirmed" ] ;
+    fhir:clinicalStatus [ fhir:code "active" ] ;
+    fhir:category [
+        fhir:coding [
+            fhir:system "http://terminology.hl7.org/CodeSystem/condition-category" ;
+            fhir:code "problem-list-item" ;
+            fhir:display "Problem List Item"
+        ]
+    ] ;
+    fhir:onsetDateTime "2022-04-15T12:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/Observation/97531> a fhir:Observation ;
+    fhir:id "97531" ;
+    fhir:status "final" ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://loinc.org" ;
+            fhir:code "55233-1" ;
+            fhir:display "Genetic analysis of extended Rasopathies panel"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/54321> ;
+    fhir:valueCodeableConcept [
+        fhir:coding [
+            fhir:system "http://snomed.info/sct" ;
+            fhir:code "260385009" ;
+            fhir:display "Negative"
+        ]
+    ] ;
+    fhir:effectiveDateTime "2022-04-20T15:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/DiagnosticReport/86420> a fhir:DiagnosticReport ;
+    fhir:id "86420" ;
+    fhir:status "final" ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://loinc.org" ;
+            fhir:code "81255-2" ;
+            fhir:display "Whole Exome Sequencing (WES)"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/54321> ;
+    fhir:result <http://example.org/fhir/Observation/97531> ;
+    fhir:conclusion "A de novo, likely pathogenic, rare variant in MAPK1 gene" ;
+    fhir:effectiveDateTime "2023-05-01T10:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/Condition/12348> a fhir:Condition ;
+    fhir:id "12348" ;
+    fhir:subject <http://example.org/fhir/Patient/54321> ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://snomed.info/sct" ;
+            fhir:code "266569009" ;
+            fhir:display "Hypertrophic cardiomyopathy"
+        ]
+    ] ;
+    fhir:verificationStatus [ fhir:code "confirmed" ] ;
+    fhir:clinicalStatus [ fhir:code "active" ] ;
+    fhir:category [
+        fhir:coding [
+            fhir:system "http://terminology.hl7.org/CodeSystem/condition-category" ;
+            fhir:code "problem-list-item" ;
+            fhir:display "Problem List Item"
+        ]
+    ] ;
+    fhir:onsetDateTime "2020-03-10T12:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/Observation/97532> a fhir:Observation ;
+    fhir:id "97532" ;
+    fhir:status "final" ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://loinc.org" ;
+            fhir:code "2339-0" ;
+            fhir:display "Glucose [Mass/volume] in Blood"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/54321> ;
+    fhir:valueQuantity [
+        fhir:value 95.0 ;
+        fhir:unit "mg/dL" ;
+        fhir:system "http://unitsofmeasure.org" ;
+        fhir:code "mg/dL"
+    ] ;
+    fhir:effectiveDateTime "2023-01-15T10:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/Observation/97533> a fhir:Observation ;
+    fhir:id "97533" ;
+    fhir:status "final" ;
+    fhir:code [
+        fhir:coding [
+            fhir:system "http://loinc.org" ;
+            fhir:code "39156-5" ;
+            fhir:display "Body Mass Index"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/54321> ;
+    fhir:valueQuantity [
+        fhir:value 19.2 ;
+        fhir:unit "kg/m2" ;
+        fhir:system "http://unitsofmeasure.org" ;
+        fhir:code "kg/m2"
+    ] ;
+    fhir:effectiveDateTime "2023-02-10T10:00:00Z"^^xsd:dateTime .
+
+<http://example.org/fhir/MedicationRequest/86421> a fhir:MedicationRequest ;
+    fhir:id "86421" ;
+    fhir:status "active" ;
+    fhir:intent "order" ;
+    fhir:medicationCodeableConcept [
+        fhir:coding [
+            fhir:system "http://www.nlm.nih.gov/research/umls/rxnorm" ;
+            fhir:code "835618" ;
+            fhir:display "Propranolol 10 mg oral tablet"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/54321> ;
+    fhir:authoredOn "2023-03-01T12:00:00Z"^^xsd:dateTime ;
+    fhir:requester [ fhir:reference "Practitioner/67891" ] .
+
+<http://example.org/fhir/Practitioner/67891> a fhir:Practitioner ;
+    fhir:id "67891" ;
+    fhir:identifier [ fhir:value "67891" ] ;
+    fhir:name [
+        fhir:given "Bob" ;
+        fhir:family "Johnson"
+    ] ;
+    fhir:gender "male" .
+
+<http://example.org/fhir/Encounter/56790> a fhir:Encounter ;
+    fhir:id "56790" ;
+    fhir:status "finished" ;
+    fhir:class [ fhir:code "outpatient" ] ;
+    fhir:type [
+        fhir:coding [
+            fhir:system "http://snomed.info/sct" ;
+            fhir:code "185349003" ;
+            fhir:display "Encounter for check-up"
+        ]
+    ] ;
+    fhir:subject <http://example.org/fhir/Patient/54321> ;
+    fhir:participant [ fhir:individual <http://example.org/fhir/Practitioner/67891> ] ;
+    fhir:period [
+        fhir:start "2023-05-10T09:00:00Z"^^xsd:dateTime ;
+        fhir:end "2023-05-10T09:30:00Z"^^xsd:dateTime
+    ] .
+
+
