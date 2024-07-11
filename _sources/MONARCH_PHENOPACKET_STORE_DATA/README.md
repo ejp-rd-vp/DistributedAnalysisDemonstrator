@@ -1,0 +1,11 @@
+# Monarch Phenopacket Store Data
+
+This folder contains a set of phenopackets selected from a collection of phenopackets that holds information from published case or cohort reports collected by Monarch Initiative. The collection consists of multiple subcollections, each representing a specific cohort and diagnosis. The documentation page for this collection can be found [here](https://monarch-initiative.github.io/phenopacket-store/collections/). The JSON files that store these phenopackets can be found in [this repository](https://github.com/monarch-initiative/phenopacket-store/tree/main/notebooks). For the demonstrator, the phenopackets are selected that are considered interesting to explore in combination with the other available data in this repository.
+
+## From phenopacket 2.0 to phenopacket RDF 2.0
+
+The phenopackets from the phenopacket store are stored in JSON files. The data does not yet conform to the RDF phenopacket data model and therefore needs to be converted in order to align to this data structure. To achieve this, a workflow has been developed that, given a JSON file containing the information required to form a phenopacket, generates RDF data that complies to the RDF data model schema of phenopackets version 2.0. This schema is expressed using Shape Expressions (SheX) which can be found [here](https://github.com/LUMC-BioSemantics/phenopackets-rdf-schema/tree/v2/shex) and has also been adapted to SHACL whose files are provided [here](https://github.com/rosazwart/phenopackets-v2-rdf-schema/tree/main/shacl). The SHACL2YARRRML2RDF workflow can be found in [this repository](https://github.com/rosazwart/phenopackets-v2-rdf-schema).
+
+## Future changes in phenopacket RDF 2.0
+
+In case any changes are added to phenopacket RDF schema 2.0, the data in this folder needs to be replaced by the newly generated RDF data file. This new data file is acquired by rerunning the SHACL2YARRRML2RDF workflow on the SHACL files that are updated given the changes in the phenopacket RDF schema.
