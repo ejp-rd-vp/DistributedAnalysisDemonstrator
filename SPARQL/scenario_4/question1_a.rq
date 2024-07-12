@@ -1,0 +1,31 @@
+PREFIX ex: <https://example.org/>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX dcterms: <http://purl.org/dc/terms/> 
+
+SELECT ?geneid ?genesymbolvalue
+WHERE {
+	# Find phenopacket with given ID
+    ?phenopacket a obo:NCIT_C79269 ;
+                 sio:SIO_000228 ?role .
+    ?id sio:SIO_000020 ?role ;
+        sio:SIO_000300 "new-reference-files" .
+    
+    # Find all genomic interpretations related to given phenopacket ID
+    ?phenopacket sio:SIO_001403 ?interpr .
+    ?interpr a obo:NCIT_C41255 ;
+    		 sio:SIO_001403 ?diagnosis .
+    ?diagnosis sio:SIO_001403 ?genomicinterpr .
+    ?genomicinterpr a obo:SO_0001026 .
+    
+    # Find the genes that are relevant to the genomic interpretations
+    ?genomicinterpr sio:SIO_001403 ?varinterpr .
+    ?varinterpr a obo:SO_0001060 ;
+                sio:SIO_001403 ?vardescr .
+    ?vardescr a obo:NCIT_C97927 ;
+              sio:SIO_001403 ?genedescr .
+    ?genedescr a obo:NCIT_C16612 ;
+               dcterms:identifier ?geneid ;
+               sio:SIO_000008 ?genesymbol .
+ 	?genesymbol sio:SIO_000300 ?genesymbolvalue
+}
