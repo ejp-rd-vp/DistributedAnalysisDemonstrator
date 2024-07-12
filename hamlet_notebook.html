@@ -183,7 +183,7 @@
 <li class="toctree-l1"><a class="reference internal" href="scenario1.html">Scenario 1: Genetic Analysis Case Study on FBX011 gene.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scenario2.html">Scenario 2: Genetic Analysis Case Study on MAPK1 gene</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scenario3.html">Scenario 3: Genetic Analysis Case Study on FN1 gene</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hamlet.html">Genetic Analysis on AML Cell Line.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scenario4.html">Scenario 4: Genetic Analysis on AML.</a></li>
 </ul>
 
     </div>
@@ -397,6 +397,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">rdflib</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
 </div>
@@ -406,6 +407,7 @@ document.write(`
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">rdflib</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="ne">ModuleNotFoundError</span>: No module named &#39;rdflib&#39;
 </pre></div>
@@ -460,21 +462,10 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
 <h1>SPARQL Queries<a class="headerlink" href="#sparql-queries" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    PREFIX ex: &lt;https://example.org/&gt;</span>
-<span class="s2">    PREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;</span>
-<span class="s2">    PREFIX sio: &lt;http://semanticscience.org/resource/&gt;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SCENARIO_NR</span> <span class="o">=</span> <span class="mi">4</span>
 
-<span class="s2">    SELECT ?idvalue</span>
-<span class="s2">    WHERE {</span>
-<span class="s2">        ?phenopacket a obo:NCIT_C79269 .</span>
-<span class="s2">        ?role a obo:NCIT_C48835 .</span>
-<span class="s2">        ?phenopacket sio:SIO_000228 ?role .</span>
-<span class="s2">        ?id a obo:IAO_0020000 .</span>
-<span class="s2">        ?id sio:SIO_000020 ?role .</span>
-<span class="s2">        ?id sio:SIO_000300 ?idvalue .</span>
-<span class="s2">    }</span>
-<span class="s2">&quot;&quot;&quot;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;SPARQL/scenario_</span><span class="si">{</span><span class="n">SCENARIO_NR</span><span class="si">}</span><span class="s1">/question1_a.rq&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -482,29 +473,110 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-
-<span class="n">id_values</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">result_row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-    <span class="n">phenopacket_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">result_row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">id_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phenopacket_id</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">genes</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;phenopacket_id&#39;</span><span class="p">,</span> <span class="n">id_values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">result_row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="n">genes</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">result_row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">result_row</span><span class="p">[</span><span class="mi">1</span><span class="p">]})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">genes_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">genes</span><span class="p">)</span>
+<span class="n">genes_df</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;new-reference-files&#39;
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>symbol</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ENSG00000213281</td>
+      <td>NRAS</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ENSG00000141510</td>
+      <td>TP53</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;scenario4_genes&#39;</span><span class="p">,</span> <span class="n">genes_df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>symbol</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ENSG00000213281</td>
+      <td>NRAS</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>ENSG00000141510</td>
+      <td>TP53</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 
