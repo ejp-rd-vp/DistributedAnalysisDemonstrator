@@ -479,18 +479,19 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">genes</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diagnosis_list</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">result_row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-    <span class="n">genes</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">result_row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">result_row</span><span class="p">[</span><span class="mi">1</span><span class="p">]})</span>
+    <span class="n">diagnosis_list</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;gene symbol&#39;</span><span class="p">:</span> <span class="n">result_row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;diagnosis ID&#39;</span><span class="p">:</span> <span class="n">result_row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                           <span class="s1">&#39;disease ID&#39;</span><span class="p">:</span> <span class="n">result_row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;disease label&#39;</span><span class="p">:</span> <span class="n">result_row</span><span class="p">[</span><span class="mi">3</span><span class="p">]})</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">genes_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">genes</span><span class="p">)</span>
-<span class="n">genes_df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diagnosis_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">diagnosis_list</span><span class="p">)</span>
+<span class="n">diagnosis_df</span>
 </pre></div>
 </div>
 </div>
@@ -513,20 +514,110 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>symbol</th>
+      <th>gene symbol</th>
+      <th>diagnosis ID</th>
+      <th>disease ID</th>
+      <th>disease label</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ENSG00000213281</td>
       <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketee17c...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ENSG00000141510</td>
-      <td>TP53</td>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketba7f5...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket3b2b2...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketb7df3...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketbf2d0...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket14db1...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket1caa9...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketfa9d7...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket0520c...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket0aaf0...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketfba27...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketc9101...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketa127c...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketf0c96...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
     </tr>
   </tbody>
 </table>
@@ -536,7 +627,7 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 
-<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;scenario4_genes&#39;</span><span class="p">,</span> <span class="n">genes_df</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;scenario4_diagnosis&#39;</span><span class="p">,</span> <span class="n">diagnosis_df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -559,20 +650,110 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>symbol</th>
+      <th>gene symbol</th>
+      <th>diagnosis ID</th>
+      <th>disease ID</th>
+      <th>disease label</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ENSG00000213281</td>
       <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketee17c...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ENSG00000141510</td>
-      <td>TP53</td>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketba7f5...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket3b2b2...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketb7df3...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketbf2d0...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket14db1...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket1caa9...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketfa9d7...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket0520c...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket0aaf0...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketfba27...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketc9101...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketa127c...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketf0c96...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
     </tr>
   </tbody>
 </table>

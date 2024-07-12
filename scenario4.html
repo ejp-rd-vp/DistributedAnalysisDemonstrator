@@ -406,15 +406,21 @@ document.write(`
 <section id="question-1-gene-mutation-prevalence">
 <h3>Question 1: Gene Mutation Prevalence<a class="headerlink" href="#question-1-gene-mutation-prevalence" title="Link to this heading">#</a></h3>
 <p>Have patients been observed with variants in the same gene and the same symptoms?</p>
-<p>To answer this question, first the genes are found in which at least one mutation is present given the phenopacket of the AML cell line:</p>
+<p>To answer this question the genes are found in which at least one mutation is present given the phenopacket of the AML cell line and given a collected set of other instances of phenopackets. The next step is to acquire the diagnosed diseases with which the relevant mutations are associated. These steps are performed in the following SPARQL query:</p>
 <div class="highlight-sparql notranslate"><div class="highlight"><pre><span></span><span class="k">PREFIX</span> <span class="nn">ex</span><span class="p">:</span> <span class="nl">&lt;https://example.org/&gt;</span>
 <span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
 <span class="k">PREFIX</span> <span class="nn">sio</span><span class="p">:</span> <span class="nl">&lt;http://semanticscience.org/resource/&gt;</span>
 <span class="k">PREFIX</span> <span class="nn">dcterms</span><span class="p">:</span> <span class="nl">&lt;http://purl.org/dc/terms/&gt;</span> 
 
-<span class="k">SELECT</span> <span class="nv">?geneid</span> <span class="nv">?genesymbolvalue</span>
+<span class="k">PREFIX</span> <span class="nn">ex</span><span class="p">:</span> <span class="nl">&lt;https://example.org/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">sio</span><span class="p">:</span> <span class="nl">&lt;http://semanticscience.org/resource/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">dcterms</span><span class="p">:</span> <span class="nl">&lt;http://purl.org/dc/terms/&gt;</span> 
+<span class="k">PREFIX</span> <span class="nn">rdfs</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
+
+<span class="k">SELECT</span> <span class="nv">?genesymbolvalue</span> <span class="nv">?otherdiagnosis</span> <span class="nv">?otherdiseaseid</span> <span class="nv">?otherdiseaselabel</span>
 <span class="k">WHERE</span> <span class="p">{</span>
-	<span class="c"># Find phenopacket with given ID</span>
+    <span class="c"># Find phenopacket with given ID</span>
     <span class="nv">?phenopacket</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C79269</span> <span class="p">;</span>
                  <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000228</span> <span class="nv">?role</span> <span class="p">.</span>
     <span class="nv">?id</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000020</span> <span class="nv">?role</span> <span class="p">;</span>
@@ -436,10 +442,28 @@ document.write(`
     <span class="nv">?genedescr</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C16612</span> <span class="p">;</span>
                <span class="nn">dcterms</span><span class="p">:</span><span class="nt">identifier</span> <span class="nv">?geneid</span> <span class="p">;</span>
                <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000008</span> <span class="nv">?genesymbol</span> <span class="p">.</span>
- 	<span class="nv">?genesymbol</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?genesymbolvalue</span>
+ 	<span class="nv">?genesymbol</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?genesymbolvalue</span> <span class="p">.</span>
+    
+    <span class="c"># Find all diagnosed diseases where a mutation is found in same genes as given phenopacket</span>
+    <span class="nv">?othergenesymbol</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?genesymbolvalue</span> <span class="p">.</span>
+    <span class="nv">?othergenedescr</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000008</span> <span class="nv">?othergenesymbol</span> <span class="p">;</span>
+                    <span class="nn">dcterms</span><span class="p">:</span><span class="nt">identifier</span> <span class="nv">?othergeneid</span> <span class="p">.</span>
+    <span class="nv">?othervardescr</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?othergenedescr</span> <span class="p">.</span>
+    <span class="nv">?othervarinterpr</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?othervardescr</span> <span class="p">.</span>
+    <span class="nv">?othergenomicinterp</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?othervarinterpr</span> <span class="p">.</span>
+    <span class="nv">?otherdiagnosis</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?othergenomicinterp</span> <span class="p">.</span>
+    <span class="nv">?otherdiagnosis</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?otherdisease</span> <span class="p">.</span>
+    <span class="nv">?otherdiseasevalue</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000628</span> <span class="nv">?otherdisease</span> <span class="p">;</span>
+                       <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C2991</span> <span class="p">.</span>
+    <span class="nv">?otherdisease</span> <span class="nn">dcterms</span><span class="p">:</span><span class="nt">identifier</span> <span class="nv">?otherdiseaseid</span> <span class="p">;</span>
+                  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?otherdiseaselabel</span> <span class="p">;</span>
+    
+    <span class="c"># Remove diagnosis of already given phenopacket</span>
+    <span class="k">FILTER</span> <span class="p">(</span><span class="nv">?diagnosis</span> <span class="o">!=</span> <span class="nv">?otherdiagnosis</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<p>From the collection of available phenopackets, a disease other than AML is identified that is associated with a mutation in the same gene as for the given AML cell line based on the query result shown below:</p>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -458,20 +482,110 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>id</th>
-      <th>symbol</th>
+      <th>gene symbol</th>
+      <th>diagnosis ID</th>
+      <th>disease ID</th>
+      <th>disease label</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>ENSG00000213281</td>
       <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketee17c...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ENSG00000141510</td>
-      <td>TP53</td>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketba7f5...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket3b2b2...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketb7df3...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketbf2d0...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket14db1...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket1caa9...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketfa9d7...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket0520c...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacket0aaf0...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketfba27...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketc9101...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketa127c...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>NRAS</td>
+      <td>https://example.org/diagnosis_phenopacketf0c96...</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
     </tr>
   </tbody>
 </table>
