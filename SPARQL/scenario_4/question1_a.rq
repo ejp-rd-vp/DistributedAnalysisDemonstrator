@@ -3,9 +3,15 @@ PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX sio: <http://semanticscience.org/resource/>
 PREFIX dcterms: <http://purl.org/dc/terms/> 
 
-SELECT ?geneid ?genesymbolvalue
+PREFIX ex: <https://example.org/>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX dcterms: <http://purl.org/dc/terms/> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?genesymbolvalue ?otherdiagnosis ?otherdiseaseid ?otherdiseaselabel
 WHERE {
-	# Find phenopacket with given ID
+    # Find phenopacket with given ID
     ?phenopacket a obo:NCIT_C79269 ;
                  sio:SIO_000228 ?role .
     ?id sio:SIO_000020 ?role ;
@@ -27,5 +33,23 @@ WHERE {
     ?genedescr a obo:NCIT_C16612 ;
                dcterms:identifier ?geneid ;
                sio:SIO_000008 ?genesymbol .
- 	?genesymbol sio:SIO_000300 ?genesymbolvalue
+ 	?genesymbol sio:SIO_000300 ?genesymbolvalue .
+    
+    # Find all diagnosed diseases where a mutation is found in same genes as given phenopacket
+    ?othergenesymbol sio:SIO_000300 ?genesymbolvalue .
+    ?othergenedescr sio:SIO_000008 ?othergenesymbol ;
+                    dcterms:identifier ?othergeneid .
+    ?othervardescr sio:SIO_001403 ?othergenedescr .
+    ?othervarinterpr sio:SIO_001403 ?othervardescr .
+    ?othergenomicinterp sio:SIO_001403 ?othervarinterpr .
+    ?otherdiagnosis sio:SIO_001403 ?othergenomicinterp .
+    ?otherdiagnosis sio:SIO_001403 ?otherdisease .
+    ?otherdiseasevalue sio:SIO_000628 ?otherdisease ;
+                       a obo:NCIT_C2991 .
+    ?otherdisease dcterms:identifier ?otherdiseaseid ;
+                  rdfs:label ?otherdiseaselabel ;
+    
+    # Remove diagnosis of already given phenopacket
+    FILTER (?diagnosis != ?otherdiagnosis)
 }
+
