@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Scenario 3: Genetic Analysis Case Study on FN1 gene &#8212; EJP-RD FDP and Virtual Portal demonstrator</title>
+    <title>Loading RDF Datasets &#8212; EJP-RD FDP and Virtual Portal demonstrator</title>
   
   
   
@@ -57,11 +57,9 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'scenario3';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'hamlet_notebook';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Genetic Analysis on AML Cell Line." href="hamlet.html" />
-    <link rel="prev" title="Scenario 2: Genetic Analysis Case Study on MAPK1 gene" href="scenario2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -124,6 +122,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -179,10 +179,10 @@
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="scenario1.html">Scenario 1: Genetic Analysis Case Study on FBX011 gene.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scenario2.html">Scenario 2: Genetic Analysis Case Study on MAPK1 gene</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Scenario 3: Genetic Analysis Case Study on FN1 gene</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scenario3.html">Scenario 3: Genetic Analysis Case Study on FN1 gene</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hamlet.html">Genetic Analysis on AML Cell Line.</a></li>
 </ul>
 
@@ -255,7 +255,7 @@
       
       
       
-      <li><a href="https://github.com/ejp-rd-vp/DistributedAnalysisDemonstrator/issues/new?title=Issue%20on%20page%20%2Fscenario3.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/ejp-rd-vp/DistributedAnalysisDemonstrator/issues/new?title=Issue%20on%20page%20%2Fhamlet_notebook.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -285,7 +285,7 @@
       
       
       
-      <li><a href="_sources/scenario3.md" target="_blank"
+      <li><a href="_sources/hamlet_notebook.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -295,7 +295,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -369,7 +369,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Scenario 3: Genetic Analysis Case Study on FN1 gene</h1>
+    <h1>Loading RDF Datasets</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -379,23 +379,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-patient-with-spondylometaphyseal-dysplasia-and-corner-fractures">A Patient with Spondylometaphyseal Dysplasia and Corner Fractures</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#research-questions">Research Questions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-mutation-prevalence">Question 1: Mutation Prevalence</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-phenotype">Question 2: Phenotype</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Loading RDF Datasets</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sparql-queries">SPARQL Queries</a></li>
 </ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#work-in-progress">WORK IN PROGRESS</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-genotype-phenotype-correlation">Question 3: Genotype-Phenotype Correlation</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#is-it-possible-to-establish-any-genotype-phenotype-correlation-work-in-progress">Is it possible to establish any genotype-phenotype correlation?
-WORK IN PROGRESS</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-variant-frequency-in-populations">Question 4: Variant Frequency in Populations</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">WORK IN PROGRESS</a></li>
-</ul>
+
             </nav>
         </div>
     </div>
@@ -406,63 +393,119 @@ WORK IN PROGRESS</a><ul class="nav section-nav flex-column">
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="scenario-3-genetic-analysis-case-study-on-fn1-gene">
-<h1>Scenario 3: Genetic Analysis Case Study on FN1 gene<a class="headerlink" href="#scenario-3-genetic-analysis-case-study-on-fn1-gene" title="Link to this heading">#</a></h1>
-<section id="a-patient-with-spondylometaphyseal-dysplasia-and-corner-fractures">
-<h2>A Patient with Spondylometaphyseal Dysplasia and Corner Fractures<a class="headerlink" href="#a-patient-with-spondylometaphyseal-dysplasia-and-corner-fractures" title="Link to this heading">#</a></h2>
-<p>A patient affected by spondylometaphyseal dysplasia with corner fractures, a rare form of AD osteocondrodysplasia of unknown genetic origin, underwent Whole Exome Sequencing (WES) analysis. This disclosed a de novo likely pathogenic mutation in the FN1 gene, a gene previously associated with glomerulopathy with fibronectin deposits, a rare kidney disease (KD) not present in the patient.</p>
-</section>
-<hr class="docutils" />
-<section id="research-questions">
-<h2>Research Questions<a class="headerlink" href="#research-questions" title="Link to this heading">#</a></h2>
-<section id="question-1-mutation-prevalence">
-<h3>Question 1: Mutation Prevalence<a class="headerlink" href="#question-1-mutation-prevalence" title="Link to this heading">#</a></h3>
-<p>Are there any other individuals with the same mutation or allelic variant?</p>
-<div class="highlight-sparql notranslate"><div class="highlight"><pre><span></span><span class="k">PREFIX</span> <span class="nn">sio</span><span class="p">:</span> <span class="nl">&lt;http://semanticscience.org/ontology/&gt;</span>
-<span class="k">PREFIX</span> <span class="nn">rdf</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</span>
-<span class="k">PREFIX</span> <span class="nn">caresm</span><span class="p">:</span> <span class="nl">&lt;http://example.com/caresm/&gt;</span>
-<span class="k">PREFIX</span> <span class="nn">rdfs</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
-
-<span class="k">SELECT</span> <span class="nv">?individual</span> <span class="nv">?individualLabel</span>
-<span class="k">WHERE</span> <span class="p">{</span>
-  <span class="c"># Identify the mutation of interest</span>
-  <span class="nv">?mutation</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">type</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000115</span> <span class="p">;</span>
-            <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;FN1 gene mutation&quot;</span><span class="o">@</span><span class="nf">en</span> <span class="p">.</span>
-
-  <span class="c"># Find individuals with the same mutation</span>
-  <span class="nv">?individual</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">type</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000498</span> <span class="p">;</span>  <span class="c"># Individual</span>
-              <span class="nn">sio</span><span class="p">:</span><span class="nt">denotes</span> <span class="nv">?mutation</span> <span class="p">;</span>
-              <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?individualLabel</span> <span class="p">.</span>
-
-  <span class="c"># Ensure the labels are in English</span>
-  <span class="k">FILTER</span><span class="p">(</span><span class="nf">LANG</span><span class="p">(</span><span class="nv">?individualLabel</span><span class="p">)</span> <span class="o">=</span> <span class="s">&quot;en&quot;</span><span class="p">)</span> <span class="p">.</span>
-<span class="p">}</span>
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">rdflib</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">os</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">rdflib</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;rdflib&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="loading-rdf-datasets">
+<h1>Loading RDF Datasets<a class="headerlink" href="#loading-rdf-datasets" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_rdf_filenames</span><span class="p">(</span><span class="n">dirname</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;  &quot;&quot;&quot;</span>
+    <span class="n">rdf_filenames</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
+        <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ttl&#39;</span><span class="p">:</span>
+            <span class="n">rdf_filenames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rdf_filenames</span>
+
+<span class="k">def</span> <span class="nf">load_rdf_files</span><span class="p">(</span><span class="n">dirnames</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;  &quot;&quot;&quot;</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">dirnames</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load RDF data from directory </span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s1"> into RDF graph.&#39;</span><span class="p">)</span>
+    
+        <span class="n">rdf_filenames</span> <span class="o">=</span> <span class="n">get_rdf_filenames</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">rdf_filename</span> <span class="ow">in</span> <span class="n">rdf_filenames</span><span class="p">:</span>
+            <span class="n">g</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">rdf_filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">g</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rdf_dirnames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;HAMLET_DATA&#39;</span><span class="p">,</span> <span class="s1">&#39;MONARCH_PHENOPACKET_STORE_DATA&#39;</span><span class="p">]</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">load_rdf_files</span><span class="p">(</span><span class="n">rdf_dirnames</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Load RDF data from directory HAMLET_DATA into RDF graph.
+Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
+</pre></div>
+</div>
+</div>
+</div>
 </section>
-<hr class="docutils" />
-<section id="question-2-phenotype">
-<h3>Question 2: Phenotype<a class="headerlink" href="#question-2-phenotype" title="Link to this heading">#</a></h3>
-<p>What is their phenotype?</p>
-</section>
-</section>
-<section id="work-in-progress">
-<h2>WORK IN PROGRESS<a class="headerlink" href="#work-in-progress" title="Link to this heading">#</a></h2>
-<section id="question-3-genotype-phenotype-correlation">
-<h3>Question 3: Genotype-Phenotype Correlation<a class="headerlink" href="#question-3-genotype-phenotype-correlation" title="Link to this heading">#</a></h3>
-</section>
-</section>
-<section id="is-it-possible-to-establish-any-genotype-phenotype-correlation-work-in-progress">
-<h2>Is it possible to establish any genotype-phenotype correlation?
-WORK IN PROGRESS<a class="headerlink" href="#is-it-possible-to-establish-any-genotype-phenotype-correlation-work-in-progress" title="Link to this heading">#</a></h2>
-<section id="question-4-variant-frequency-in-populations">
-<h3>Question 4: Variant Frequency in Populations<a class="headerlink" href="#question-4-variant-frequency-in-populations" title="Link to this heading">#</a></h3>
-<p>What is the variant frequency across different populations?</p>
-</section>
-</section>
-<section id="id1">
-<h2>WORK IN PROGRESS<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-</section>
+<section class="tex2jax_ignore mathjax_ignore" id="sparql-queries">
+<h1>SPARQL Queries<a class="headerlink" href="#sparql-queries" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    PREFIX ex: &lt;https://example.org/&gt;</span>
+<span class="s2">    PREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;</span>
+<span class="s2">    PREFIX sio: &lt;http://semanticscience.org/resource/&gt;</span>
+
+<span class="s2">    SELECT ?idvalue</span>
+<span class="s2">    WHERE {</span>
+<span class="s2">        ?phenopacket a obo:NCIT_C79269 .</span>
+<span class="s2">        ?role a obo:NCIT_C48835 .</span>
+<span class="s2">        ?phenopacket sio:SIO_000228 ?role .</span>
+<span class="s2">        ?id a obo:IAO_0020000 .</span>
+<span class="s2">        ?id sio:SIO_000020 ?role .</span>
+<span class="s2">        ?id sio:SIO_000300 ?idvalue .</span>
+<span class="s2">    }</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+<span class="n">id_values</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">result_row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="n">phenopacket_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">result_row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">id_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">phenopacket_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;phenopacket_id&#39;</span><span class="p">,</span> <span class="n">id_values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;new-reference-files&#39;
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -495,24 +538,6 @@ WORK IN PROGRESS<a class="headerlink" href="#is-it-possible-to-establish-any-gen
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="scenario2.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Scenario 2: Genetic Analysis Case Study on MAPK1 gene</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="hamlet.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Genetic Analysis on AML Cell Line.</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -529,23 +554,10 @@ WORK IN PROGRESS<a class="headerlink" href="#is-it-possible-to-establish-any-gen
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-patient-with-spondylometaphyseal-dysplasia-and-corner-fractures">A Patient with Spondylometaphyseal Dysplasia and Corner Fractures</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#research-questions">Research Questions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-mutation-prevalence">Question 1: Mutation Prevalence</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-phenotype">Question 2: Phenotype</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Loading RDF Datasets</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sparql-queries">SPARQL Queries</a></li>
 </ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#work-in-progress">WORK IN PROGRESS</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-genotype-phenotype-correlation">Question 3: Genotype-Phenotype Correlation</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#is-it-possible-to-establish-any-genotype-phenotype-correlation-work-in-progress">Is it possible to establish any genotype-phenotype correlation?
-WORK IN PROGRESS</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4-variant-frequency-in-populations">Question 4: Variant Frequency in Populations</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">WORK IN PROGRESS</a></li>
-</ul>
+
   </nav></div>
 
 </div></div>
