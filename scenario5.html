@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Notebooks with MyST Markdown &#8212; EJP-RD FDP and Virtual Portal demonstrator</title>
+    <title>Scenario 5: Genetic Analysis Case Study on NRAS gene &#8212; EJP-RD FDP and Virtual Portal demonstrator</title>
   
   
   
@@ -57,7 +57,7 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'markdown-notebooks';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'scenario5';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -255,7 +255,7 @@
       
       
       
-      <li><a href="https://github.com/ejp-rd-vp/DistributedAnalysisDemonstrator/issues/new?title=Issue%20on%20page%20%2Fmarkdown-notebooks.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/ejp-rd-vp/DistributedAnalysisDemonstrator/issues/new?title=Issue%20on%20page%20%2Fscenario5.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -285,7 +285,7 @@
       
       
       
-      <li><a href="_sources/markdown-notebooks.md" target="_blank"
+      <li><a href="_sources/scenario5.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -369,7 +369,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Notebooks with MyST Markdown</h1>
+    <h1>Scenario 5: Genetic Analysis Case Study on NRAS gene</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -379,9 +379,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-cell">An example cell</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-notebook-with-myst-markdown">Create a notebook with MyST Markdown</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quickly-add-yaml-metadata-for-myst-notebooks">Quickly add YAML metadata for MyST Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-undiagnosed-child-with-delayed-motor-development-and-generalized-dysmorphism">An Undiagnosed Child with Delayed Motor Development and Generalized Dysmorphism</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#research-questions">Research Questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-gene-mutation-prevalence">Question 1: Gene Mutation Prevalence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-phenotype-and-disease-prevalence">Question 2: Phenotype and Disease Prevalence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-matching-phenotypes">Question 3: Matching Phenotypes</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -393,50 +397,255 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="notebooks-with-myst-markdown">
-<h1>Notebooks with MyST Markdown<a class="headerlink" href="#notebooks-with-myst-markdown" title="Link to this heading">#</a></h1>
-<p>Jupyter Book also lets you write text-based notebooks using MyST Markdown.
-See <a class="reference external" href="https://jupyterbook.org/file-types/myst-notebooks.html">the Notebooks with MyST Markdown documentation</a> for more detailed instructions.
-This page shows off a notebook written in MyST Markdown.</p>
-<section id="an-example-cell">
-<h2>An example cell<a class="headerlink" href="#an-example-cell" title="Link to this heading">#</a></h2>
-<p>With MyST Markdown, you can define code cells with a directive like so:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4
-</pre></div>
-</div>
-</div>
-</div>
-<p>When your book is built, the contents of any <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> blocks will be
-executed with your default Jupyter kernel, and their outputs will be displayed
-in-line with the rest of your content.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p>Jupyter Book uses <a class="reference external" href="https://jupytext.readthedocs.io/en/latest/">Jupytext</a> to convert text-based files to notebooks, and can support <a class="reference external" href="https://jupyterbook.org/file-types/jupytext.html">many other text-based notebook files</a>.</p>
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="scenario-5-genetic-analysis-case-study-on-nras-gene">
+<h1>Scenario 5: Genetic Analysis Case Study on NRAS gene<a class="headerlink" href="#scenario-5-genetic-analysis-case-study-on-nras-gene" title="Link to this heading">#</a></h1>
+<section id="an-undiagnosed-child-with-delayed-motor-development-and-generalized-dysmorphism">
+<h2>An Undiagnosed Child with Delayed Motor Development and Generalized Dysmorphism<a class="headerlink" href="#an-undiagnosed-child-with-delayed-motor-development-and-generalized-dysmorphism" title="Link to this heading">#</a></h2>
+<p>On clinical examination, the undiagnosed child was found to have several facial dysmorphisms, in particular a broad neck and low-set ears. It has also been assessed that the child exhibits delayed motor development.</p>
+<p>Genetic testing has been performed using Whole Exome Sequencing (WES) which identified a probable pathogenic mutation in the NRAS gene.</p>
 </section>
-<section id="create-a-notebook-with-myst-markdown">
-<h2>Create a notebook with MyST Markdown<a class="headerlink" href="#create-a-notebook-with-myst-markdown" title="Link to this heading">#</a></h2>
-<p>MyST Markdown notebooks are defined by two things:</p>
-<ol class="arabic simple">
-<li><p>YAML metadata that is needed to understand if / how it should convert text files to notebooks (including information about the kernel needed).
-See the YAML at the top of this page for example.</p></li>
-<li><p>The presence of <code class="docutils literal notranslate"><span class="pre">{code-cell}</span></code> directives, which will be executed with your book.</p></li>
-</ol>
-<p>That’s all that is needed to get started!</p>
-</section>
-<section id="quickly-add-yaml-metadata-for-myst-notebooks">
-<h2>Quickly add YAML metadata for MyST Notebooks<a class="headerlink" href="#quickly-add-yaml-metadata-for-myst-notebooks" title="Link to this heading">#</a></h2>
-<p>If you have a markdown file and you’d like to quickly add YAML metadata to it, so that Jupyter Book will treat it as a MyST Markdown Notebook, run the following command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span><span class="o">-</span><span class="n">book</span> <span class="n">myst</span> <span class="n">init</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">markdownfile</span><span class="o">.</span><span class="n">md</span>
+<hr class="docutils" />
+<section id="research-questions">
+<h2>Research Questions<a class="headerlink" href="#research-questions" title="Link to this heading">#</a></h2>
+<section id="question-1-gene-mutation-prevalence">
+<h3>Question 1: Gene Mutation Prevalence<a class="headerlink" href="#question-1-gene-mutation-prevalence" title="Link to this heading">#</a></h3>
+<p>Are there any other individuals with a mutation in the same gene?</p>
+<p>To answer this question the SPARQL query below has been used for finding the phenopackets that include at least one mutation in the NRAS gene. To identify the correct gene descriptions, the HGNC gene ID is used of NRAS being <a class="reference external" href="https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/7989">HGNC:7989</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;PREFIX ex: &lt;https://example.org/&gt;</span><span class="se">\n</span><span class="s2">PREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;</span><span class="se">\n</span><span class="s2">PREFIX sio: &lt;http://semanticscience.org/resource/&gt;</span><span class="se">\n</span><span class="s2">PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt; </span><span class="se">\n</span><span class="s2">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><span class="se">\n\n</span><span class="s2">SELECT ?phenopacketidval ?creatorname ?createddate</span><span class="se">\n</span><span class="s2">WHERE {</span><span class="se">\n</span><span class="s2">    # Find the phenopackets that contain at least one mutation in given gene</span><span class="se">\n</span><span class="s2">    ?genedescr a obo:NCIT_C16612 ;</span><span class="se">\n</span><span class="s2">               dcterms:identifier &#39;HGNC:7989&#39; .</span><span class="se">\n</span><span class="s2">    ?vardescr sio:SIO_001403 ?genedescr .</span><span class="se">\n</span><span class="s2">    ?varinterpr sio:SIO_001403 ?vardescr .</span><span class="se">\n</span><span class="s2">    ?genomicinterp sio:SIO_001403 ?varinterpr .</span><span class="se">\n</span><span class="s2">    ?diagnosis sio:SIO_001403 ?genomicinterp .</span><span class="se">\n</span><span class="s2">    ?interpr sio:SIO_001403 ?diagnosis .</span><span class="se">\n</span><span class="s2">    ?phenopacket sio:SIO_001403 ?interpr ;</span><span class="se">\n</span><span class="s2">                 a obo:NCIT_C79269 ;</span><span class="se">\n</span><span class="s2">                 sio:SIO_000228 ?role .</span><span class="se">\n</span><span class="s2">    </span><span class="se">\n</span><span class="s2">    # Find phenopacket ID value</span><span class="se">\n</span><span class="s2">    ?phenopacketid sio:SIO_000020 ?role ;</span><span class="se">\n\t</span><span class="s2">               sio:SIO_000300 ?phenopacketidval .</span><span class="se">\n</span><span class="s2">    </span><span class="se">\n</span><span class="s2">    # Find metadata</span><span class="se">\n</span><span class="s2">    ?phenopacket sio:SIO_001403 ?metadata .</span><span class="se">\n</span><span class="s2">    ?metadata a obo:NCIT_C52095 ;</span><span class="se">\n</span><span class="s2">              sio:SIO_000008 ?creator ;</span><span class="se">\n</span><span class="s2">              sio:SIO_000008 ?created .</span><span class="se">\n</span><span class="s2">    </span><span class="se">\n</span><span class="s2">    ?creator a dcterms:creator .</span><span class="se">\n</span><span class="s2">    ?creatorval sio:SIO_000628 ?creator ;</span><span class="se">\n</span><span class="s2">                a obo:NCIT_C70856 ;</span><span class="se">\n</span><span class="s2">                sio:SIO_000300 ?creatorname .</span><span class="se">\n</span><span class="s2">    </span><span class="se">\n</span><span class="s2">    ?created a dcterms:created .</span><span class="se">\n</span><span class="s2">    ?createdval sio:SIO_000628 ?created ;</span><span class="se">\n</span><span class="s2">                a obo:NCIT_C70856 ;</span><span class="se">\n</span><span class="s2">                sio:SIO_000300 ?createddate .</span><span class="se">\n</span><span class="s2">}&quot;</span>
 </pre></div>
 </div>
+<p>As shown below, a total of fourteen phenopackets have been found including phenotypic and genetic information related to mutations in the NRAS gene. This set of phenopackets has been created by the same researcher at the same datetime based on the metadata.</p>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>phenopacket id</th>
+      <th>creator</th>
+      <th>creation date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PMID_26467218_individual_6_Cirstea_et_al__14</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PMID_26467218_individual_11_Kraoua_et_al__23</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PMID_26467218_individual_3_Denayer_et_al__22</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PMID_26467218_individual_9_Cirstea_et_al__14</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PMID_26467218_individual_4_Denayer_et_al__22</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>PMID_26467218_individual_12_Present_study</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>PMID_26467218_individual_1_De_Filippi_et_al__20</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>PMID_26467218_individual_2_Runtuwene_et_al__21</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>PMID_26467218_individual_5_Denayer_et_al__22</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>PMID_26467218_individual_12_F_Present_study</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>PMID_26467218_individual_8_Cirstea_et_al__14</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>PMID_26467218_individual_10_Kraoua_et_al__23</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
+      <td>ORCID:0000-0002-0736-9199</td>
+      <td>2024-05-20 20:56:12</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></section>
+<section id="question-2-phenotype-and-disease-prevalence">
+<h3>Question 2: Phenotype and Disease Prevalence<a class="headerlink" href="#question-2-phenotype-and-disease-prevalence" title="Link to this heading">#</a></h3>
+<p>What phenotypes and which diseases have been observed in these individuals and how often do they occur in this group of individuals?</p>
+<p>The phenopackets found for the previous question can now be analysed to conclude which phenotypes and diseases occur in this group of individuals. This is done by using the following SPARQL queries for acquiring the associated phenotypes and diseases, respectively:</p>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>phenopacket id</th>
+      <th>disease ID</th>
+      <th>disease label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PMID_26467218_individual_6_Cirstea_et_al__14</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PMID_26467218_individual_11_Kraoua_et_al__23</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PMID_26467218_individual_3_Denayer_et_al__22</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PMID_26467218_individual_9_Cirstea_et_al__14</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PMID_26467218_individual_4_Denayer_et_al__22</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>PMID_26467218_individual_12_Present_study</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>PMID_26467218_individual_1_De_Filippi_et_al__20</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>PMID_26467218_individual_2_Runtuwene_et_al__21</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>PMID_26467218_individual_5_Denayer_et_al__22</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>PMID_26467218_individual_12_F_Present_study</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>PMID_26467218_individual_8_Cirstea_et_al__14</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>PMID_26467218_individual_10_Kraoua_et_al__23</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
+      <td>OMIM:613224</td>
+      <td>Noonan syndrome 6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></section>
+<section id="question-3-matching-phenotypes">
+<h3>Question 3: Matching Phenotypes<a class="headerlink" href="#question-3-matching-phenotypes" title="Link to this heading">#</a></h3>
+<p>Do the found phenotypes overlap with the observed phenotypes found in the undiagnosed child?</p>
+<hr class="docutils" />
+</section>
 </section>
 </section>
 
@@ -486,9 +695,13 @@ See the YAML at the top of this page for example.</p></li>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-example-cell">An example cell</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-notebook-with-myst-markdown">Create a notebook with MyST Markdown</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quickly-add-yaml-metadata-for-myst-notebooks">Quickly add YAML metadata for MyST Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-undiagnosed-child-with-delayed-motor-development-and-generalized-dysmorphism">An Undiagnosed Child with Delayed Motor Development and Generalized Dysmorphism</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#research-questions">Research Questions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1-gene-mutation-prevalence">Question 1: Gene Mutation Prevalence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2-phenotype-and-disease-prevalence">Question 2: Phenotype and Disease Prevalence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-matching-phenotypes">Question 3: Matching Phenotypes</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

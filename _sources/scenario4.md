@@ -2,7 +2,7 @@
 title: Scenario 4 - Genetic Analysis on AML
 ---
 
-# Scenario 4: Genetic Analysis on AML.
+# Scenario 4: Genetic Analysis on AML
 
 ## Cell Line Derived from a Patient with AML
 
