@@ -93,7 +93,7 @@ Given the path length distances between each pair of phenotypes, the phenotypes 
 
 ![image](nras_matching_phenotypes.png)
 
-The phenotypes labeled in bold text are the phenotypes observed in the undiagnosed child. Again, it can be seen that the phenotypes low-set ears and motor delay are also found in patients with Noonan syndrome 6. Interestingly, this plot also shows that the remaining observed phenotype "broad neck" seems to be similar to phenotype "webbed neck" that is also associated in group of individuals with this same diagnosis. 
+The phenotypes labeled in bold text are the phenotypes observed in the undiagnosed child. Again, it can be seen that the phenotypes low-set ears and motor delay are also found in patients with Noonan syndrome 6 given the colors of the points that represent the phenotypes. Interestingly, this plot also shows that the remaining observed phenotype "broad neck" seems to be similar to phenotype "webbed neck" that is also associated in group of individuals with this same diagnosis. 
 
 ---
 
