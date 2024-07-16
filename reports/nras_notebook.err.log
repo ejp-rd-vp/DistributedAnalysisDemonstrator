@@ -26,10 +26,11 @@ import oxrdflib
 import pandas as pd
 from datetime import datetime
 
+import networkx as nx
+import matplotlib.pyplot as plt
+from sklearn.manifold import MDS
+
 from myst_nb import glue
-
-rdflib.plugin.register('Oxigraph', rdflib.store.Store, 'oxrdflib', 'Oxigraph')
-
 
 ------------------
 

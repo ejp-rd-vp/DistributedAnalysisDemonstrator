@@ -386,6 +386,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-matching-phenotypes">Question 3: Matching Phenotypes</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
             </nav>
         </div>
@@ -397,7 +398,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="scenario-5-genetic-analysis-case-study-on-nras-gene">
+  <section class="tex2jax_ignore mathjax_ignore" id="scenario-5-genetic-analysis-case-study-on-nras-gene">
 <h1>Scenario 5: Genetic Analysis Case Study on NRAS gene<a class="headerlink" href="#scenario-5-genetic-analysis-case-study-on-nras-gene" title="Link to this heading">#</a></h1>
 <section id="an-undiagnosed-child-with-delayed-motor-development-and-generalized-dysmorphism">
 <h2>An Undiagnosed Child with Delayed Motor Development and Generalized Dysmorphism<a class="headerlink" href="#an-undiagnosed-child-with-delayed-motor-development-and-generalized-dysmorphism" title="Link to this heading">#</a></h2>
@@ -529,10 +530,11 @@ document.write(`
 <section id="question-2-phenotype-and-disease-prevalence">
 <h3>Question 2: Phenotype and Disease Prevalence<a class="headerlink" href="#question-2-phenotype-and-disease-prevalence" title="Link to this heading">#</a></h3>
 <p>What phenotypes and which diseases have been observed in these individuals and how often do they occur in this group of individuals?</p>
-<p>The phenopackets found for the previous question can now be analysed to conclude which phenotypes and diseases occur in this group of individuals. This is done by using the following SPARQL queries for acquiring the associated phenotypes and diseases, respectively:</p>
+<p>The phenopackets found for the previous question can now be analysed to conclude which phenotypes and diseases occur in this group of individuals. This is done by using SPARQL queries for acquiring the associated phenotypes and diseases. The query below searches for all diagnosed diseases in the relevant phenopackets.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;PREFIX ex: &lt;https://example.org/&gt;</span><span class="se">\n</span><span class="s1">PREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;</span><span class="se">\n</span><span class="s1">PREFIX sio: &lt;http://semanticscience.org/resource/&gt;</span><span class="se">\n</span><span class="s1">PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt; </span><span class="se">\n</span><span class="s1">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><span class="se">\n\n</span><span class="s1">SELECT ?idvalue ?diseaseid ?diseaselabel</span><span class="se">\n</span><span class="s1">WHERE {</span><span class="se">\n</span><span class="s1">    # Find relevant phenopackets</span><span class="se">\n</span><span class="s1">    ?id a obo:IAO_0020000 ;</span><span class="se">\n</span><span class="s1">        sio:SIO_000300 ?idvalue .</span><span class="se">\n</span><span class="s1">    VALUES ?idvalue { &quot;PMID_26467218_individual_6_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_11_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_3_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_9_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_4_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_Present_study&quot; &quot;PMID_26467218_individual_1_De_Filippi_et_al__20&quot; &quot;PMID_26467218_individual_2_Runtuwene_et_al__21&quot; &quot;PMID_26467218_individual_9_M_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_5_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_F_Present_study&quot; &quot;PMID_26467218_individual_8_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_10_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_7_Cirstea_et_al__14&quot; } .</span><span class="se">\n</span><span class="s1">    </span><span class="se">\n</span><span class="s1">    # Find diagnosis</span><span class="se">\n</span><span class="s1">    ?id sio:SIO_000020 ?role .</span><span class="se">\n</span><span class="s1">    ?phenopacket sio:SIO_000228 ?role ;</span><span class="se">\n</span><span class="s1">                 sio:SIO_001403 ?interpr .</span><span class="se">\n</span><span class="s1">    ?interpr a obo:NCIT_C41255 ;</span><span class="se">\n</span><span class="s1">             sio:SIO_001403 ?diagnosis .</span><span class="se">\n</span><span class="s1">    ?diagnosis a sio:SIO_000614 ;</span><span class="se">\n</span><span class="s1">               sio:SIO_001403 ?disease .</span><span class="se">\n</span><span class="s1">    ?diseaseval a obo:NCIT_C2991 ;</span><span class="se">\n</span><span class="s1">                sio:SIO_000628 ?disease .</span><span class="se">\n</span><span class="s1">    ?disease rdfs:label ?diseaselabel ;</span><span class="se">\n</span><span class="s1">             dcterms:identifier ?diseaseid .</span><span class="se">\n</span><span class="s1">}&#39;</span>
 </pre></div>
 </div>
+<p>Given the results of the SPARQL query shown above, the individuals for which mutations are found in the NRAS gene are all diagnosed with Noonan syndrome 6.</p>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -643,12 +645,389 @@ document.write(`
     </tr>
   </tbody>
 </table>
+</div></div><p>The query shown below searches for all phenotypes that are associated with at least one of the relevant phenopackets.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;PREFIX ex: &lt;https://example.org/&gt;</span><span class="se">\n</span><span class="s1">PREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;</span><span class="se">\n</span><span class="s1">PREFIX sio: &lt;http://semanticscience.org/resource/&gt;</span><span class="se">\n</span><span class="s1">PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt; </span><span class="se">\n</span><span class="s1">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><span class="se">\n\n</span><span class="s1">SELECT ?idvalue ?phenofeatid ?phenofeatlabel</span><span class="se">\n</span><span class="s1">WHERE {</span><span class="se">\n</span><span class="s1">    # Find relevant phenopackets</span><span class="se">\n</span><span class="s1">    ?id a obo:IAO_0020000 ;</span><span class="se">\n</span><span class="s1">        sio:SIO_000300 ?idvalue .</span><span class="se">\n</span><span class="s1">    VALUES ?idvalue { &quot;PMID_26467218_individual_6_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_11_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_3_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_9_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_4_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_Present_study&quot; &quot;PMID_26467218_individual_1_De_Filippi_et_al__20&quot; &quot;PMID_26467218_individual_2_Runtuwene_et_al__21&quot; &quot;PMID_26467218_individual_9_M_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_5_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_F_Present_study&quot; &quot;PMID_26467218_individual_8_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_10_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_7_Cirstea_et_al__14&quot; } .</span><span class="se">\n</span><span class="s1">    </span><span class="se">\n</span><span class="s1">    # Find phenotypic features</span><span class="se">\n</span><span class="s1">    ?id sio:SIO_000020 ?role .</span><span class="se">\n</span><span class="s1">    ?phenopacket sio:SIO_000228 ?role ;</span><span class="se">\n</span><span class="s1">                 sio:SIO_001403 ?phenofeat .</span><span class="se">\n</span><span class="s1">    ?phenofeatval sio:SIO_000628 ?phenofeat ;</span><span class="se">\n</span><span class="s1">                  a obo:NCIT_C16977 .</span><span class="se">\n</span><span class="s1">    ?phenofeat dcterms:identifier ?phenofeatid ;</span><span class="se">\n</span><span class="s1">               rdfs:label ?phenofeatlabel .</span><span class="se">\n</span><span class="s1">    </span><span class="se">\n</span><span class="s1">}&#39;</span>
+</pre></div>
+</div>
+<p>A total of  phenotypes have been found. A sample of these results are shown below:</p>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>phenopacket ID</th>
+      <th>phenotype ID</th>
+      <th>phenotype label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>94</th>
+      <td>PMID_26467218_individual_9_Cirstea_et_al__14</td>
+      <td>HP:0000028</td>
+      <td>Cryptorchidism</td>
+    </tr>
+    <tr>
+      <th>133</th>
+      <td>PMID_26467218_individual_12_Present_study</td>
+      <td>HP:0000767</td>
+      <td>Pectus excavatum</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td>PMID_26467218_individual_2_Runtuwene_et_al__21</td>
+      <td>HP:0000256</td>
+      <td>Macrocephaly</td>
+    </tr>
+    <tr>
+      <th>184</th>
+      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
+      <td>HP:0000508</td>
+      <td>Ptosis</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
+      <td>HP:0006699</td>
+      <td>Premature atrial contractions</td>
+    </tr>
+    <tr>
+      <th>207</th>
+      <td>PMID_26467218_individual_5_Denayer_et_al__22</td>
+      <td>HP:0000256</td>
+      <td>Macrocephaly</td>
+    </tr>
+    <tr>
+      <th>233</th>
+      <td>PMID_26467218_individual_12_F_Present_study</td>
+      <td>HP:0001561</td>
+      <td>Polyhydramnios</td>
+    </tr>
+    <tr>
+      <th>292</th>
+      <td>PMID_26467218_individual_10_Kraoua_et_al__23</td>
+      <td>HP:0001680</td>
+      <td>Coarctation of aorta</td>
+    </tr>
+    <tr>
+      <th>324</th>
+      <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
+      <td>HP:0006699</td>
+      <td>Premature atrial contractions</td>
+    </tr>
+    <tr>
+      <th>325</th>
+      <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
+      <td>HP:0002212</td>
+      <td>Curly hair</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><p>Given these results, the occurrence of each phenotype is calculated:</p>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>phenotype ID</th>
+      <th>phenotype label</th>
+      <th>counts</th>
+      <th>occurrence percentage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>HP:0000369</td>
+      <td>Low-set ears</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>HP:0000316</td>
+      <td>Hypertelorism</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>HP:0000957</td>
+      <td>Cafe-au-lait spot</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>HP:0012209</td>
+      <td>Juvenile myelomonocytic leukemia</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>HP:0000494</td>
+      <td>Downslanted palpebral fissures</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>HP:0004322</td>
+      <td>Short stature</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>HP:0000348</td>
+      <td>High forehead</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>HP:0000508</td>
+      <td>Ptosis</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>HP:0000358</td>
+      <td>Posteriorly rotated ears</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>HP:0000767</td>
+      <td>Pectus excavatum</td>
+      <td>13</td>
+      <td>92.9%</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>HP:0001655</td>
+      <td>Patent foramen ovale</td>
+      <td>13</td>
+      <td>92.9%</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>HP:0000256</td>
+      <td>Macrocephaly</td>
+      <td>13</td>
+      <td>92.9%</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>HP:0001680</td>
+      <td>Coarctation of aorta</td>
+      <td>13</td>
+      <td>92.9%</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>HP:0000483</td>
+      <td>Astigmatism</td>
+      <td>12</td>
+      <td>85.7%</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>HP:0001270</td>
+      <td>Motor delay</td>
+      <td>12</td>
+      <td>85.7%</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>HP:0000486</td>
+      <td>Strabismus</td>
+      <td>12</td>
+      <td>85.7%</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>HP:0000465</td>
+      <td>Webbed neck</td>
+      <td>12</td>
+      <td>85.7%</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>HP:0000545</td>
+      <td>Myopia</td>
+      <td>11</td>
+      <td>78.6%</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>HP:0000563</td>
+      <td>Keratoconus</td>
+      <td>11</td>
+      <td>78.6%</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>HP:0006699</td>
+      <td>Premature atrial contractions</td>
+      <td>11</td>
+      <td>78.6%</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>HP:0002212</td>
+      <td>Curly hair</td>
+      <td>11</td>
+      <td>78.6%</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>HP:0000978</td>
+      <td>Bruising susceptibility</td>
+      <td>11</td>
+      <td>78.6%</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>HP:0001561</td>
+      <td>Polyhydramnios</td>
+      <td>10</td>
+      <td>71.4%</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>HP:0001195</td>
+      <td>Single umbilical artery</td>
+      <td>10</td>
+      <td>71.4%</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>HP:0032152</td>
+      <td>Keratosis pilaris</td>
+      <td>9</td>
+      <td>64.3%</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>HP:0000028</td>
+      <td>Cryptorchidism</td>
+      <td>9</td>
+      <td>64.3%</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>HP:0001639</td>
+      <td>Hypertrophic cardiomyopathy</td>
+      <td>3</td>
+      <td>21.4%</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>HP:0001642</td>
+      <td>Pulmonic stenosis</td>
+      <td>3</td>
+      <td>21.4%</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>HP:0001631</td>
+      <td>Atrial septal defect</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+  </tbody>
+</table>
 </div></div></section>
 <section id="question-3-matching-phenotypes">
 <h3>Question 3: Matching Phenotypes<a class="headerlink" href="#question-3-matching-phenotypes" title="Link to this heading">#</a></h3>
-<p>Do the found phenotypes overlap with the observed phenotypes found in the undiagnosed child?</p>
-<hr class="docutils" />
+<p>Do the found phenotypes overlap with the phenotypes observed in the undiagnosed child?</p>
+<p>Multiple phenotypes have been observed in the undiagnosed child being broad neck, low-set ears and motor delay. In order to match the observed phenotypes with the phenotypes observed in the phenopackets, the <a class="reference external" href="https://hpo.jax.org/">Human Phenotype Ontology (HPO)</a> identifiers need to be retrieved. These identifiers are acquired by querying over this HPO ontology matching the phenotypes with the labels of the terms that are part of HPO. Below, a SPARQL query is shown that searches for the identifier for the broad neck phenotype:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><span class="se">\n</span><span class="s2">PREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;</span><span class="se">\n\n</span><span class="s2">SELECT ?iri</span><span class="se">\n</span><span class="s2">WHERE {</span><span class="se">\n</span><span class="s2">    ?iri rdfs:label &#39;Broad neck&#39; .</span><span class="se">\n</span><span class="s2">}&quot;</span>
+</pre></div>
+</div>
+<p>Executing this SPARQL query for all observed phenotypes results in the following identifiers:</p>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>HP:0000475</td>
+      <td>Broad neck</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>HP:0000369</td>
+      <td>Low-set ears</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>HP:0001270</td>
+      <td>Motor delay</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><p>Next, the list of observed phenotypes can be compared with the list of phenotypes associated with the selection of phenopackets coming to the conclusion that the observed phenotypes  is also found in the individuals represented in the phenopackets.</p>
+<p>It is still possible to gather more information about the observed phenotype that has not been found in at least one of the phenopackets. One step would be to investigate the closeness of the observed phenotype to the phenotypes associated with Noonan syndrome 6 given their relative positions in the HPO ontology. To be more explicit, this closeness can be calculated by acquiring the shortest path length between phenotypes in a network. This network is built by adding each phenotype as a node. An edge between two nodes represents the relation of one phenotype being the subclass or superclass of another phenotype.</p>
+<p>Given the path length distances between each pair of phenotypes, the phenotypes can be shown on a two-dimensional plot by applying multidimensional scaling. In this way, a clear overview is generated of all phenotypes and their similarities expressed in their positions in the two dimensional space. This plot is shown below:</p>
+<p><img alt="image" src="_images/nras_matching_phenotypes.png" /></p>
+<p>The phenotypes labeled in bold text are the phenotypes observed in the undiagnosed child. Again, it can be seen that the phenotypes low-set ears and motor delay are also found in patients with Noonan syndrome 6. Interestingly, this plot also shows that the remaining observed phenotype “broad neck” seems to be similar to phenotype “webbed neck” that is also associated in group of individuals with this same diagnosis.</p>
 </section>
+</section>
+<hr class="docutils" />
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>Given the mutations in the NRAS gene identified in individuals with Noonan syndrome 6 and the overlap and similarities between the observed phenotypes and the phenotypes associated with the individuals diagnosed with Noonan syndrome 6, there is reason to further investigate Noonan syndrome 6 as being a likely diagnosis for the child.</p>
+<hr class="docutils" />
 </section>
 </section>
 
@@ -714,6 +1093,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3-matching-phenotypes">Question 3: Matching Phenotypes</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
   </nav></div>
 
