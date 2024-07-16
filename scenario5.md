@@ -56,7 +56,7 @@ The query shown below searches for all phenotypes that are associated with at le
 :language: sparql
 ```
 
-A total of {glue:}`scenario5_phenofeat_count :doc: nras_notebook.ipynb` phenotypes have been found. A sample of these results are shown below:
+A total of {glue:}`scenario5_phenofeat_count:nras_notebook.ipynb` phenotypes have been found. A sample of these results are shown below:
 
 ```{glue} scenario5_phenofeat
 :doc: nras_notebook.ipynb
@@ -85,7 +85,7 @@ Executing this SPARQL query for all observed phenotypes results in the following
 :doc: nras_notebook.ipynb
 ```
 
-Next, the list of observed phenotypes can be compared with the list of phenotypes associated with the selection of phenopackets coming to the conclusion that the observed phenotypes {glue:}`scenario5_matchingphenotypes :doc: nras_notebook.ipynb` is also found in the individuals represented in the phenopackets. 
+Next, the list of observed phenotypes can be compared with the list of phenotypes associated with the selection of phenopackets coming to the conclusion that the observed phenotypes {glue:}`scenario5_matchingphenotypes:nras_notebook.ipynb` are also found in the individuals represented in the phenopackets. 
 
 It is still possible to gather more information about the observed phenotype that has not been found in at least one of the phenopackets. One step would be to investigate the closeness of the observed phenotype to the phenotypes associated with Noonan syndrome 6 given their relative positions in the HPO ontology. To be more explicit, this closeness can be calculated by acquiring the shortest path length between phenotypes in a network. This network is built by adding each phenotype as a node. An edge between two nodes represents the relation of one phenotype being the subclass or superclass of another phenotype.
 
