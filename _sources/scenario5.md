@@ -37,6 +37,11 @@ What phenotypes and which diseases have been observed in these individuals and h
 
 The phenopackets found for the previous question can now be analysed to conclude which phenotypes and diseases occur in this group of individuals. This is done by using the following SPARQL queries for acquiring the associated phenotypes and diseases, respectively:
 
+```{glue} scenario5_query_q2a
+:doc: nras_notebook.ipynb
+:language: sparql
+```
+
 ```{glue} scenario5_diseases
 :doc: nras_notebook.ipynb
 :language: sparql
