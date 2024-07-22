@@ -3,3 +3,5 @@ matplotlib
 numpy
 rdflib
 oxrdflib
+sklearn
+networkx
