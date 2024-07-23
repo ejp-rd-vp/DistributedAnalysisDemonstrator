@@ -56,7 +56,7 @@ The query shown below searches for all phenotypes that are associated with at le
 :language: sparql
 ```
 
-A total of 326 {glue:}`scenario5_phenofeat_count:nras_notebook.ipynb` phenotypes have been found. A sample of these results are shown below:
+A total of 157 {glue:}`scenario5_phenofeat_count:nras_notebook.ipynb` phenotypes have been found. A sample of these results are shown below:
 
 ```{glue} scenario5_phenofeat
 :doc: nras_notebook.ipynb
