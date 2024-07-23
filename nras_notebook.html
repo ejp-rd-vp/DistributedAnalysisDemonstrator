@@ -840,7 +840,7 @@ Load RDF data from directory HPO into RDF graph.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;PREFIX ex: &lt;https://example.org/&gt;\nPREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;\nPREFIX sio: &lt;http://semanticscience.org/resource/&gt;\nPREFIX dcterms: &lt;http://purl.org/dc/terms/&gt; \nPREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;\n\nSELECT ?idvalue ?phenofeatid ?phenofeatlabel\nWHERE {\n    # Find relevant phenopackets\n    ?id a obo:IAO_0020000 ;\n        sio:SIO_000300 ?idvalue .\n    VALUES ?idvalue { &quot;PMID_26467218_individual_6_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_11_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_3_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_9_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_4_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_Present_study&quot; &quot;PMID_26467218_individual_1_De_Filippi_et_al__20&quot; &quot;PMID_26467218_individual_2_Runtuwene_et_al__21&quot; &quot;PMID_26467218_individual_9_M_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_5_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_F_Present_study&quot; &quot;PMID_26467218_individual_8_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_10_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_7_Cirstea_et_al__14&quot; } .\n    \n    # Find phenotypic features\n    ?id sio:SIO_000020 ?role .\n    ?phenopacket sio:SIO_000228 ?role ;\n                 sio:SIO_001403 ?phenofeat .\n    ?phenofeatval sio:SIO_000628 ?phenofeat ;\n                  a obo:NCIT_C16977 .\n    ?phenofeat dcterms:identifier ?phenofeatid ;\n               rdfs:label ?phenofeatlabel .\n    \n}&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;PREFIX ex: &lt;https://example.org/&gt;\nPREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;\nPREFIX sio: &lt;http://semanticscience.org/resource/&gt;\nPREFIX dcterms: &lt;http://purl.org/dc/terms/&gt; \nPREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;\nPREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;\n\nSELECT ?idvalue ?phenofeatid ?phenofeatlabel\nWHERE {\n    # Find relevant phenopackets\n    ?id a obo:IAO_0020000 ;\n        sio:SIO_000300 ?idvalue .\n    VALUES ?idvalue { &quot;PMID_26467218_individual_6_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_11_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_3_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_9_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_4_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_Present_study&quot; &quot;PMID_26467218_individual_1_De_Filippi_et_al__20&quot; &quot;PMID_26467218_individual_2_Runtuwene_et_al__21&quot; &quot;PMID_26467218_individual_9_M_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_5_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_F_Present_study&quot; &quot;PMID_26467218_individual_8_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_10_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_7_Cirstea_et_al__14&quot; } .\n    \n    # Find phenotypic features\n    ?id sio:SIO_000020 ?role .\n    ?phenopacket sio:SIO_000228 ?role ;\n                 sio:SIO_001403 ?phenofeat .\n    ?phenofeatval sio:SIO_000628 ?phenofeat ;\n                  a obo:NCIT_C16977 .\n    ?phenofeat dcterms:identifier ?phenofeatid ;\n               rdfs:label ?phenofeatlabel .\n\n    OPTIONAL {\n        ?phenofeat sio:SIO_000008 ?excluded .\n        ?excluded a obo:HP_0040285 .\n        ?excludedval sio:SIO_000628 ?excluded ;\n     \t\t\t     sio:SIO_000300 ?excludedlabel . \n    }\n    \n    FILTER (!bound(?excluded) || ?excludedlabel = &quot;false&quot;^^xsd:boolean )\n    \n}&#39;
 </pre></div>
 </div>
 </div>
@@ -861,7 +861,7 @@ Load RDF data from directory HPO into RDF graph.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>326
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>157
 </pre></div>
 </div>
 </div>
@@ -900,61 +900,61 @@ Load RDF data from directory HPO into RDF graph.
   </thead>
   <tbody>
     <tr>
-      <th>94</th>
-      <td>PMID_26467218_individual_9_Cirstea_et_al__14</td>
+      <th>13</th>
+      <td>PMID_26467218_individual_6_Cirstea_et_al__14</td>
       <td>HP:0000028</td>
       <td>Cryptorchidism</td>
     </tr>
     <tr>
-      <th>133</th>
-      <td>PMID_26467218_individual_12_Present_study</td>
+      <th>97</th>
+      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
+      <td>HP:0000369</td>
+      <td>Low-set ears</td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td>PMID_26467218_individual_5_Denayer_et_al__22</td>
       <td>HP:0000767</td>
       <td>Pectus excavatum</td>
     </tr>
     <tr>
-      <th>179</th>
-      <td>PMID_26467218_individual_2_Runtuwene_et_al__21</td>
-      <td>HP:0000256</td>
-      <td>Macrocephaly</td>
-    </tr>
-    <tr>
-      <th>184</th>
-      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
-      <td>HP:0000508</td>
-      <td>Ptosis</td>
-    </tr>
-    <tr>
-      <th>198</th>
-      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
-      <td>HP:0006699</td>
-      <td>Premature atrial contractions</td>
-    </tr>
-    <tr>
-      <th>207</th>
-      <td>PMID_26467218_individual_5_Denayer_et_al__22</td>
-      <td>HP:0000256</td>
-      <td>Macrocephaly</td>
-    </tr>
-    <tr>
-      <th>233</th>
+      <th>113</th>
       <td>PMID_26467218_individual_12_F_Present_study</td>
-      <td>HP:0001561</td>
-      <td>Polyhydramnios</td>
+      <td>HP:0000316</td>
+      <td>Hypertelorism</td>
     </tr>
     <tr>
-      <th>292</th>
+      <th>130</th>
+      <td>PMID_26467218_individual_8_Cirstea_et_al__14</td>
+      <td>HP:0000348</td>
+      <td>High forehead</td>
+    </tr>
+    <tr>
+      <th>138</th>
       <td>PMID_26467218_individual_10_Kraoua_et_al__23</td>
-      <td>HP:0001680</td>
-      <td>Coarctation of aorta</td>
+      <td>HP:0000316</td>
+      <td>Hypertelorism</td>
     </tr>
     <tr>
-      <th>324</th>
+      <th>143</th>
+      <td>PMID_26467218_individual_10_Kraoua_et_al__23</td>
+      <td>HP:0004322</td>
+      <td>Short stature</td>
+    </tr>
+    <tr>
+      <th>146</th>
       <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
-      <td>HP:0006699</td>
-      <td>Premature atrial contractions</td>
+      <td>HP:0004322</td>
+      <td>Short stature</td>
     </tr>
     <tr>
-      <th>325</th>
+      <th>152</th>
+      <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
+      <td>HP:0000358</td>
+      <td>Posteriorly rotated ears</td>
+    </tr>
+    <tr>
+      <th>156</th>
       <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
       <td>HP:0002212</td>
       <td>Curly hair</td>
@@ -1043,190 +1043,190 @@ Load RDF data from directory HPO into RDF graph.
     </tr>
     <tr>
       <th>2</th>
-      <td>HP:0000957</td>
-      <td>Cafe-au-lait spot</td>
-      <td>14</td>
-      <td>100.0%</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>HP:0012209</td>
-      <td>Juvenile myelomonocytic leukemia</td>
-      <td>14</td>
-      <td>100.0%</td>
-    </tr>
-    <tr>
-      <th>4</th>
       <td>HP:0000494</td>
       <td>Downslanted palpebral fissures</td>
       <td>14</td>
       <td>100.0%</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>HP:0004322</td>
-      <td>Short stature</td>
-      <td>14</td>
-      <td>100.0%</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>HP:0000348</td>
-      <td>High forehead</td>
-      <td>14</td>
-      <td>100.0%</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>HP:0000508</td>
-      <td>Ptosis</td>
-      <td>14</td>
-      <td>100.0%</td>
-    </tr>
-    <tr>
-      <th>8</th>
+      <th>3</th>
       <td>HP:0000358</td>
       <td>Posteriorly rotated ears</td>
       <td>14</td>
       <td>100.0%</td>
     </tr>
     <tr>
-      <th>9</th>
+      <th>4</th>
+      <td>HP:0000348</td>
+      <td>High forehead</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>HP:0000465</td>
+      <td>Webbed neck</td>
+      <td>10</td>
+      <td>71.4%</td>
+    </tr>
+    <tr>
+      <th>6</th>
       <td>HP:0000767</td>
       <td>Pectus excavatum</td>
-      <td>13</td>
-      <td>92.9%</td>
+      <td>9</td>
+      <td>64.3%</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>HP:0001270</td>
+      <td>Motor delay</td>
+      <td>9</td>
+      <td>64.3%</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>HP:0000028</td>
+      <td>Cryptorchidism</td>
+      <td>6</td>
+      <td>42.9%</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>HP:0004322</td>
+      <td>Short stature</td>
+      <td>5</td>
+      <td>35.7%</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>HP:0001655</td>
-      <td>Patent foramen ovale</td>
-      <td>13</td>
-      <td>92.9%</td>
+      <td>HP:0000957</td>
+      <td>Cafe-au-lait spot</td>
+      <td>5</td>
+      <td>35.7%</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>HP:0000256</td>
-      <td>Macrocephaly</td>
-      <td>13</td>
-      <td>92.9%</td>
+      <td>HP:0002212</td>
+      <td>Curly hair</td>
+      <td>5</td>
+      <td>35.7%</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>HP:0001680</td>
-      <td>Coarctation of aorta</td>
-      <td>13</td>
-      <td>92.9%</td>
+      <td>HP:0000256</td>
+      <td>Macrocephaly</td>
+      <td>5</td>
+      <td>35.7%</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>HP:0000483</td>
-      <td>Astigmatism</td>
-      <td>12</td>
-      <td>85.7%</td>
+      <td>HP:0001561</td>
+      <td>Polyhydramnios</td>
+      <td>4</td>
+      <td>28.6%</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>HP:0001270</td>
-      <td>Motor delay</td>
-      <td>12</td>
-      <td>85.7%</td>
+      <td>HP:0032152</td>
+      <td>Keratosis pilaris</td>
+      <td>4</td>
+      <td>28.6%</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>HP:0000486</td>
-      <td>Strabismus</td>
-      <td>12</td>
-      <td>85.7%</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>HP:0000465</td>
-      <td>Webbed neck</td>
-      <td>12</td>
-      <td>85.7%</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>HP:0000545</td>
-      <td>Myopia</td>
-      <td>11</td>
-      <td>78.6%</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>HP:0000563</td>
-      <td>Keratoconus</td>
-      <td>11</td>
-      <td>78.6%</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>HP:0006699</td>
-      <td>Premature atrial contractions</td>
-      <td>11</td>
-      <td>78.6%</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>HP:0002212</td>
-      <td>Curly hair</td>
-      <td>11</td>
-      <td>78.6%</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>HP:0000978</td>
-      <td>Bruising susceptibility</td>
-      <td>11</td>
-      <td>78.6%</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>HP:0001561</td>
-      <td>Polyhydramnios</td>
-      <td>10</td>
-      <td>71.4%</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>HP:0001195</td>
-      <td>Single umbilical artery</td>
-      <td>10</td>
-      <td>71.4%</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>HP:0032152</td>
-      <td>Keratosis pilaris</td>
-      <td>9</td>
-      <td>64.3%</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>HP:0000028</td>
-      <td>Cryptorchidism</td>
-      <td>9</td>
-      <td>64.3%</td>
-    </tr>
-    <tr>
-      <th>26</th>
       <td>HP:0001639</td>
       <td>Hypertrophic cardiomyopathy</td>
       <td>3</td>
       <td>21.4%</td>
     </tr>
     <tr>
-      <th>27</th>
+      <th>16</th>
+      <td>HP:0000545</td>
+      <td>Myopia</td>
+      <td>3</td>
+      <td>21.4%</td>
+    </tr>
+    <tr>
+      <th>17</th>
       <td>HP:0001642</td>
       <td>Pulmonic stenosis</td>
       <td>3</td>
       <td>21.4%</td>
     </tr>
     <tr>
-      <th>28</th>
+      <th>18</th>
+      <td>HP:0000508</td>
+      <td>Ptosis</td>
+      <td>3</td>
+      <td>21.4%</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>HP:0000978</td>
+      <td>Bruising susceptibility</td>
+      <td>3</td>
+      <td>21.4%</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>HP:0000486</td>
+      <td>Strabismus</td>
+      <td>2</td>
+      <td>14.3%</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>HP:0006699</td>
+      <td>Premature atrial contractions</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>HP:0000563</td>
+      <td>Keratoconus</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>23</th>
       <td>HP:0001631</td>
       <td>Atrial septal defect</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>HP:0000483</td>
+      <td>Astigmatism</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>HP:0012209</td>
+      <td>Juvenile myelomonocytic leukemia</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>HP:0001655</td>
+      <td>Patent foramen ovale</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>HP:0001680</td>
+      <td>Coarctation of aorta</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>HP:0001195</td>
+      <td>Single umbilical artery</td>
       <td>1</td>
       <td>7.1%</td>
     </tr>
@@ -1352,7 +1352,7 @@ Load RDF data from directory HPO into RDF graph.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Motor delay (HP:0001270), Low-set ears (HP:0000369)&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Low-set ears (HP:0000369), Motor delay (HP:0001270)&#39;
 </pre></div>
 </div>
 </div>
@@ -1440,24 +1440,24 @@ Load RDF data from directory HPO into RDF graph.
       <th></th>
       <th>HP:0000369</th>
       <th>HP:0000316</th>
-      <th>HP:0000957</th>
-      <th>HP:0012209</th>
       <th>HP:0000494</th>
-      <th>HP:0004322</th>
-      <th>HP:0000348</th>
-      <th>HP:0000508</th>
       <th>HP:0000358</th>
+      <th>HP:0000348</th>
+      <th>HP:0000465</th>
       <th>HP:0000767</th>
-      <th>...</th>
-      <th>HP:0002212</th>
-      <th>HP:0000978</th>
-      <th>HP:0001561</th>
-      <th>HP:0001195</th>
-      <th>HP:0032152</th>
+      <th>HP:0001270</th>
       <th>HP:0000028</th>
-      <th>HP:0001639</th>
-      <th>HP:0001642</th>
+      <th>HP:0004322</th>
+      <th>...</th>
+      <th>HP:0000486</th>
+      <th>HP:0006699</th>
+      <th>HP:0000563</th>
       <th>HP:0001631</th>
+      <th>HP:0000483</th>
+      <th>HP:0012209</th>
+      <th>HP:0001655</th>
+      <th>HP:0001680</th>
+      <th>HP:0001195</th>
       <th>HP:0000475</th>
     </tr>
   </thead>
@@ -1466,385 +1466,121 @@ Load RDF data from directory HPO into RDF graph.
       <th>HP:0000369</th>
       <td>0</td>
       <td>10</td>
+      <td>11</td>
+      <td>2</td>
+      <td>11</td>
+      <td>9</td>
+      <td>8</td>
+      <td>11</td>
+      <td>11</td>
+      <td>9</td>
+      <td>...</td>
+      <td>10</td>
+      <td>12</td>
       <td>12</td>
       <td>10</td>
-      <td>11</td>
       <td>9</td>
-      <td>11</td>
-      <td>8</td>
-      <td>2</td>
-      <td>8</td>
-      <td>...</td>
-      <td>11</td>
-      <td>8</td>
-      <td>9</td>
-      <td>9</td>
-      <td>9</td>
-      <td>11</td>
-      <td>11</td>
-      <td>11</td>
       <td>10</td>
+      <td>11</td>
+      <td>11</td>
+      <td>9</td>
       <td>9</td>
     </tr>
     <tr>
       <th>HP:0000316</th>
       <td>10</td>
       <td>0</td>
+      <td>9</td>
       <td>10</td>
       <td>8</td>
+      <td>8</td>
+      <td>9</td>
+      <td>9</td>
       <td>9</td>
       <td>7</td>
-      <td>8</td>
-      <td>5</td>
-      <td>10</td>
-      <td>9</td>
       <td>...</td>
-      <td>9</td>
       <td>7</td>
-      <td>7</td>
-      <td>8</td>
-      <td>8</td>
-      <td>9</td>
-      <td>9</td>
-      <td>9</td>
-      <td>8</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>HP:0000957</th>
-      <td>12</td>
-      <td>10</td>
-      <td>0</td>
-      <td>11</td>
-      <td>7</td>
-      <td>10</td>
-      <td>5</td>
-      <td>8</td>
-      <td>12</td>
-      <td>10</td>
-      <td>...</td>
-      <td>8</td>
-      <td>8</td>
-      <td>10</td>
-      <td>8</td>
-      <td>5</td>
-      <td>11</td>
-      <td>12</td>
-      <td>12</td>
-      <td>11</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th>HP:0012209</th>
-      <td>10</td>
-      <td>8</td>
-      <td>11</td>
-      <td>0</td>
-      <td>12</td>
-      <td>8</td>
-      <td>10</td>
-      <td>8</td>
-      <td>10</td>
-      <td>10</td>
-      <td>...</td>
       <td>10</td>
       <td>7</td>
       <td>8</td>
-      <td>9</td>
+      <td>6</td>
       <td>8</td>
       <td>9</td>
-      <td>9</td>
-      <td>10</td>
       <td>8</td>
-      <td>9</td>
+      <td>8</td>
+      <td>8</td>
     </tr>
     <tr>
       <th>HP:0000494</th>
       <td>11</td>
       <td>9</td>
+      <td>0</td>
+      <td>11</td>
+      <td>8</td>
+      <td>9</td>
+      <td>11</td>
+      <td>13</td>
+      <td>10</td>
+      <td>11</td>
+      <td>...</td>
+      <td>9</td>
+      <td>13</td>
+      <td>8</td>
+      <td>11</td>
       <td>7</td>
       <td>12</td>
-      <td>0</td>
-      <td>11</td>
-      <td>8</td>
-      <td>7</td>
-      <td>11</td>
-      <td>11</td>
-      <td>...</td>
-      <td>7</td>
-      <td>8</td>
-      <td>11</td>
-      <td>11</td>
-      <td>8</td>
-      <td>10</td>
-      <td>11</td>
+      <td>12</td>
       <td>12</td>
       <td>11</td>
       <td>9</td>
-    </tr>
-    <tr>
-      <th>HP:0004322</th>
-      <td>9</td>
-      <td>7</td>
-      <td>10</td>
-      <td>8</td>
-      <td>11</td>
-      <td>0</td>
-      <td>8</td>
-      <td>6</td>
-      <td>9</td>
-      <td>6</td>
-      <td>...</td>
-      <td>8</td>
-      <td>7</td>
-      <td>6</td>
-      <td>7</td>
-      <td>7</td>
-      <td>9</td>
-      <td>9</td>
-      <td>8</td>
-      <td>8</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>HP:0000348</th>
-      <td>11</td>
-      <td>8</td>
-      <td>5</td>
-      <td>10</td>
-      <td>8</td>
-      <td>8</td>
-      <td>0</td>
-      <td>8</td>
-      <td>11</td>
-      <td>8</td>
-      <td>...</td>
-      <td>7</td>
-      <td>7</td>
-      <td>8</td>
-      <td>8</td>
-      <td>7</td>
-      <td>10</td>
-      <td>10</td>
-      <td>10</td>
-      <td>9</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>HP:0000508</th>
-      <td>8</td>
-      <td>5</td>
-      <td>8</td>
-      <td>8</td>
-      <td>7</td>
-      <td>6</td>
-      <td>8</td>
-      <td>0</td>
-      <td>8</td>
-      <td>9</td>
-      <td>...</td>
-      <td>8</td>
-      <td>6</td>
-      <td>6</td>
-      <td>7</td>
-      <td>7</td>
-      <td>9</td>
-      <td>9</td>
-      <td>8</td>
-      <td>8</td>
-      <td>7</td>
     </tr>
     <tr>
       <th>HP:0000358</th>
       <td>2</td>
       <td>10</td>
-      <td>12</td>
-      <td>10</td>
       <td>11</td>
-      <td>9</td>
-      <td>11</td>
-      <td>8</td>
       <td>0</td>
+      <td>11</td>
+      <td>9</td>
       <td>8</td>
+      <td>11</td>
+      <td>11</td>
+      <td>9</td>
       <td>...</td>
-      <td>11</td>
-      <td>8</td>
-      <td>9</td>
-      <td>9</td>
-      <td>9</td>
-      <td>11</td>
-      <td>11</td>
-      <td>11</td>
       <td>10</td>
+      <td>12</td>
+      <td>12</td>
+      <td>10</td>
+      <td>9</td>
+      <td>10</td>
+      <td>11</td>
+      <td>11</td>
+      <td>9</td>
       <td>9</td>
     </tr>
     <tr>
-      <th>HP:0000767</th>
-      <td>8</td>
-      <td>9</td>
-      <td>10</td>
-      <td>10</td>
+      <th>HP:0000348</th>
       <td>11</td>
-      <td>6</td>
       <td>8</td>
-      <td>9</td>
       <td>8</td>
+      <td>11</td>
       <td>0</td>
+      <td>7</td>
+      <td>8</td>
+      <td>8</td>
+      <td>10</td>
+      <td>8</td>
       <td>...</td>
       <td>10</td>
-      <td>8</td>
-      <td>9</td>
-      <td>7</td>
-      <td>7</td>
-      <td>10</td>
-      <td>9</td>
-      <td>10</td>
-      <td>8</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>HP:0001655</th>
       <td>11</td>
-      <td>9</td>
-      <td>12</td>
-      <td>9</td>
-      <td>12</td>
-      <td>9</td>
       <td>10</td>
       <td>9</td>
-      <td>11</td>
-      <td>9</td>
-      <td>...</td>
-      <td>11</td>
-      <td>9</td>
-      <td>9</td>
-      <td>6</td>
       <td>9</td>
       <td>10</td>
-      <td>6</td>
-      <td>9</td>
-      <td>1</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>HP:0000256</th>
       <td>10</td>
       <td>8</td>
-      <td>10</td>
-      <td>11</td>
-      <td>11</td>
-      <td>7</td>
-      <td>7</td>
-      <td>9</td>
-      <td>10</td>
-      <td>7</td>
-      <td>...</td>
-      <td>9</td>
-      <td>10</td>
-      <td>9</td>
-      <td>9</td>
-      <td>9</td>
-      <td>12</td>
-      <td>11</td>
-      <td>11</td>
-      <td>10</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>HP:0001680</th>
-      <td>11</td>
-      <td>8</td>
-      <td>11</td>
-      <td>11</td>
-      <td>12</td>
-      <td>10</td>
-      <td>8</td>
-      <td>9</td>
-      <td>11</td>
-      <td>9</td>
-      <td>...</td>
-      <td>10</td>
-      <td>8</td>
-      <td>10</td>
-      <td>7</td>
-      <td>9</td>
-      <td>12</td>
-      <td>9</td>
-      <td>10</td>
       <td>8</td>
       <td>7</td>
-    </tr>
-    <tr>
-      <th>HP:0000483</th>
-      <td>9</td>
-      <td>6</td>
-      <td>8</td>
-      <td>9</td>
-      <td>7</td>
-      <td>7</td>
-      <td>9</td>
-      <td>3</td>
-      <td>9</td>
-      <td>10</td>
-      <td>...</td>
-      <td>8</td>
-      <td>7</td>
-      <td>7</td>
-      <td>8</td>
-      <td>8</td>
-      <td>10</td>
-      <td>10</td>
-      <td>9</td>
-      <td>9</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>HP:0001270</th>
-      <td>11</td>
-      <td>9</td>
-      <td>11</td>
-      <td>10</td>
-      <td>13</td>
-      <td>8</td>
-      <td>8</td>
-      <td>8</td>
-      <td>11</td>
-      <td>9</td>
-      <td>...</td>
-      <td>10</td>
-      <td>9</td>
-      <td>8</td>
-      <td>9</td>
-      <td>9</td>
-      <td>11</td>
-      <td>11</td>
-      <td>10</td>
-      <td>10</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>HP:0000486</th>
-      <td>10</td>
-      <td>7</td>
-      <td>10</td>
-      <td>10</td>
-      <td>9</td>
-      <td>8</td>
-      <td>10</td>
-      <td>4</td>
-      <td>10</td>
-      <td>11</td>
-      <td>...</td>
-      <td>10</td>
-      <td>8</td>
-      <td>8</td>
-      <td>9</td>
-      <td>9</td>
-      <td>11</td>
-      <td>11</td>
-      <td>10</td>
-      <td>10</td>
-      <td>9</td>
     </tr>
     <tr>
       <th>HP:0000465</th>
@@ -1852,262 +1588,286 @@ Load RDF data from directory HPO into RDF graph.
       <td>8</td>
       <td>9</td>
       <td>9</td>
-      <td>9</td>
       <td>7</td>
-      <td>7</td>
-      <td>7</td>
-      <td>9</td>
+      <td>0</td>
       <td>8</td>
+      <td>8</td>
+      <td>10</td>
+      <td>7</td>
       <td>...</td>
-      <td>8</td>
+      <td>9</td>
+      <td>10</td>
+      <td>10</td>
       <td>7</td>
+      <td>8</td>
+      <td>9</td>
+      <td>8</td>
       <td>7</td>
       <td>5</td>
-      <td>6</td>
-      <td>10</td>
-      <td>8</td>
-      <td>9</td>
-      <td>7</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>HP:0000545</th>
-      <td>9</td>
-      <td>6</td>
-      <td>9</td>
-      <td>9</td>
+      <th>HP:0000767</th>
       <td>8</td>
-      <td>7</td>
-      <td>9</td>
-      <td>3</td>
-      <td>9</td>
-      <td>10</td>
-      <td>...</td>
-      <td>9</td>
-      <td>7</td>
-      <td>7</td>
-      <td>8</td>
-      <td>8</td>
-      <td>10</td>
-      <td>10</td>
-      <td>9</td>
-      <td>9</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>HP:0000563</th>
-      <td>12</td>
-      <td>7</td>
       <td>9</td>
       <td>11</td>
       <td>8</td>
-      <td>10</td>
+      <td>8</td>
+      <td>8</td>
+      <td>0</td>
+      <td>9</td>
       <td>10</td>
       <td>6</td>
-      <td>12</td>
-      <td>13</td>
       <td>...</td>
-      <td>9</td>
-      <td>10</td>
-      <td>10</td>
-      <td>10</td>
-      <td>10</td>
-      <td>12</td>
       <td>11</td>
-      <td>12</td>
-      <td>11</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>HP:0006699</th>
-      <td>12</td>
-      <td>10</td>
-      <td>13</td>
       <td>11</td>
       <td>13</td>
+      <td>8</td>
+      <td>10</td>
+      <td>10</td>
       <td>9</td>
+      <td>9</td>
+      <td>7</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>HP:0001270</th>
       <td>11</td>
       <td>9</td>
+      <td>13</td>
+      <td>11</td>
+      <td>8</td>
+      <td>8</td>
+      <td>9</td>
+      <td>0</td>
+      <td>11</td>
+      <td>8</td>
+      <td>...</td>
+      <td>9</td>
+      <td>11</td>
       <td>12</td>
+      <td>10</td>
+      <td>9</td>
+      <td>10</td>
       <td>11</td>
-      <td>...</td>
-      <td>11</td>
-      <td>9</td>
-      <td>9</td>
-      <td>8</td>
-      <td>10</td>
-      <td>12</td>
-      <td>10</td>
-      <td>7</td>
-      <td>9</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <th>HP:0002212</th>
       <td>11</td>
       <td>9</td>
       <td>8</td>
-      <td>10</td>
-      <td>7</td>
-      <td>8</td>
-      <td>7</td>
-      <td>8</td>
-      <td>11</td>
-      <td>10</td>
-      <td>...</td>
-      <td>0</td>
-      <td>9</td>
-      <td>8</td>
-      <td>9</td>
-      <td>7</td>
-      <td>10</td>
-      <td>11</td>
-      <td>10</td>
-      <td>10</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>HP:0000978</th>
-      <td>8</td>
-      <td>7</td>
-      <td>8</td>
-      <td>7</td>
-      <td>8</td>
-      <td>7</td>
-      <td>7</td>
-      <td>6</td>
-      <td>8</td>
-      <td>8</td>
-      <td>...</td>
-      <td>9</td>
-      <td>0</td>
-      <td>7</td>
-      <td>7</td>
-      <td>5</td>
-      <td>9</td>
-      <td>9</td>
-      <td>8</td>
-      <td>8</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>HP:0001561</th>
-      <td>9</td>
-      <td>7</td>
-      <td>10</td>
-      <td>8</td>
-      <td>11</td>
-      <td>6</td>
-      <td>8</td>
-      <td>6</td>
-      <td>9</td>
-      <td>9</td>
-      <td>...</td>
-      <td>8</td>
-      <td>7</td>
-      <td>0</td>
-      <td>6</td>
-      <td>7</td>
-      <td>9</td>
-      <td>9</td>
-      <td>8</td>
-      <td>8</td>
-      <td>7</td>
-    </tr>
-    <tr>
-      <th>HP:0001195</th>
-      <td>9</td>
-      <td>8</td>
-      <td>8</td>
-      <td>9</td>
-      <td>11</td>
-      <td>7</td>
-      <td>8</td>
-      <td>7</td>
-      <td>9</td>
-      <td>7</td>
-      <td>...</td>
-      <td>9</td>
-      <td>7</td>
-      <td>6</td>
-      <td>0</td>
-      <td>5</td>
-      <td>10</td>
-      <td>6</td>
-      <td>7</td>
-      <td>5</td>
-      <td>5</td>
-    </tr>
-    <tr>
-      <th>HP:0032152</th>
-      <td>9</td>
-      <td>8</td>
-      <td>5</td>
-      <td>8</td>
-      <td>8</td>
-      <td>7</td>
-      <td>7</td>
-      <td>7</td>
-      <td>9</td>
-      <td>7</td>
-      <td>...</td>
-      <td>7</td>
-      <td>5</td>
-      <td>7</td>
-      <td>5</td>
-      <td>0</td>
-      <td>8</td>
-      <td>9</td>
-      <td>9</td>
-      <td>8</td>
-      <td>6</td>
     </tr>
     <tr>
       <th>HP:0000028</th>
       <td>11</td>
       <td>9</td>
+      <td>10</td>
+      <td>11</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>11</td>
+      <td>0</td>
+      <td>9</td>
+      <td>...</td>
+      <td>11</td>
+      <td>12</td>
+      <td>12</td>
+      <td>9</td>
+      <td>10</td>
+      <td>9</td>
+      <td>10</td>
+      <td>12</td>
+      <td>10</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>HP:0004322</th>
+      <td>9</td>
+      <td>7</td>
       <td>11</td>
       <td>9</td>
-      <td>10</td>
+      <td>8</td>
+      <td>7</td>
+      <td>6</td>
+      <td>8</td>
+      <td>9</td>
+      <td>0</td>
+      <td>...</td>
+      <td>8</td>
       <td>9</td>
       <td>10</td>
+      <td>8</td>
+      <td>7</td>
+      <td>8</td>
       <td>9</td>
+      <td>10</td>
+      <td>7</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>HP:0000957</th>
+      <td>12</td>
+      <td>10</td>
+      <td>7</td>
+      <td>12</td>
+      <td>5</td>
+      <td>9</td>
+      <td>10</td>
+      <td>11</td>
       <td>11</td>
       <td>10</td>
       <td>...</td>
       <td>10</td>
+      <td>13</td>
       <td>9</td>
+      <td>11</td>
+      <td>8</td>
+      <td>11</td>
+      <td>12</td>
+      <td>11</td>
+      <td>8</td>
       <td>9</td>
+    </tr>
+    <tr>
+      <th>HP:0002212</th>
+      <td>11</td>
+      <td>9</td>
+      <td>7</td>
+      <td>11</td>
+      <td>7</td>
+      <td>8</td>
+      <td>10</td>
+      <td>10</td>
       <td>10</td>
       <td>8</td>
-      <td>0</td>
+      <td>...</td>
       <td>10</td>
       <td>11</td>
       <td>9</td>
       <td>10</td>
+      <td>8</td>
+      <td>10</td>
+      <td>11</td>
+      <td>10</td>
+      <td>9</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>HP:0000256</th>
+      <td>10</td>
+      <td>8</td>
+      <td>11</td>
+      <td>10</td>
+      <td>7</td>
+      <td>8</td>
+      <td>7</td>
+      <td>11</td>
+      <td>12</td>
+      <td>7</td>
+      <td>...</td>
+      <td>11</td>
+      <td>12</td>
+      <td>13</td>
+      <td>10</td>
+      <td>10</td>
+      <td>11</td>
+      <td>11</td>
+      <td>9</td>
+      <td>9</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>HP:0001561</th>
+      <td>9</td>
+      <td>7</td>
+      <td>11</td>
+      <td>9</td>
+      <td>8</td>
+      <td>7</td>
+      <td>9</td>
+      <td>8</td>
+      <td>9</td>
+      <td>6</td>
+      <td>...</td>
+      <td>8</td>
+      <td>9</td>
+      <td>10</td>
+      <td>8</td>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+      <td>10</td>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>HP:0032152</th>
+      <td>9</td>
+      <td>8</td>
+      <td>8</td>
+      <td>9</td>
+      <td>7</td>
+      <td>6</td>
+      <td>7</td>
+      <td>9</td>
+      <td>8</td>
+      <td>7</td>
+      <td>...</td>
+      <td>9</td>
+      <td>10</td>
+      <td>10</td>
+      <td>8</td>
+      <td>8</td>
+      <td>8</td>
+      <td>9</td>
+      <td>9</td>
+      <td>5</td>
+      <td>6</td>
     </tr>
     <tr>
       <th>HP:0001639</th>
       <td>11</td>
       <td>9</td>
-      <td>12</td>
-      <td>9</td>
       <td>11</td>
-      <td>9</td>
+      <td>11</td>
       <td>10</td>
+      <td>8</td>
       <td>9</td>
       <td>11</td>
+      <td>10</td>
       <td>9</td>
       <td>...</td>
       <td>11</td>
-      <td>9</td>
+      <td>10</td>
+      <td>11</td>
+      <td>5</td>
+      <td>10</td>
       <td>9</td>
       <td>6</td>
       <td>9</td>
-      <td>10</td>
-      <td>0</td>
+      <td>6</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>HP:0000545</th>
       <td>9</td>
+      <td>6</td>
+      <td>8</td>
+      <td>9</td>
+      <td>9</td>
+      <td>8</td>
+      <td>10</td>
+      <td>9</td>
+      <td>10</td>
+      <td>7</td>
+      <td>...</td>
       <td>5</td>
+      <td>10</td>
+      <td>5</td>
+      <td>9</td>
+      <td>2</td>
+      <td>9</td>
+      <td>10</td>
+      <td>10</td>
+      <td>8</td>
       <td>8</td>
     </tr>
     <tr>
@@ -2115,48 +1875,288 @@ Load RDF data from directory HPO into RDF graph.
       <td>11</td>
       <td>9</td>
       <td>12</td>
-      <td>10</td>
-      <td>12</td>
-      <td>8</td>
-      <td>10</td>
-      <td>8</td>
       <td>11</td>
       <td>10</td>
+      <td>9</td>
+      <td>10</td>
+      <td>10</td>
+      <td>11</td>
+      <td>8</td>
       <td>...</td>
       <td>10</td>
+      <td>7</td>
+      <td>12</td>
+      <td>8</td>
+      <td>9</td>
+      <td>10</td>
+      <td>9</td>
+      <td>10</td>
+      <td>7</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>HP:0000508</th>
+      <td>8</td>
+      <td>5</td>
+      <td>7</td>
       <td>8</td>
       <td>8</td>
       <td>7</td>
       <td>9</td>
-      <td>11</td>
-      <td>9</td>
-      <td>0</td>
       <td>8</td>
       <td>9</td>
+      <td>6</td>
+      <td>...</td>
+      <td>4</td>
+      <td>9</td>
+      <td>6</td>
+      <td>8</td>
+      <td>3</td>
+      <td>8</td>
+      <td>9</td>
+      <td>9</td>
+      <td>7</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>HP:0000978</th>
+      <td>8</td>
+      <td>7</td>
+      <td>8</td>
+      <td>8</td>
+      <td>7</td>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+      <td>9</td>
+      <td>7</td>
+      <td>...</td>
+      <td>8</td>
+      <td>9</td>
+      <td>10</td>
+      <td>8</td>
+      <td>7</td>
+      <td>7</td>
+      <td>9</td>
+      <td>8</td>
+      <td>7</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>HP:0000486</th>
+      <td>10</td>
+      <td>7</td>
+      <td>9</td>
+      <td>10</td>
+      <td>10</td>
+      <td>9</td>
+      <td>11</td>
+      <td>9</td>
+      <td>11</td>
+      <td>8</td>
+      <td>...</td>
+      <td>0</td>
+      <td>11</td>
+      <td>8</td>
+      <td>10</td>
+      <td>5</td>
+      <td>10</td>
+      <td>11</td>
+      <td>11</td>
+      <td>9</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>HP:0006699</th>
+      <td>12</td>
+      <td>10</td>
+      <td>13</td>
+      <td>12</td>
+      <td>11</td>
+      <td>10</td>
+      <td>11</td>
+      <td>11</td>
+      <td>12</td>
+      <td>9</td>
+      <td>...</td>
+      <td>11</td>
+      <td>0</td>
+      <td>13</td>
+      <td>9</td>
+      <td>10</td>
+      <td>11</td>
+      <td>10</td>
+      <td>11</td>
+      <td>8</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>HP:0000563</th>
+      <td>12</td>
+      <td>7</td>
+      <td>8</td>
+      <td>12</td>
+      <td>10</td>
+      <td>10</td>
+      <td>13</td>
+      <td>12</td>
+      <td>12</td>
+      <td>10</td>
+      <td>...</td>
+      <td>8</td>
+      <td>13</td>
+      <td>0</td>
+      <td>11</td>
+      <td>3</td>
+      <td>11</td>
+      <td>12</td>
+      <td>11</td>
+      <td>10</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>HP:0001631</th>
       <td>10</td>
       <td>8</td>
       <td>11</td>
-      <td>8</td>
-      <td>11</td>
-      <td>8</td>
+      <td>10</td>
       <td>9</td>
+      <td>7</td>
       <td>8</td>
       <td>10</td>
+      <td>9</td>
       <td>8</td>
       <td>...</td>
       <td>10</td>
+      <td>9</td>
+      <td>11</td>
+      <td>0</td>
+      <td>9</td>
+      <td>8</td>
+      <td>1</td>
+      <td>8</td>
+      <td>5</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>HP:0000483</th>
+      <td>9</td>
+      <td>6</td>
+      <td>7</td>
+      <td>9</td>
+      <td>9</td>
+      <td>8</td>
+      <td>10</td>
+      <td>9</td>
+      <td>10</td>
+      <td>7</td>
+      <td>...</td>
+      <td>5</td>
+      <td>10</td>
+      <td>3</td>
+      <td>9</td>
+      <td>0</td>
+      <td>9</td>
+      <td>10</td>
+      <td>10</td>
       <td>8</td>
       <td>8</td>
+    </tr>
+    <tr>
+      <th>HP:0012209</th>
+      <td>10</td>
+      <td>8</td>
+      <td>12</td>
+      <td>10</td>
+      <td>10</td>
+      <td>9</td>
+      <td>10</td>
+      <td>10</td>
+      <td>9</td>
+      <td>8</td>
+      <td>...</td>
+      <td>10</td>
+      <td>11</td>
+      <td>11</td>
+      <td>8</td>
+      <td>9</td>
+      <td>0</td>
+      <td>9</td>
+      <td>11</td>
+      <td>9</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>HP:0001655</th>
+      <td>11</td>
+      <td>9</td>
+      <td>12</td>
+      <td>11</td>
+      <td>10</td>
+      <td>8</td>
+      <td>9</td>
+      <td>11</td>
+      <td>10</td>
+      <td>9</td>
+      <td>...</td>
+      <td>11</td>
+      <td>10</td>
+      <td>12</td>
+      <td>1</td>
+      <td>10</td>
+      <td>9</td>
+      <td>0</td>
+      <td>9</td>
+      <td>6</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>HP:0001680</th>
+      <td>11</td>
+      <td>8</td>
+      <td>12</td>
+      <td>11</td>
+      <td>8</td>
+      <td>7</td>
+      <td>9</td>
+      <td>11</td>
+      <td>12</td>
+      <td>10</td>
+      <td>...</td>
+      <td>11</td>
+      <td>11</td>
+      <td>11</td>
+      <td>8</td>
+      <td>10</td>
+      <td>11</td>
+      <td>9</td>
+      <td>0</td>
+      <td>7</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>HP:0001195</th>
+      <td>9</td>
+      <td>8</td>
+      <td>11</td>
+      <td>9</td>
+      <td>8</td>
+      <td>5</td>
+      <td>7</td>
+      <td>9</td>
+      <td>10</td>
+      <td>7</td>
+      <td>...</td>
+      <td>9</td>
+      <td>8</td>
+      <td>10</td>
       <td>5</td>
       <td>8</td>
       <td>9</td>
-      <td>5</td>
-      <td>8</td>
-      <td>0</td>
+      <td>6</td>
       <td>7</td>
+      <td>0</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>HP:0000475</th>
@@ -2164,22 +2164,22 @@ Load RDF data from directory HPO into RDF graph.
       <td>8</td>
       <td>9</td>
       <td>9</td>
-      <td>9</td>
       <td>7</td>
-      <td>7</td>
-      <td>7</td>
-      <td>9</td>
+      <td>2</td>
       <td>8</td>
+      <td>8</td>
+      <td>10</td>
+      <td>7</td>
       <td>...</td>
-      <td>8</td>
+      <td>9</td>
+      <td>10</td>
+      <td>10</td>
       <td>7</td>
+      <td>8</td>
+      <td>9</td>
+      <td>8</td>
       <td>7</td>
       <td>5</td>
-      <td>6</td>
-      <td>10</td>
-      <td>8</td>
-      <td>9</td>
-      <td>7</td>
       <td>0</td>
     </tr>
   </tbody>
@@ -2245,192 +2245,192 @@ Load RDF data from directory HPO into RDF graph.
     </tr>
     <tr>
       <th>2</th>
-      <td>HP:0000957</td>
-      <td>14</td>
-      <td>100.0%</td>
-      <td>Cafe-au-lait spot</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>HP:0012209</td>
-      <td>14</td>
-      <td>100.0%</td>
-      <td>Juvenile myelomonocytic leukemia</td>
-    </tr>
-    <tr>
-      <th>4</th>
       <td>HP:0000494</td>
       <td>14</td>
       <td>100.0%</td>
       <td>Downslanted palpebral fissures</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>HP:0004322</td>
-      <td>14</td>
-      <td>100.0%</td>
-      <td>Short stature</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>HP:0000348</td>
-      <td>14</td>
-      <td>100.0%</td>
-      <td>High forehead</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>HP:0000508</td>
-      <td>14</td>
-      <td>100.0%</td>
-      <td>Ptosis</td>
-    </tr>
-    <tr>
-      <th>8</th>
+      <th>3</th>
       <td>HP:0000358</td>
       <td>14</td>
       <td>100.0%</td>
       <td>Posteriorly rotated ears</td>
     </tr>
     <tr>
-      <th>9</th>
-      <td>HP:0000767</td>
-      <td>13</td>
-      <td>92.9%</td>
-      <td>Pectus excavatum</td>
+      <th>4</th>
+      <td>HP:0000348</td>
+      <td>14</td>
+      <td>100.0%</td>
+      <td>High forehead</td>
     </tr>
     <tr>
-      <th>10</th>
-      <td>HP:0001655</td>
-      <td>13</td>
-      <td>92.9%</td>
-      <td>Patent foramen ovale</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>HP:0000256</td>
-      <td>13</td>
-      <td>92.9%</td>
-      <td>Macrocephaly</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>HP:0001680</td>
-      <td>13</td>
-      <td>92.9%</td>
-      <td>Coarctation of aorta</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>HP:0000483</td>
-      <td>12</td>
-      <td>85.7%</td>
-      <td>Astigmatism</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>HP:0001270</td>
-      <td>12</td>
-      <td>85.7%</td>
-      <td>Motor delay</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>HP:0000486</td>
-      <td>12</td>
-      <td>85.7%</td>
-      <td>Strabismus</td>
-    </tr>
-    <tr>
-      <th>16</th>
+      <th>5</th>
       <td>HP:0000465</td>
-      <td>12</td>
-      <td>85.7%</td>
+      <td>10</td>
+      <td>71.4%</td>
       <td>Webbed neck</td>
     </tr>
     <tr>
-      <th>17</th>
-      <td>HP:0000545</td>
-      <td>11</td>
-      <td>78.6%</td>
-      <td>Myopia</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>HP:0000563</td>
-      <td>11</td>
-      <td>78.6%</td>
-      <td>Keratoconus</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>HP:0006699</td>
-      <td>11</td>
-      <td>78.6%</td>
-      <td>Premature atrial contractions</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>HP:0002212</td>
-      <td>11</td>
-      <td>78.6%</td>
-      <td>Curly hair</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>HP:0000978</td>
-      <td>11</td>
-      <td>78.6%</td>
-      <td>Bruising susceptibility</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>HP:0001561</td>
-      <td>10</td>
-      <td>71.4%</td>
-      <td>Polyhydramnios</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>HP:0001195</td>
-      <td>10</td>
-      <td>71.4%</td>
-      <td>Single umbilical artery</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>HP:0032152</td>
+      <th>6</th>
+      <td>HP:0000767</td>
       <td>9</td>
       <td>64.3%</td>
-      <td>Keratosis pilaris</td>
+      <td>Pectus excavatum</td>
     </tr>
     <tr>
-      <th>25</th>
+      <th>7</th>
+      <td>HP:0001270</td>
+      <td>9</td>
+      <td>64.3%</td>
+      <td>Motor delay</td>
+    </tr>
+    <tr>
+      <th>8</th>
       <td>HP:0000028</td>
-      <td>9</td>
-      <td>64.3%</td>
+      <td>6</td>
+      <td>42.9%</td>
       <td>Cryptorchidism</td>
     </tr>
     <tr>
-      <th>26</th>
+      <th>9</th>
+      <td>HP:0004322</td>
+      <td>5</td>
+      <td>35.7%</td>
+      <td>Short stature</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>HP:0000957</td>
+      <td>5</td>
+      <td>35.7%</td>
+      <td>Cafe-au-lait spot</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>HP:0002212</td>
+      <td>5</td>
+      <td>35.7%</td>
+      <td>Curly hair</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>HP:0000256</td>
+      <td>5</td>
+      <td>35.7%</td>
+      <td>Macrocephaly</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>HP:0001561</td>
+      <td>4</td>
+      <td>28.6%</td>
+      <td>Polyhydramnios</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>HP:0032152</td>
+      <td>4</td>
+      <td>28.6%</td>
+      <td>Keratosis pilaris</td>
+    </tr>
+    <tr>
+      <th>15</th>
       <td>HP:0001639</td>
       <td>3</td>
       <td>21.4%</td>
       <td>Hypertrophic cardiomyopathy</td>
     </tr>
     <tr>
-      <th>27</th>
+      <th>16</th>
+      <td>HP:0000545</td>
+      <td>3</td>
+      <td>21.4%</td>
+      <td>Myopia</td>
+    </tr>
+    <tr>
+      <th>17</th>
       <td>HP:0001642</td>
       <td>3</td>
       <td>21.4%</td>
       <td>Pulmonic stenosis</td>
     </tr>
     <tr>
-      <th>28</th>
+      <th>18</th>
+      <td>HP:0000508</td>
+      <td>3</td>
+      <td>21.4%</td>
+      <td>Ptosis</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>HP:0000978</td>
+      <td>3</td>
+      <td>21.4%</td>
+      <td>Bruising susceptibility</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>HP:0000486</td>
+      <td>2</td>
+      <td>14.3%</td>
+      <td>Strabismus</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>HP:0006699</td>
+      <td>1</td>
+      <td>7.1%</td>
+      <td>Premature atrial contractions</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>HP:0000563</td>
+      <td>1</td>
+      <td>7.1%</td>
+      <td>Keratoconus</td>
+    </tr>
+    <tr>
+      <th>23</th>
       <td>HP:0001631</td>
       <td>1</td>
       <td>7.1%</td>
       <td>Atrial septal defect</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>HP:0000483</td>
+      <td>1</td>
+      <td>7.1%</td>
+      <td>Astigmatism</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>HP:0012209</td>
+      <td>1</td>
+      <td>7.1%</td>
+      <td>Juvenile myelomonocytic leukemia</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>HP:0001655</td>
+      <td>1</td>
+      <td>7.1%</td>
+      <td>Patent foramen ovale</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>HP:0001680</td>
+      <td>1</td>
+      <td>7.1%</td>
+      <td>Coarctation of aorta</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>HP:0001195</td>
+      <td>1</td>
+      <td>7.1%</td>
+      <td>Single umbilical artery</td>
     </tr>
     <tr>
       <th>29</th>
@@ -2451,7 +2451,7 @@ Load RDF data from directory HPO into RDF graph.
 <span class="n">phenotype_labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_phenotype_counts_df</span><span class="p">[</span><span class="s1">&#39;phenotype label&#39;</span><span class="p">])</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">scatter</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">all_phenotype_counts_df</span><span class="p">[</span><span class="s1">&#39;counts&#39;</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">scatter</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">all_phenotype_counts_df</span><span class="p">[</span><span class="s1">&#39;counts&#39;</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;plasma&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">phenotype_id</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">phenotypes_dist_matrix_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">phenotype_labels</span><span class="p">,</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]):</span>
     <span class="k">if</span> <span class="n">phenotype_id</span> <span class="ow">in</span> <span class="n">observed_phenotype_ids</span><span class="p">:</span>
@@ -2472,7 +2472,7 @@ Load RDF data from directory HPO into RDF graph.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/04ab91421b3a1c05c1872bb53da28a483a2b22ae312f9abbfd632d52dbf457a6.png" src="_images/04ab91421b3a1c05c1872bb53da28a483a2b22ae312f9abbfd632d52dbf457a6.png" />
+<img alt="_images/8ad8ffc462d86df8b416faa42a616859c9262ed142acf14881ac57f2e496ea43.png" src="_images/8ad8ffc462d86df8b416faa42a616859c9262ed142acf14881ac57f2e496ea43.png" />
 </div>
 </div>
 </section>

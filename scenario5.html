@@ -646,7 +646,7 @@ document.write(`
   </tbody>
 </table>
 </div></div><p>The query shown below searches for all phenotypes that are associated with at least one of the relevant phenopackets.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;PREFIX ex: &lt;https://example.org/&gt;</span><span class="se">\n</span><span class="s1">PREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;</span><span class="se">\n</span><span class="s1">PREFIX sio: &lt;http://semanticscience.org/resource/&gt;</span><span class="se">\n</span><span class="s1">PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt; </span><span class="se">\n</span><span class="s1">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><span class="se">\n\n</span><span class="s1">SELECT ?idvalue ?phenofeatid ?phenofeatlabel</span><span class="se">\n</span><span class="s1">WHERE {</span><span class="se">\n</span><span class="s1">    # Find relevant phenopackets</span><span class="se">\n</span><span class="s1">    ?id a obo:IAO_0020000 ;</span><span class="se">\n</span><span class="s1">        sio:SIO_000300 ?idvalue .</span><span class="se">\n</span><span class="s1">    VALUES ?idvalue { &quot;PMID_26467218_individual_6_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_11_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_3_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_9_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_4_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_Present_study&quot; &quot;PMID_26467218_individual_1_De_Filippi_et_al__20&quot; &quot;PMID_26467218_individual_2_Runtuwene_et_al__21&quot; &quot;PMID_26467218_individual_9_M_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_5_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_F_Present_study&quot; &quot;PMID_26467218_individual_8_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_10_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_7_Cirstea_et_al__14&quot; } .</span><span class="se">\n</span><span class="s1">    </span><span class="se">\n</span><span class="s1">    # Find phenotypic features</span><span class="se">\n</span><span class="s1">    ?id sio:SIO_000020 ?role .</span><span class="se">\n</span><span class="s1">    ?phenopacket sio:SIO_000228 ?role ;</span><span class="se">\n</span><span class="s1">                 sio:SIO_001403 ?phenofeat .</span><span class="se">\n</span><span class="s1">    ?phenofeatval sio:SIO_000628 ?phenofeat ;</span><span class="se">\n</span><span class="s1">                  a obo:NCIT_C16977 .</span><span class="se">\n</span><span class="s1">    ?phenofeat dcterms:identifier ?phenofeatid ;</span><span class="se">\n</span><span class="s1">               rdfs:label ?phenofeatlabel .</span><span class="se">\n</span><span class="s1">    </span><span class="se">\n</span><span class="s1">}&#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;PREFIX ex: &lt;https://example.org/&gt;</span><span class="se">\n</span><span class="s1">PREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;</span><span class="se">\n</span><span class="s1">PREFIX sio: &lt;http://semanticscience.org/resource/&gt;</span><span class="se">\n</span><span class="s1">PREFIX dcterms: &lt;http://purl.org/dc/terms/&gt; </span><span class="se">\n</span><span class="s1">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span><span class="se">\n</span><span class="s1">PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;</span><span class="se">\n\n</span><span class="s1">SELECT ?idvalue ?phenofeatid ?phenofeatlabel</span><span class="se">\n</span><span class="s1">WHERE {</span><span class="se">\n</span><span class="s1">    # Find relevant phenopackets</span><span class="se">\n</span><span class="s1">    ?id a obo:IAO_0020000 ;</span><span class="se">\n</span><span class="s1">        sio:SIO_000300 ?idvalue .</span><span class="se">\n</span><span class="s1">    VALUES ?idvalue { &quot;PMID_26467218_individual_6_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_11_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_3_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_9_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_4_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_Present_study&quot; &quot;PMID_26467218_individual_1_De_Filippi_et_al__20&quot; &quot;PMID_26467218_individual_2_Runtuwene_et_al__21&quot; &quot;PMID_26467218_individual_9_M_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_5_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_F_Present_study&quot; &quot;PMID_26467218_individual_8_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_10_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_7_Cirstea_et_al__14&quot; } .</span><span class="se">\n</span><span class="s1">    </span><span class="se">\n</span><span class="s1">    # Find phenotypic features</span><span class="se">\n</span><span class="s1">    ?id sio:SIO_000020 ?role .</span><span class="se">\n</span><span class="s1">    ?phenopacket sio:SIO_000228 ?role ;</span><span class="se">\n</span><span class="s1">                 sio:SIO_001403 ?phenofeat .</span><span class="se">\n</span><span class="s1">    ?phenofeatval sio:SIO_000628 ?phenofeat ;</span><span class="se">\n</span><span class="s1">                  a obo:NCIT_C16977 .</span><span class="se">\n</span><span class="s1">    ?phenofeat dcterms:identifier ?phenofeatid ;</span><span class="se">\n</span><span class="s1">               rdfs:label ?phenofeatlabel .</span><span class="se">\n\n</span><span class="s1">    OPTIONAL {</span><span class="se">\n</span><span class="s1">        ?phenofeat sio:SIO_000008 ?excluded .</span><span class="se">\n</span><span class="s1">        ?excluded a obo:HP_0040285 .</span><span class="se">\n</span><span class="s1">        ?excludedval sio:SIO_000628 ?excluded ;</span><span class="se">\n</span><span class="s1">     </span><span class="se">\t\t\t</span><span class="s1">     sio:SIO_000300 ?excludedlabel . </span><span class="se">\n</span><span class="s1">    }</span><span class="se">\n</span><span class="s1">    </span><span class="se">\n</span><span class="s1">    FILTER (!bound(?excluded) || ?excludedlabel = &quot;false&quot;^^xsd:boolean )</span><span class="se">\n</span><span class="s1">    </span><span class="se">\n</span><span class="s1">}&#39;</span>
 </pre></div>
 </div>
 <p>A total of 326  phenotypes have been found. A sample of these results are shown below:</p>
@@ -675,61 +675,61 @@ document.write(`
   </thead>
   <tbody>
     <tr>
-      <th>94</th>
-      <td>PMID_26467218_individual_9_Cirstea_et_al__14</td>
+      <th>13</th>
+      <td>PMID_26467218_individual_6_Cirstea_et_al__14</td>
       <td>HP:0000028</td>
       <td>Cryptorchidism</td>
     </tr>
     <tr>
-      <th>133</th>
-      <td>PMID_26467218_individual_12_Present_study</td>
+      <th>97</th>
+      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
+      <td>HP:0000369</td>
+      <td>Low-set ears</td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td>PMID_26467218_individual_5_Denayer_et_al__22</td>
       <td>HP:0000767</td>
       <td>Pectus excavatum</td>
     </tr>
     <tr>
-      <th>179</th>
-      <td>PMID_26467218_individual_2_Runtuwene_et_al__21</td>
-      <td>HP:0000256</td>
-      <td>Macrocephaly</td>
-    </tr>
-    <tr>
-      <th>184</th>
-      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
-      <td>HP:0000508</td>
-      <td>Ptosis</td>
-    </tr>
-    <tr>
-      <th>198</th>
-      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
-      <td>HP:0006699</td>
-      <td>Premature atrial contractions</td>
-    </tr>
-    <tr>
-      <th>207</th>
-      <td>PMID_26467218_individual_5_Denayer_et_al__22</td>
-      <td>HP:0000256</td>
-      <td>Macrocephaly</td>
-    </tr>
-    <tr>
-      <th>233</th>
+      <th>113</th>
       <td>PMID_26467218_individual_12_F_Present_study</td>
-      <td>HP:0001561</td>
-      <td>Polyhydramnios</td>
+      <td>HP:0000316</td>
+      <td>Hypertelorism</td>
     </tr>
     <tr>
-      <th>292</th>
+      <th>130</th>
+      <td>PMID_26467218_individual_8_Cirstea_et_al__14</td>
+      <td>HP:0000348</td>
+      <td>High forehead</td>
+    </tr>
+    <tr>
+      <th>138</th>
       <td>PMID_26467218_individual_10_Kraoua_et_al__23</td>
-      <td>HP:0001680</td>
-      <td>Coarctation of aorta</td>
+      <td>HP:0000316</td>
+      <td>Hypertelorism</td>
     </tr>
     <tr>
-      <th>324</th>
+      <th>143</th>
+      <td>PMID_26467218_individual_10_Kraoua_et_al__23</td>
+      <td>HP:0004322</td>
+      <td>Short stature</td>
+    </tr>
+    <tr>
+      <th>146</th>
       <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
-      <td>HP:0006699</td>
-      <td>Premature atrial contractions</td>
+      <td>HP:0004322</td>
+      <td>Short stature</td>
     </tr>
     <tr>
-      <th>325</th>
+      <th>152</th>
+      <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
+      <td>HP:0000358</td>
+      <td>Posteriorly rotated ears</td>
+    </tr>
+    <tr>
+      <th>156</th>
       <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
       <td>HP:0002212</td>
       <td>Curly hair</td>
@@ -778,190 +778,190 @@ document.write(`
     </tr>
     <tr>
       <th>2</th>
-      <td>HP:0000957</td>
-      <td>Cafe-au-lait spot</td>
-      <td>14</td>
-      <td>100.0%</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>HP:0012209</td>
-      <td>Juvenile myelomonocytic leukemia</td>
-      <td>14</td>
-      <td>100.0%</td>
-    </tr>
-    <tr>
-      <th>4</th>
       <td>HP:0000494</td>
       <td>Downslanted palpebral fissures</td>
       <td>14</td>
       <td>100.0%</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>HP:0004322</td>
-      <td>Short stature</td>
-      <td>14</td>
-      <td>100.0%</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>HP:0000348</td>
-      <td>High forehead</td>
-      <td>14</td>
-      <td>100.0%</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>HP:0000508</td>
-      <td>Ptosis</td>
-      <td>14</td>
-      <td>100.0%</td>
-    </tr>
-    <tr>
-      <th>8</th>
+      <th>3</th>
       <td>HP:0000358</td>
       <td>Posteriorly rotated ears</td>
       <td>14</td>
       <td>100.0%</td>
     </tr>
     <tr>
-      <th>9</th>
+      <th>4</th>
+      <td>HP:0000348</td>
+      <td>High forehead</td>
+      <td>14</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>HP:0000465</td>
+      <td>Webbed neck</td>
+      <td>10</td>
+      <td>71.4%</td>
+    </tr>
+    <tr>
+      <th>6</th>
       <td>HP:0000767</td>
       <td>Pectus excavatum</td>
-      <td>13</td>
-      <td>92.9%</td>
+      <td>9</td>
+      <td>64.3%</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>HP:0001270</td>
+      <td>Motor delay</td>
+      <td>9</td>
+      <td>64.3%</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>HP:0000028</td>
+      <td>Cryptorchidism</td>
+      <td>6</td>
+      <td>42.9%</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>HP:0004322</td>
+      <td>Short stature</td>
+      <td>5</td>
+      <td>35.7%</td>
     </tr>
     <tr>
       <th>10</th>
-      <td>HP:0001655</td>
-      <td>Patent foramen ovale</td>
-      <td>13</td>
-      <td>92.9%</td>
+      <td>HP:0000957</td>
+      <td>Cafe-au-lait spot</td>
+      <td>5</td>
+      <td>35.7%</td>
     </tr>
     <tr>
       <th>11</th>
-      <td>HP:0000256</td>
-      <td>Macrocephaly</td>
-      <td>13</td>
-      <td>92.9%</td>
+      <td>HP:0002212</td>
+      <td>Curly hair</td>
+      <td>5</td>
+      <td>35.7%</td>
     </tr>
     <tr>
       <th>12</th>
-      <td>HP:0001680</td>
-      <td>Coarctation of aorta</td>
-      <td>13</td>
-      <td>92.9%</td>
+      <td>HP:0000256</td>
+      <td>Macrocephaly</td>
+      <td>5</td>
+      <td>35.7%</td>
     </tr>
     <tr>
       <th>13</th>
-      <td>HP:0000483</td>
-      <td>Astigmatism</td>
-      <td>12</td>
-      <td>85.7%</td>
+      <td>HP:0001561</td>
+      <td>Polyhydramnios</td>
+      <td>4</td>
+      <td>28.6%</td>
     </tr>
     <tr>
       <th>14</th>
-      <td>HP:0001270</td>
-      <td>Motor delay</td>
-      <td>12</td>
-      <td>85.7%</td>
+      <td>HP:0032152</td>
+      <td>Keratosis pilaris</td>
+      <td>4</td>
+      <td>28.6%</td>
     </tr>
     <tr>
       <th>15</th>
-      <td>HP:0000486</td>
-      <td>Strabismus</td>
-      <td>12</td>
-      <td>85.7%</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>HP:0000465</td>
-      <td>Webbed neck</td>
-      <td>12</td>
-      <td>85.7%</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>HP:0000545</td>
-      <td>Myopia</td>
-      <td>11</td>
-      <td>78.6%</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>HP:0000563</td>
-      <td>Keratoconus</td>
-      <td>11</td>
-      <td>78.6%</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>HP:0006699</td>
-      <td>Premature atrial contractions</td>
-      <td>11</td>
-      <td>78.6%</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>HP:0002212</td>
-      <td>Curly hair</td>
-      <td>11</td>
-      <td>78.6%</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>HP:0000978</td>
-      <td>Bruising susceptibility</td>
-      <td>11</td>
-      <td>78.6%</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>HP:0001561</td>
-      <td>Polyhydramnios</td>
-      <td>10</td>
-      <td>71.4%</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>HP:0001195</td>
-      <td>Single umbilical artery</td>
-      <td>10</td>
-      <td>71.4%</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>HP:0032152</td>
-      <td>Keratosis pilaris</td>
-      <td>9</td>
-      <td>64.3%</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>HP:0000028</td>
-      <td>Cryptorchidism</td>
-      <td>9</td>
-      <td>64.3%</td>
-    </tr>
-    <tr>
-      <th>26</th>
       <td>HP:0001639</td>
       <td>Hypertrophic cardiomyopathy</td>
       <td>3</td>
       <td>21.4%</td>
     </tr>
     <tr>
-      <th>27</th>
+      <th>16</th>
+      <td>HP:0000545</td>
+      <td>Myopia</td>
+      <td>3</td>
+      <td>21.4%</td>
+    </tr>
+    <tr>
+      <th>17</th>
       <td>HP:0001642</td>
       <td>Pulmonic stenosis</td>
       <td>3</td>
       <td>21.4%</td>
     </tr>
     <tr>
-      <th>28</th>
+      <th>18</th>
+      <td>HP:0000508</td>
+      <td>Ptosis</td>
+      <td>3</td>
+      <td>21.4%</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>HP:0000978</td>
+      <td>Bruising susceptibility</td>
+      <td>3</td>
+      <td>21.4%</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>HP:0000486</td>
+      <td>Strabismus</td>
+      <td>2</td>
+      <td>14.3%</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>HP:0006699</td>
+      <td>Premature atrial contractions</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>HP:0000563</td>
+      <td>Keratoconus</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>23</th>
       <td>HP:0001631</td>
       <td>Atrial septal defect</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>HP:0000483</td>
+      <td>Astigmatism</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>HP:0012209</td>
+      <td>Juvenile myelomonocytic leukemia</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>HP:0001655</td>
+      <td>Patent foramen ovale</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>HP:0001680</td>
+      <td>Coarctation of aorta</td>
+      <td>1</td>
+      <td>7.1%</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>HP:0001195</td>
+      <td>Single umbilical artery</td>
       <td>1</td>
       <td>7.1%</td>
     </tr>
