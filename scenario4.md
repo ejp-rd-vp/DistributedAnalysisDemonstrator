@@ -14,7 +14,7 @@ A researcher is interested in the diversity and prevalence of genetic aberration
 
 ### Question 1: Gene Mutation Prevalence
 
-Have patients been observed with variants in the same gene and the same symptoms?
+Have patients been observed with variants in the same gene and the same diagnosis?
 
 To answer this question the genes are found in which at least one mutation is present given the phenopacket of the AML cell line and given a collected set of other instances of phenopackets. The next step is to acquire the diagnosed diseases with which the relevant mutations are associated. These steps are performed in the following SPARQL query:
 
@@ -28,6 +28,10 @@ From the collection of available phenopackets, a disease other than AML is ident
 :doc: hamlet_notebook.ipynb
 ```
 
+---
 
+## Conclusion
+
+Given the observations, patients have been found with variants in the same gene as in the AML cell line being the gene NRAS. However, these patients are diagnosed with a different disease, Noonan syndrome 6. 
 
 ---
