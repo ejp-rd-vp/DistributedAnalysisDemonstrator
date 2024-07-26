@@ -409,7 +409,7 @@ document.write(`
 <section id="question-1-gene-mutation-prevalence">
 <h3>Question 1: Gene Mutation Prevalence<a class="headerlink" href="#question-1-gene-mutation-prevalence" title="Link to this heading">#</a></h3>
 <p>Have patients been observed with variants in the same gene and the same diagnosis?</p>
-<p>To answer this question the genes are found in which at least one mutation is present given the phenopacket of the AML cell line and given a collected set of other instances of phenopackets. The next step is to acquire the diagnosed diseases with which the relevant mutations are associated. These steps are performed in the following SPARQL query:</p>
+<p>To answer this question the genes are found in which at least one mutation is present given the phenopacket of the AML cell line identified as <code class="docutils literal notranslate"><span class="pre">new-reference-files</span></code> and given a set of other instances of phenopackets collected from a public data source. This database contains phenopackets holding information from different published cases and cohort reports. The next step is to acquire the diagnosed diseases with which the relevant mutations are associated in the collected phenopackets. These steps are performed in the following SPARQL query:</p>
 <div class="highlight-sparql notranslate"><div class="highlight"><pre><span></span><span class="k">PREFIX</span> <span class="nn">ex</span><span class="p">:</span> <span class="nl">&lt;https://example.org/&gt;</span>
 <span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
 <span class="k">PREFIX</span> <span class="nn">sio</span><span class="p">:</span> <span class="nl">&lt;http://semanticscience.org/resource/&gt;</span>
@@ -423,7 +423,7 @@ document.write(`
 
 <span class="k">SELECT</span> <span class="nv">?genesymbolvalue</span> <span class="nv">?otherdiagnosis</span> <span class="nv">?otherdiseaseid</span> <span class="nv">?otherdiseaselabel</span>
 <span class="k">WHERE</span> <span class="p">{</span>
-    <span class="c"># Find phenopacket with given ID</span>
+    <span class="c"># Find phenopacket of AML cell line given its ID (&#39;new-reference-files&#39;)</span>
     <span class="nv">?phenopacket</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C79269</span> <span class="p">;</span>
                  <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000228</span> <span class="nv">?role</span> <span class="p">.</span>
     <span class="nv">?id</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000020</span> <span class="nv">?role</span> <span class="p">;</span>
@@ -466,7 +466,7 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>From the collection of available phenopackets, a disease other than AML is identified that is associated with a mutation in the same gene as for the given AML cell line based on the query result shown below:</p>
+<p>From the collection of available phenopackets, a disease other than AML associated with a mutation in the same gene as for the given AML cell line is identified based on the query result shown below:</p>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
