@@ -6,7 +6,7 @@ title: Scenario 4 - Genetic Analysis on AML
 
 ## Cell Line Derived from a Patient with AML
 
-A researcher is interested in the diversity and prevalence of genetic aberrations that cause AML in patients. A cell line has been derived from a patient with acute myeloid leukemia (AML). In order to acquire data that can be used for genetic analysis on this cell line, whole transcriptome RNA sequencing was performed of which the results have been used as input of the HAMLET pipeline. The HAMLET pipeline enables simultaneous detection of genetic mutations resulting in a phenopacket dataset that stores genetic as well as phenotypic information.
+A researcher is interested in the diversity and prevalence of genetic aberrations that cause AML in patients. A cell line has been derived from a patient with acute myeloid leukemia (AML). In order to acquire data that can be used for genetic analysis on this cell line, whole transcriptome RNA sequencing was performed of which the results have been used as input of the HAMLET pipeline. The HAMLET pipeline allows the simultaneous detection of genetic mutations. The result of the genetic test is stored in a phenopacket, which allows both genetic and phenotypic information to be stored as well as interoperability with other phenopacket data instances when queried.
 
 ---
 
