@@ -11,7 +11,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?genesymbolvalue ?otherdiagnosis ?otherdiseaseid ?otherdiseaselabel
 WHERE {
-    # Find phenopacket with given ID
+    # Find phenopacket of AML cell line given its ID ('new-reference-files')
     ?phenopacket a obo:NCIT_C79269 ;
                  sio:SIO_000228 ?role .
     ?id sio:SIO_000020 ?role ;
