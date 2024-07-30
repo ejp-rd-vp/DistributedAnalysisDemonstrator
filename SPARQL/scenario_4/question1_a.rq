@@ -11,43 +11,46 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?genesymbolvalue ?otherdiagnosis ?otherdiseaseid ?otherdiseaselabel
 WHERE {
-    # Find phenopacket of AML cell line given its ID ('new-reference-files')
-    ?phenopacket a obo:NCIT_C79269 ;
-                 sio:SIO_000228 ?role .
-    ?id sio:SIO_000020 ?role ;
-        sio:SIO_000300 "new-reference-files" .
+    GRAPH <http://example.org/HAMLET_DATA> {
+        # Find phenopacket of AML cell line given its ID ('new-reference-files')
+        ?phenopacket a obo:NCIT_C79269 ;
+                    sio:SIO_000228 ?role .
+        ?id sio:SIO_000020 ?role ;
+            sio:SIO_000300 "new-reference-files" .
     
-    # Find all genomic interpretations related to given phenopacket ID
-    ?phenopacket sio:SIO_001403 ?interpr .
-    ?interpr a obo:NCIT_C41255 ;
-    		 sio:SIO_001403 ?diagnosis .
-    ?diagnosis sio:SIO_001403 ?genomicinterpr .
-    ?genomicinterpr a obo:SO_0001026 .
-    
-    # Find the genes that are relevant to the genomic interpretations
-    ?genomicinterpr sio:SIO_001403 ?varinterpr .
-    ?varinterpr a obo:SO_0001060 ;
-                sio:SIO_001403 ?vardescr .
-    ?vardescr a obo:NCIT_C97927 ;
-              sio:SIO_001403 ?genedescr .
-    ?genedescr a obo:NCIT_C16612 ;
-               dcterms:identifier ?geneid ;
-               sio:SIO_000008 ?genesymbol .
- 	?genesymbol sio:SIO_000300 ?genesymbolvalue .
-    
-    # Find all diagnosed diseases where a mutation is found in same genes as given phenopacket
-    ?othergenesymbol sio:SIO_000300 ?genesymbolvalue .
-    ?othergenedescr sio:SIO_000008 ?othergenesymbol ;
-                    dcterms:identifier ?othergeneid .
-    ?othervardescr sio:SIO_001403 ?othergenedescr .
-    ?othervarinterpr sio:SIO_001403 ?othervardescr .
-    ?othergenomicinterp sio:SIO_001403 ?othervarinterpr .
-    ?otherdiagnosis sio:SIO_001403 ?othergenomicinterp .
-    ?otherdiagnosis sio:SIO_001403 ?otherdisease .
-    ?otherdiseasevalue sio:SIO_000628 ?otherdisease ;
-                       a obo:NCIT_C2991 .
-    ?otherdisease dcterms:identifier ?otherdiseaseid ;
-                  rdfs:label ?otherdiseaselabel ;
+        # Find all genomic interpretations related to given phenopacket ID
+        ?phenopacket sio:SIO_001403 ?interpr .
+        ?interpr a obo:NCIT_C41255 ;
+                sio:SIO_001403 ?diagnosis .
+        ?diagnosis sio:SIO_001403 ?genomicinterpr .
+        ?genomicinterpr a obo:SO_0001026 .
+        
+        # Find the genes that are relevant to the genomic interpretations
+        ?genomicinterpr sio:SIO_001403 ?varinterpr .
+        ?varinterpr a obo:SO_0001060 ;
+                    sio:SIO_001403 ?vardescr .
+        ?vardescr a obo:NCIT_C97927 ;
+                sio:SIO_001403 ?genedescr .
+        ?genedescr a obo:NCIT_C16612 ;
+                dcterms:identifier ?geneid ;
+                sio:SIO_000008 ?genesymbol .
+        ?genesymbol sio:SIO_000300 ?genesymbolvalue .
+    }
+    GRAPH <http://example.org/MONARCH_PHENOPACKET_STORE_DATA> {
+        # Find all diagnosed diseases where a mutation is found in same genes as given phenopacket
+        ?othergenesymbol sio:SIO_000300 ?genesymbolvalue .
+        ?othergenedescr sio:SIO_000008 ?othergenesymbol ;
+                        dcterms:identifier ?othergeneid .
+        ?othervardescr sio:SIO_001403 ?othergenedescr .
+        ?othervarinterpr sio:SIO_001403 ?othervardescr .
+        ?othergenomicinterp sio:SIO_001403 ?othervarinterpr .
+        ?otherdiagnosis sio:SIO_001403 ?othergenomicinterp .
+        ?otherdiagnosis sio:SIO_001403 ?otherdisease .
+        ?otherdiseasevalue sio:SIO_000628 ?otherdisease ;
+                        a obo:NCIT_C2991 .
+        ?otherdisease dcterms:identifier ?otherdiseaseid ;
+                    rdfs:label ?otherdiseaselabel ;
+    }
     
     # Remove diagnosis of already given phenopacket
     FILTER (?diagnosis != ?otherdiagnosis)
