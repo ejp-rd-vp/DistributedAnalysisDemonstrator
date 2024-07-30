@@ -419,10 +419,13 @@ document.write(`
 </div>
 <section class="tex2jax_ignore mathjax_ignore" id="loading-rdf-datasets">
 <h1>Loading RDF Datasets<a class="headerlink" href="#loading-rdf-datasets" title="Link to this heading">#</a></h1>
+<p>To simulate querying over different data source services, the RDF datasets are stored in a conjunctive graph in which each graph being the graph for the HAMLET RDF data and the graph for the PHENOPACKET-STORE data have their own keyword.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_rdf_filenames</span><span class="p">(</span><span class="n">dirname</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;  &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Get the RDF filenames in Turtle format given the directory. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rdf_filenames</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">):</span>
         <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
@@ -431,17 +434,28 @@ document.write(`
     <span class="k">return</span> <span class="n">rdf_filenames</span>
 
 <span class="k">def</span> <span class="nf">load_rdf_files</span><span class="p">(</span><span class="n">dirnames</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;  &quot;&quot;&quot;</span>
-    <span class="n">g</span> <span class="o">=</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="n">oxrdflib</span><span class="o">.</span><span class="n">OxigraphStore</span><span class="p">())</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Load the RDF files into separate graphs and then combine into a conjunctive graph with their keyword</span>
+<span class="sd">        to simulate separate service data sources. </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">service_graphs</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">dirnames</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load RDF data from directory </span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s1"> into RDF graph.&#39;</span><span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="n">oxrdflib</span><span class="o">.</span><span class="n">OxigraphStore</span><span class="p">())</span>
     
         <span class="n">rdf_filenames</span> <span class="o">=</span> <span class="n">get_rdf_filenames</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">rdf_filename</span> <span class="ow">in</span> <span class="n">rdf_filenames</span><span class="p">:</span>
             <span class="n">g</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">rdf_filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">g</span>
+        <span class="n">service_graphs</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">URIRef</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;http://example.org/</span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">),</span> <span class="s1">&#39;graph&#39;</span><span class="p">:</span> <span class="n">g</span><span class="p">})</span>
+
+    <span class="n">combined_g</span> <span class="o">=</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">ConjunctiveGraph</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="n">oxrdflib</span><span class="o">.</span><span class="n">OxigraphStore</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">service_graph</span> <span class="ow">in</span> <span class="n">service_graphs</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Add graph of service </span><span class="si">{</span><span class="n">service_graph</span><span class="p">[</span><span class="s1">&#39;service&#39;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">combined_g</span><span class="o">.</span><span class="n">addN</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">service_graph</span><span class="p">[</span><span class="s1">&#39;service&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">service_graph</span><span class="p">[</span><span class="s1">&#39;graph&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">combined_g</span>
 </pre></div>
 </div>
 </div>
@@ -456,6 +470,8 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Load RDF data from directory HAMLET_DATA into RDF graph.
 Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
+Add graph of service http://example.org/HAMLET_DATA
+Add graph of service http://example.org/MONARCH_PHENOPACKET_STORE_DATA
 </pre></div>
 </div>
 </div>
@@ -463,6 +479,7 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="sparql-queries">
 <h1>SPARQL Queries<a class="headerlink" href="#sparql-queries" title="Link to this heading">#</a></h1>
+<p>The query that is loaded below accesses the conjunctive graph explicitly given the keywords of each individual graph using function GRAPH to simulate the SERVICE functionality of SPARQL.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SCENARIO_NR</span> <span class="o">=</span> <span class="mi">4</span>
@@ -527,7 +544,7 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
     <tr>
       <th>0</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketba7f5...</td>
+      <td>https://example.org/diagnosis_phenopacketbf2d0...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
@@ -541,21 +558,21 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
     <tr>
       <th>2</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketa127c...</td>
+      <td>https://example.org/diagnosis_phenopacket0aaf0...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>3</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket0aaf0...</td>
+      <td>https://example.org/diagnosis_phenopacket3b2b2...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>4</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketfa9d7...</td>
+      <td>https://example.org/diagnosis_phenopacket1caa9...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
@@ -569,56 +586,56 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
     <tr>
       <th>6</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket1caa9...</td>
+      <td>https://example.org/diagnosis_phenopacketf0c96...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>7</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketf0c96...</td>
+      <td>https://example.org/diagnosis_phenopacketee17c...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>8</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketbf2d0...</td>
+      <td>https://example.org/diagnosis_phenopacketa127c...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>9</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket3b2b2...</td>
+      <td>https://example.org/diagnosis_phenopacket14db1...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>10</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketc9101...</td>
+      <td>https://example.org/diagnosis_phenopacketfa9d7...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>11</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketfba27...</td>
+      <td>https://example.org/diagnosis_phenopacketba7f5...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>12</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketee17c...</td>
+      <td>https://example.org/diagnosis_phenopacketc9101...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>13</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket14db1...</td>
+      <td>https://example.org/diagnosis_phenopacketfba27...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
@@ -663,7 +680,7 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
     <tr>
       <th>0</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketba7f5...</td>
+      <td>https://example.org/diagnosis_phenopacketbf2d0...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
@@ -677,21 +694,21 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
     <tr>
       <th>2</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketa127c...</td>
+      <td>https://example.org/diagnosis_phenopacket0aaf0...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>3</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket0aaf0...</td>
+      <td>https://example.org/diagnosis_phenopacket3b2b2...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>4</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketfa9d7...</td>
+      <td>https://example.org/diagnosis_phenopacket1caa9...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
@@ -705,56 +722,56 @@ Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
     <tr>
       <th>6</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket1caa9...</td>
+      <td>https://example.org/diagnosis_phenopacketf0c96...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>7</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketf0c96...</td>
+      <td>https://example.org/diagnosis_phenopacketee17c...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>8</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketbf2d0...</td>
+      <td>https://example.org/diagnosis_phenopacketa127c...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>9</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket3b2b2...</td>
+      <td>https://example.org/diagnosis_phenopacket14db1...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>10</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketc9101...</td>
+      <td>https://example.org/diagnosis_phenopacketfa9d7...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>11</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketfba27...</td>
+      <td>https://example.org/diagnosis_phenopacketba7f5...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>12</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketee17c...</td>
+      <td>https://example.org/diagnosis_phenopacketc9101...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
     <tr>
       <th>13</th>
       <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket14db1...</td>
+      <td>https://example.org/diagnosis_phenopacketfba27...</td>
       <td>OMIM:613224</td>
       <td>Noonan syndrome 6</td>
     </tr>
