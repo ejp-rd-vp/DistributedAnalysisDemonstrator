@@ -3,5 +3,7 @@ PREFIX obo: <http://purl.obolibrary.org/obo/>
 
 SELECT ?iri
 WHERE {
-    ?iri rdfs:label 'VAR_PHENOTYPE_NAME' .
+    GRAPH <http://example.org/HPO> {
+        ?iri rdfs:label 'VAR_PHENOTYPE_NAME' .
+    }
 }

@@ -7,28 +7,29 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 SELECT ?idvalue ?phenofeatid ?phenofeatlabel
 WHERE {
-    # Find relevant phenopackets
-    ?id a obo:IAO_0020000 ;
-        sio:SIO_000300 ?idvalue .
-    VALUES ?idvalue { VAR_ID_LIST } .
-    
-    # Find phenotypic features
-    ?id sio:SIO_000020 ?role .
-    ?phenopacket sio:SIO_000228 ?role ;
-                 sio:SIO_001403 ?phenofeat .
-    ?phenofeatval sio:SIO_000628 ?phenofeat ;
-                  a obo:NCIT_C16977 .
-    ?phenofeat dcterms:identifier ?phenofeatid ;
-               rdfs:label ?phenofeatlabel .
+    GRAPH <http://example.org/MONARCH_PHENOPACKET_STORE_DATA> {
+        # Find relevant phenopackets
+        ?id a obo:IAO_0020000 ;
+            sio:SIO_000300 ?idvalue .
+        VALUES ?idvalue { VAR_ID_LIST } .
+        
+        # Find phenotypic features
+        ?id sio:SIO_000020 ?role .
+        ?phenopacket sio:SIO_000228 ?role ;
+                    sio:SIO_001403 ?phenofeat .
+        ?phenofeatval sio:SIO_000628 ?phenofeat ;
+                    a obo:NCIT_C16977 .
+        ?phenofeat dcterms:identifier ?phenofeatid ;
+                rdfs:label ?phenofeatlabel .
 
-    # Find the phenotypic features that are not excluded
-    OPTIONAL {
-        ?phenofeat sio:SIO_000008 ?excluded .
-        ?excluded a obo:HP_0040285 .
-        ?excludedval sio:SIO_000628 ?excluded ;
-     			     sio:SIO_000300 ?excludedlabel . 
+        # Find the phenotypic features that are not excluded
+        OPTIONAL {
+            ?phenofeat sio:SIO_000008 ?excluded .
+            ?excluded a obo:HP_0040285 .
+            ?excludedval sio:SIO_000628 ?excluded ;
+                        sio:SIO_000300 ?excludedlabel . 
+        }
+        
+        FILTER (!bound(?excluded) || ?excludedlabel = "false"^^xsd:boolean)
     }
-    
-    FILTER (!bound(?excluded) || ?excludedlabel = "false"^^xsd:boolean )
-    
 }
