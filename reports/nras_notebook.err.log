@@ -30,6 +30,11 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from sklearn.manifold import MDS
 
+from pygments import highlight
+from pygments.lexers import SparqlLexer
+from pygments.formatters import HtmlFormatter
+from IPython.display import HTML
+
 from myst_nb import glue
 
 ------------------

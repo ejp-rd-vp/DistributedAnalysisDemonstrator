@@ -381,7 +381,10 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Loading RDF Datasets</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sparql-queries">SPARQL Queries</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sparql-queries">SPARQL Queries</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1">Question 1</a></li>
+</ul>
+</li>
 </ul>
 
             </nav>
@@ -400,6 +403,13 @@ document.write(`
 <span class="kn">import</span> <span class="nn">rdflib</span>
 <span class="kn">import</span> <span class="nn">oxrdflib</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">pygments</span> <span class="kn">import</span> <span class="n">highlight</span>
+<span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">SparqlLexer</span>
+<span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+
+<span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 </pre></div>
 </div>
 </div>
@@ -482,13 +492,96 @@ Add graph of service http://example.org/MONARCH_PHENOPACKET_STORE_DATA
 <p>The query that is loaded below accesses the conjunctive graph explicitly given the keywords of each individual graph using function GRAPH to simulate the SERVICE functionality of SPARQL.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SCENARIO_NR</span> <span class="o">=</span> <span class="mi">4</span>
-
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;SPARQL/scenario_</span><span class="si">{</span><span class="n">SCENARIO_NR</span><span class="si">}</span><span class="s1">/question1_a.rq&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-    <span class="n">query</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_prettyprint_sparql_query</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Get the given string representing a SPARQL query in a readable manner. &quot;&quot;&quot;</span>
+    <span class="n">lexer</span> <span class="o">=</span> <span class="n">SparqlLexer</span><span class="p">()</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;colorful&#39;</span><span class="p">)</span>
+    <span class="n">highlighted_query</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span> <span class="n">formatter</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">highlighted_query</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SCENARIO_NR</span> <span class="o">=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="question-1">
+<h2>Question 1<a class="headerlink" href="#question-1" title="Link to this heading">#</a></h2>
+<p><strong>Have patients been observed with variants in the same gene and the same diagnosis?</strong></p>
+<p>From the single AML cell line phenopacket from the HAMLET dataset, all mutated genes are found that are as follows used to find the phenopackets from the PHENOPACKET-STORE data that have mutations in at least one of the same genes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;SPARQL/scenario_</span><span class="si">{</span><span class="n">SCENARIO_NR</span><span class="si">}</span><span class="s1">/question1_a.rq&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">get_prettyprint_sparql_query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div class="highlight"><pre><span></span><span class="k">PREFIX</span> <span class="nn">ex</span><span class="p">:</span> <span class="nl">&lt;https://example.org/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">sio</span><span class="p">:</span> <span class="nl">&lt;http://semanticscience.org/resource/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">dcterms</span><span class="p">:</span> <span class="nl">&lt;http://purl.org/dc/terms/&gt;</span> 
+
+<span class="k">PREFIX</span> <span class="nn">ex</span><span class="p">:</span> <span class="nl">&lt;https://example.org/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">sio</span><span class="p">:</span> <span class="nl">&lt;http://semanticscience.org/resource/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">dcterms</span><span class="p">:</span> <span class="nl">&lt;http://purl.org/dc/terms/&gt;</span> 
+<span class="k">PREFIX</span> <span class="nn">rdfs</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
+
+<span class="k">SELECT</span> <span class="nv">?genesymbolvalue</span> <span class="nv">?otherdiagnosis</span> <span class="nv">?otherdiseaseid</span> <span class="nv">?otherdiseaselabel</span>
+<span class="k">WHERE</span> <span class="p">{</span>
+    <span class="k">GRAPH</span> <span class="nl">&lt;http://example.org/HAMLET_DATA&gt;</span> <span class="p">{</span>
+        <span class="c"># Find phenopacket of AML cell line given its ID (&#39;new-reference-files&#39;)</span>
+        <span class="nv">?phenopacket</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C79269</span> <span class="p">;</span>
+                    <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000228</span> <span class="nv">?role</span> <span class="p">.</span>
+        <span class="nv">?id</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000020</span> <span class="nv">?role</span> <span class="p">;</span>
+            <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="s">&quot;new-reference-files&quot;</span> <span class="p">.</span>
+    
+        <span class="c"># Find all genomic interpretations related to given phenopacket ID</span>
+        <span class="nv">?phenopacket</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?interpr</span> <span class="p">.</span>
+        <span class="nv">?interpr</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C41255</span> <span class="p">;</span>
+                <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?diagnosis</span> <span class="p">.</span>
+        <span class="nv">?diagnosis</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?genomicinterpr</span> <span class="p">.</span>
+        <span class="nv">?genomicinterpr</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">SO_0001026</span> <span class="p">.</span>
+        
+        <span class="c"># Find the genes that are relevant to the genomic interpretations</span>
+        <span class="nv">?genomicinterpr</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?varinterpr</span> <span class="p">.</span>
+        <span class="nv">?varinterpr</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">SO_0001060</span> <span class="p">;</span>
+                    <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?vardescr</span> <span class="p">.</span>
+        <span class="nv">?vardescr</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C97927</span> <span class="p">;</span>
+                <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?genedescr</span> <span class="p">.</span>
+        <span class="nv">?genedescr</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C16612</span> <span class="p">;</span>
+                <span class="nn">dcterms</span><span class="p">:</span><span class="nt">identifier</span> <span class="nv">?geneid</span> <span class="p">;</span>
+                <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000008</span> <span class="nv">?genesymbol</span> <span class="p">.</span>
+        <span class="nv">?genesymbol</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?genesymbolvalue</span> <span class="p">.</span>
+    <span class="p">}</span>
+    <span class="k">GRAPH</span> <span class="nl">&lt;http://example.org/MONARCH_PHENOPACKET_STORE_DATA&gt;</span> <span class="p">{</span>
+        <span class="c"># Find all diagnosed diseases where a mutation is found in same genes as given phenopacket</span>
+        <span class="nv">?othergenesymbol</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?genesymbolvalue</span> <span class="p">.</span>
+        <span class="nv">?othergenedescr</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000008</span> <span class="nv">?othergenesymbol</span> <span class="p">;</span>
+                        <span class="nn">dcterms</span><span class="p">:</span><span class="nt">identifier</span> <span class="nv">?othergeneid</span> <span class="p">.</span>
+        <span class="nv">?othervardescr</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?othergenedescr</span> <span class="p">.</span>
+        <span class="nv">?othervarinterpr</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?othervardescr</span> <span class="p">.</span>
+        <span class="nv">?othergenomicinterp</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?othervarinterpr</span> <span class="p">.</span>
+        <span class="nv">?otherdiagnosis</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?othergenomicinterp</span> <span class="p">.</span>
+        <span class="nv">?otherdiagnosis</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?otherdisease</span> <span class="p">.</span>
+        <span class="nv">?otherdiseasevalue</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000628</span> <span class="nv">?otherdisease</span> <span class="p">;</span>
+                        <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C2991</span> <span class="p">.</span>
+        <span class="nv">?otherdisease</span> <span class="nn">dcterms</span><span class="p">:</span><span class="nt">identifier</span> <span class="nv">?otherdiseaseid</span> <span class="p">;</span>
+                    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?otherdiseaselabel</span> <span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c"># Remove diagnosis of already given phenopacket</span>
+    <span class="k">FILTER</span> <span class="p">(</span><span class="nv">?diagnosis</span> <span class="o">!=</span> <span class="nv">?otherdiagnosis</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -511,142 +604,6 @@ Add graph of service http://example.org/MONARCH_PHENOPACKET_STORE_DATA
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diagnosis_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">diagnosis_list</span><span class="p">)</span>
-<span class="n">diagnosis_df</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>gene symbol</th>
-      <th>diagnosis ID</th>
-      <th>disease ID</th>
-      <th>disease label</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketbf2d0...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketb7df3...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket0aaf0...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket3b2b2...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket1caa9...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket0520c...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketf0c96...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketee17c...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketa127c...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacket14db1...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketfa9d7...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketba7f5...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketc9101...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>NRAS</td>
-      <td>https://example.org/diagnosis_phenopacketfba27...</td>
-      <td>OMIM:613224</td>
-      <td>Noonan syndrome 6</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
-
 <span class="n">glue</span><span class="p">(</span><span class="s1">&#39;scenario4_diagnosis&#39;</span><span class="p">,</span> <span class="n">diagnosis_df</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -780,6 +737,7 @@ Add graph of service http://example.org/MONARCH_PHENOPACKET_STORE_DATA
 </div></div></div>
 </div>
 </section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -828,7 +786,10 @@ Add graph of service http://example.org/MONARCH_PHENOPACKET_STORE_DATA
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Loading RDF Datasets</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sparql-queries">SPARQL Queries</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sparql-queries">SPARQL Queries</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1">Question 1</a></li>
+</ul>
+</li>
 </ul>
 
   </nav></div>

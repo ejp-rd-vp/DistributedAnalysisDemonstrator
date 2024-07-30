@@ -22,6 +22,13 @@ import os
 import rdflib
 import oxrdflib
 import pandas as pd
+
+from pygments import highlight
+from pygments.lexers import SparqlLexer
+from pygments.formatters import HtmlFormatter
+from IPython.display import HTML
+
+from myst_nb import glue
 ------------------
 
 

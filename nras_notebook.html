@@ -417,6 +417,11 @@ document.write(`
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">MDS</span>
 
+<span class="kn">from</span> <span class="nn">pygments</span> <span class="kn">import</span> <span class="n">highlight</span>
+<span class="kn">from</span> <span class="nn">pygments.lexers</span> <span class="kn">import</span> <span class="n">SparqlLexer</span>
+<span class="kn">from</span> <span class="nn">pygments.formatters</span> <span class="kn">import</span> <span class="n">HtmlFormatter</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+
 <span class="kn">from</span> <span class="nn">myst_nb</span> <span class="kn">import</span> <span class="n">glue</span>
 </pre></div>
 </div>
@@ -437,6 +442,7 @@ document.write(`
 </div>
 <section class="tex2jax_ignore mathjax_ignore" id="loading-rdf-datasets-and-ontologies">
 <h1>Loading RDF Datasets and Ontologies<a class="headerlink" href="#loading-rdf-datasets-and-ontologies" title="Link to this heading">#</a></h1>
+<p>To simulate querying over different data source services, the RDF datasets are stored in a conjunctive graph in which each graph being the graph for the HPO data and the graph for the PHENOPACKET-STORE data have their own keyword.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_file_ext</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -457,11 +463,11 @@ document.write(`
 
 <span class="k">def</span> <span class="nf">load_rdf_files</span><span class="p">(</span><span class="n">dirnames</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;  &quot;&quot;&quot;</span>
-
-    <span class="n">g</span> <span class="o">=</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="n">oxrdflib</span><span class="o">.</span><span class="n">OxigraphStore</span><span class="p">())</span>
+    <span class="n">service_graphs</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">dirnames</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load RDF data from directory </span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s1"> into RDF graph.&#39;</span><span class="p">)</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="n">oxrdflib</span><span class="o">.</span><span class="n">OxigraphStore</span><span class="p">())</span>
     
         <span class="n">rdf_filenames</span> <span class="o">=</span> <span class="n">get_rdf_filenames</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">rdf_filename</span> <span class="ow">in</span> <span class="n">rdf_filenames</span><span class="p">:</span>
@@ -470,7 +476,14 @@ document.write(`
             <span class="k">elif</span> <span class="n">get_file_ext</span><span class="p">(</span><span class="n">rdf_filename</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;ttl&#39;</span><span class="p">:</span>
                 <span class="n">g</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">rdf_filename</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;ttl&#39;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">g</span>
+        <span class="n">service_graphs</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;service&#39;</span><span class="p">:</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">URIRef</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;http://example.org/</span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">),</span> <span class="s1">&#39;graph&#39;</span><span class="p">:</span> <span class="n">g</span><span class="p">})</span>
+
+    <span class="n">combined_g</span> <span class="o">=</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">ConjunctiveGraph</span><span class="p">(</span><span class="n">store</span><span class="o">=</span><span class="n">oxrdflib</span><span class="o">.</span><span class="n">OxigraphStore</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">service_graph</span> <span class="ow">in</span> <span class="n">service_graphs</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Add graph of service </span><span class="si">{</span><span class="n">service_graph</span><span class="p">[</span><span class="s1">&#39;service&#39;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">combined_g</span><span class="o">.</span><span class="n">addN</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">service_graph</span><span class="p">[</span><span class="s1">&#39;service&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">service_graph</span><span class="p">[</span><span class="s1">&#39;graph&#39;</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">combined_g</span>
 </pre></div>
 </div>
 </div>
@@ -485,6 +498,8 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Load RDF data from directory MONARCH_PHENOPACKET_STORE_DATA into RDF graph.
 Load RDF data from directory HPO into RDF graph.
+Add graph of service http://example.org/MONARCH_PHENOPACKET_STORE_DATA
+Add graph of service http://example.org/HPO
 </pre></div>
 </div>
 </div>
@@ -492,6 +507,18 @@ Load RDF data from directory HPO into RDF graph.
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="sparql-queries">
 <h1>SPARQL Queries<a class="headerlink" href="#sparql-queries" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_prettyprint_sparql_query</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Get the given string representing a SPARQL query in a readable manner. &quot;&quot;&quot;</span>
+    <span class="n">lexer</span> <span class="o">=</span> <span class="n">SparqlLexer</span><span class="p">()</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">HtmlFormatter</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;colorful&#39;</span><span class="p">)</span>
+    <span class="n">highlighted_query</span> <span class="o">=</span> <span class="n">highlight</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">lexer</span><span class="p">,</span> <span class="n">formatter</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HTML</span><span class="p">(</span><span class="n">highlighted_query</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SCENARIO_NR</span> <span class="o">=</span> <span class="mi">5</span>
@@ -502,22 +529,64 @@ Load RDF data from directory HPO into RDF graph.
 </div>
 <section id="question-1">
 <h2>Question 1<a class="headerlink" href="#question-1" title="Link to this heading">#</a></h2>
-<p>Are there any other individuals with a mutation in the same gene?</p>
+<p><strong>Are there any other individuals with a mutation in the same gene?</strong></p>
+<p>Search for phenopackets that have at least one mutation in the same gene with ID HGNC:7989.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;SPARQL/scenario_</span><span class="si">{</span><span class="n">SCENARIO_NR</span><span class="si">}</span><span class="s1">/question1.rq&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
     <span class="n">query</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
 <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;VAR_GENE_ID&#39;</span><span class="p">,</span> <span class="n">gene_id</span><span class="p">)</span>
-<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;scenario5_query_q1&#39;</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;scenario5_query_q1&#39;</span><span class="p">,</span> <span class="n">get_prettyprint_sparql_query</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;PREFIX ex: &lt;https://example.org/&gt;\nPREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;\nPREFIX sio: &lt;http://semanticscience.org/resource/&gt;\nPREFIX dcterms: &lt;http://purl.org/dc/terms/&gt; \nPREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;\n\nSELECT ?phenopacketidval ?creatorname ?createddate\nWHERE {\n    # Find the phenopackets that contain at least one mutation in given gene\n    ?genedescr a obo:NCIT_C16612 ;\n               dcterms:identifier &#39;HGNC:7989&#39; .\n    ?vardescr sio:SIO_001403 ?genedescr .\n    ?varinterpr sio:SIO_001403 ?vardescr .\n    ?genomicinterp sio:SIO_001403 ?varinterpr .\n    ?diagnosis sio:SIO_001403 ?genomicinterp .\n    ?interpr sio:SIO_001403 ?diagnosis .\n    ?phenopacket sio:SIO_001403 ?interpr ;\n                 a obo:NCIT_C79269 ;\n                 sio:SIO_000228 ?role .\n    \n    # Find phenopacket ID value\n    ?phenopacketid sio:SIO_000020 ?role ;\n\t               sio:SIO_000300 ?phenopacketidval .\n    \n    # Find metadata\n    ?phenopacket sio:SIO_001403 ?metadata .\n    ?metadata a obo:NCIT_C52095 ;\n              sio:SIO_000008 ?creator ;\n              sio:SIO_000008 ?created .\n    \n    ?creator a dcterms:creator .\n    ?creatorval sio:SIO_000628 ?creator ;\n                a obo:NCIT_C70856 ;\n                sio:SIO_000300 ?creatorname .\n    \n    ?created a dcterms:created .\n    ?createdval sio:SIO_000628 ?created ;\n                a obo:NCIT_C70856 ;\n                sio:SIO_000300 ?createddate .\n}&quot;
+<div class="output text_html"><div class="highlight"><pre><span></span><span class="k">PREFIX</span> <span class="nn">ex</span><span class="p">:</span> <span class="nl">&lt;https://example.org/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">sio</span><span class="p">:</span> <span class="nl">&lt;http://semanticscience.org/resource/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">dcterms</span><span class="p">:</span> <span class="nl">&lt;http://purl.org/dc/terms/&gt;</span> 
+<span class="k">PREFIX</span> <span class="nn">rdfs</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
+
+<span class="k">SELECT</span> <span class="nv">?phenopacketidval</span> <span class="nv">?creatorname</span> <span class="nv">?createddate</span>
+<span class="k">WHERE</span> <span class="p">{</span>
+    <span class="k">GRAPH</span> <span class="nl">&lt;http://example.org/MONARCH_PHENOPACKET_STORE_DATA&gt;</span> <span class="p">{</span>
+        <span class="c"># Find the phenopackets that contain at least one mutation in given gene</span>
+        <span class="nv">?genedescr</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C16612</span> <span class="p">;</span>
+                <span class="nn">dcterms</span><span class="p">:</span><span class="nt">identifier</span> <span class="s">&#39;HGNC:7989&#39;</span> <span class="p">.</span>
+        <span class="nv">?vardescr</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?genedescr</span> <span class="p">.</span>
+        <span class="nv">?varinterpr</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?vardescr</span> <span class="p">.</span>
+        <span class="nv">?genomicinterp</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?varinterpr</span> <span class="p">.</span>
+        <span class="nv">?diagnosis</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?genomicinterp</span> <span class="p">.</span>
+        <span class="nv">?interpr</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?diagnosis</span> <span class="p">.</span>
+        <span class="nv">?phenopacket</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?interpr</span> <span class="p">;</span>
+                    <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C79269</span> <span class="p">;</span>
+                    <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000228</span> <span class="nv">?role</span> <span class="p">.</span>
+        
+        <span class="c"># Find phenopacket ID value</span>
+        <span class="nv">?phenopacketid</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000020</span> <span class="nv">?role</span> <span class="p">;</span>
+                    <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?phenopacketidval</span> <span class="p">.</span>
+        
+        <span class="c"># Find metadata</span>
+        <span class="nv">?phenopacket</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?metadata</span> <span class="p">.</span>
+        <span class="nv">?metadata</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C52095</span> <span class="p">;</span>
+                <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000008</span> <span class="nv">?creator</span> <span class="p">;</span>
+                <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000008</span> <span class="nv">?created</span> <span class="p">.</span>
+        
+        <span class="nv">?creator</span> <span class="k">a</span> <span class="nn">dcterms</span><span class="p">:</span><span class="nt">creator</span> <span class="p">.</span>
+        <span class="nv">?creatorval</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000628</span> <span class="nv">?creator</span> <span class="p">;</span>
+                    <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C70856</span> <span class="p">;</span>
+                    <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?creatorname</span> <span class="p">.</span>
+        
+        <span class="nv">?created</span> <span class="k">a</span> <span class="nn">dcterms</span><span class="p">:</span><span class="nt">created</span> <span class="p">.</span>
+        <span class="nv">?createdval</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000628</span> <span class="nv">?created</span> <span class="p">;</span>
+                    <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C70856</span> <span class="p">;</span>
+                    <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?createddate</span> <span class="p">.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -664,7 +733,8 @@ Load RDF data from directory HPO into RDF graph.
 </section>
 <section id="question-2">
 <h2>Question 2<a class="headerlink" href="#question-2" title="Link to this heading">#</a></h2>
-<p>What phenotypes and which diseases have been observed in these individuals and how often do they occur in this group of individuals?</p>
+<p><strong>What phenotypes and which diseases have been observed in these individuals and how often do they occur in this group of individuals?</strong></p>
+<p>Given the found phenopacket IDs, retrieve all diseases and phenotypic features associated with these phenopackets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phenopacket_ids</span> <span class="o">=</span> <span class="n">phenopackets_df</span><span class="p">[</span><span class="s1">&#39;phenopacket id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -682,15 +752,41 @@ Load RDF data from directory HPO into RDF graph.
     <span class="n">query2</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
 <span class="n">query2</span> <span class="o">=</span> <span class="n">query2</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;VAR_ID_LIST&#39;</span><span class="p">,</span> <span class="n">query_ids_list_str</span><span class="p">)</span>
-<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;scenario5_query_q2a&#39;</span><span class="p">,</span> <span class="n">query2</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;scenario5_query_q2a&#39;</span><span class="p">,</span> <span class="n">get_prettyprint_sparql_query</span><span class="p">(</span><span class="n">query2</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;PREFIX ex: &lt;https://example.org/&gt;\nPREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;\nPREFIX sio: &lt;http://semanticscience.org/resource/&gt;\nPREFIX dcterms: &lt;http://purl.org/dc/terms/&gt; \nPREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;\n\nSELECT ?idvalue ?diseaseid ?diseaselabel\nWHERE {\n    # Find relevant phenopackets\n    ?id a obo:IAO_0020000 ;\n        sio:SIO_000300 ?idvalue .\n    VALUES ?idvalue { &quot;PMID_26467218_individual_6_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_11_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_3_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_9_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_4_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_Present_study&quot; &quot;PMID_26467218_individual_1_De_Filippi_et_al__20&quot; &quot;PMID_26467218_individual_2_Runtuwene_et_al__21&quot; &quot;PMID_26467218_individual_9_M_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_5_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_F_Present_study&quot; &quot;PMID_26467218_individual_8_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_10_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_7_Cirstea_et_al__14&quot; } .\n    \n    # Find diagnosis\n    ?id sio:SIO_000020 ?role .\n    ?phenopacket sio:SIO_000228 ?role ;\n                 sio:SIO_001403 ?interpr .\n    ?interpr a obo:NCIT_C41255 ;\n             sio:SIO_001403 ?diagnosis .\n    ?diagnosis a sio:SIO_000614 ;\n               sio:SIO_001403 ?disease .\n    ?diseaseval a obo:NCIT_C2991 ;\n                sio:SIO_000628 ?disease .\n    ?disease rdfs:label ?diseaselabel ;\n             dcterms:identifier ?diseaseid .\n}&#39;
+<div class="output text_html"><div class="highlight"><pre><span></span><span class="k">PREFIX</span> <span class="nn">ex</span><span class="p">:</span> <span class="nl">&lt;https://example.org/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">sio</span><span class="p">:</span> <span class="nl">&lt;http://semanticscience.org/resource/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">dcterms</span><span class="p">:</span> <span class="nl">&lt;http://purl.org/dc/terms/&gt;</span> 
+<span class="k">PREFIX</span> <span class="nn">rdfs</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
+
+<span class="k">SELECT</span> <span class="nv">?idvalue</span> <span class="nv">?diseaseid</span> <span class="nv">?diseaselabel</span>
+<span class="k">WHERE</span> <span class="p">{</span>
+    <span class="k">GRAPH</span> <span class="nl">&lt;http://example.org/MONARCH_PHENOPACKET_STORE_DATA&gt;</span> <span class="p">{</span>
+        <span class="c"># Find relevant phenopackets</span>
+        <span class="nv">?id</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">IAO_0020000</span> <span class="p">;</span>
+            <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?idvalue</span> <span class="p">.</span>
+        <span class="k">VALUES</span> <span class="nv">?idvalue</span> <span class="p">{</span> <span class="s">&quot;PMID_26467218_individual_6_Cirstea_et_al__14&quot;</span> <span class="s">&quot;PMID_26467218_individual_11_Kraoua_et_al__23&quot;</span> <span class="s">&quot;PMID_26467218_individual_3_Denayer_et_al__22&quot;</span> <span class="s">&quot;PMID_26467218_individual_9_Cirstea_et_al__14&quot;</span> <span class="s">&quot;PMID_26467218_individual_4_Denayer_et_al__22&quot;</span> <span class="s">&quot;PMID_26467218_individual_12_Present_study&quot;</span> <span class="s">&quot;PMID_26467218_individual_1_De_Filippi_et_al__20&quot;</span> <span class="s">&quot;PMID_26467218_individual_2_Runtuwene_et_al__21&quot;</span> <span class="s">&quot;PMID_26467218_individual_9_M_Cirstea_et_al__14&quot;</span> <span class="s">&quot;PMID_26467218_individual_5_Denayer_et_al__22&quot;</span> <span class="s">&quot;PMID_26467218_individual_12_F_Present_study&quot;</span> <span class="s">&quot;PMID_26467218_individual_8_Cirstea_et_al__14&quot;</span> <span class="s">&quot;PMID_26467218_individual_10_Kraoua_et_al__23&quot;</span> <span class="s">&quot;PMID_26467218_individual_7_Cirstea_et_al__14&quot;</span> <span class="p">}</span> <span class="p">.</span>
+        
+        <span class="c"># Find diagnosis</span>
+        <span class="nv">?id</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000020</span> <span class="nv">?role</span> <span class="p">.</span>
+        <span class="nv">?phenopacket</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000228</span> <span class="nv">?role</span> <span class="p">;</span>
+                    <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?interpr</span> <span class="p">.</span>
+        <span class="nv">?interpr</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C41255</span> <span class="p">;</span>
+                <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?diagnosis</span> <span class="p">.</span>
+        <span class="nv">?diagnosis</span> <span class="k">a</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000614</span> <span class="p">;</span>
+                <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?disease</span> <span class="p">.</span>
+        <span class="nv">?diseaseval</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C2991</span> <span class="p">;</span>
+                    <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000628</span> <span class="nv">?disease</span> <span class="p">.</span>
+        <span class="nv">?disease</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?diseaselabel</span> <span class="p">;</span>
+                <span class="nn">dcterms</span><span class="p">:</span><span class="nt">identifier</span> <span class="nv">?diseaseid</span> <span class="p">.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -835,15 +931,48 @@ Load RDF data from directory HPO into RDF graph.
     <span class="n">query3</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
 <span class="n">query3</span> <span class="o">=</span> <span class="n">query3</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;VAR_ID_LIST&#39;</span><span class="p">,</span> <span class="n">query_ids_list_str</span><span class="p">)</span>
-<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;scenario5_query_q2b&#39;</span><span class="p">,</span> <span class="n">query3</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s1">&#39;scenario5_query_q2b&#39;</span><span class="p">,</span> <span class="n">get_prettyprint_sparql_query</span><span class="p">(</span><span class="n">query3</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;PREFIX ex: &lt;https://example.org/&gt;\nPREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;\nPREFIX sio: &lt;http://semanticscience.org/resource/&gt;\nPREFIX dcterms: &lt;http://purl.org/dc/terms/&gt; \nPREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;\nPREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;\n\nSELECT ?idvalue ?phenofeatid ?phenofeatlabel\nWHERE {\n    # Find relevant phenopackets\n    ?id a obo:IAO_0020000 ;\n        sio:SIO_000300 ?idvalue .\n    VALUES ?idvalue { &quot;PMID_26467218_individual_6_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_11_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_3_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_9_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_4_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_Present_study&quot; &quot;PMID_26467218_individual_1_De_Filippi_et_al__20&quot; &quot;PMID_26467218_individual_2_Runtuwene_et_al__21&quot; &quot;PMID_26467218_individual_9_M_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_5_Denayer_et_al__22&quot; &quot;PMID_26467218_individual_12_F_Present_study&quot; &quot;PMID_26467218_individual_8_Cirstea_et_al__14&quot; &quot;PMID_26467218_individual_10_Kraoua_et_al__23&quot; &quot;PMID_26467218_individual_7_Cirstea_et_al__14&quot; } .\n    \n    # Find phenotypic features\n    ?id sio:SIO_000020 ?role .\n    ?phenopacket sio:SIO_000228 ?role ;\n                 sio:SIO_001403 ?phenofeat .\n    ?phenofeatval sio:SIO_000628 ?phenofeat ;\n                  a obo:NCIT_C16977 .\n    ?phenofeat dcterms:identifier ?phenofeatid ;\n               rdfs:label ?phenofeatlabel .\n\n    OPTIONAL {\n        ?phenofeat sio:SIO_000008 ?excluded .\n        ?excluded a obo:HP_0040285 .\n        ?excludedval sio:SIO_000628 ?excluded ;\n     \t\t\t     sio:SIO_000300 ?excludedlabel . \n    }\n    \n    FILTER (!bound(?excluded) || ?excludedlabel = &quot;false&quot;^^xsd:boolean )\n    \n}&#39;
+<div class="output text_html"><div class="highlight"><pre><span></span><span class="k">PREFIX</span> <span class="nn">ex</span><span class="p">:</span> <span class="nl">&lt;https://example.org/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">sio</span><span class="p">:</span> <span class="nl">&lt;http://semanticscience.org/resource/&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">dcterms</span><span class="p">:</span> <span class="nl">&lt;http://purl.org/dc/terms/&gt;</span> 
+<span class="k">PREFIX</span> <span class="nn">rdfs</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">xsd</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2001/XMLSchema#&gt;</span>
+
+<span class="k">SELECT</span> <span class="nv">?idvalue</span> <span class="nv">?phenofeatid</span> <span class="nv">?phenofeatlabel</span>
+<span class="k">WHERE</span> <span class="p">{</span>
+    <span class="k">GRAPH</span> <span class="nl">&lt;http://example.org/MONARCH_PHENOPACKET_STORE_DATA&gt;</span> <span class="p">{</span>
+        <span class="c"># Find relevant phenopackets</span>
+        <span class="nv">?id</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">IAO_0020000</span> <span class="p">;</span>
+            <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?idvalue</span> <span class="p">.</span>
+        <span class="k">VALUES</span> <span class="nv">?idvalue</span> <span class="p">{</span> <span class="s">&quot;PMID_26467218_individual_6_Cirstea_et_al__14&quot;</span> <span class="s">&quot;PMID_26467218_individual_11_Kraoua_et_al__23&quot;</span> <span class="s">&quot;PMID_26467218_individual_3_Denayer_et_al__22&quot;</span> <span class="s">&quot;PMID_26467218_individual_9_Cirstea_et_al__14&quot;</span> <span class="s">&quot;PMID_26467218_individual_4_Denayer_et_al__22&quot;</span> <span class="s">&quot;PMID_26467218_individual_12_Present_study&quot;</span> <span class="s">&quot;PMID_26467218_individual_1_De_Filippi_et_al__20&quot;</span> <span class="s">&quot;PMID_26467218_individual_2_Runtuwene_et_al__21&quot;</span> <span class="s">&quot;PMID_26467218_individual_9_M_Cirstea_et_al__14&quot;</span> <span class="s">&quot;PMID_26467218_individual_5_Denayer_et_al__22&quot;</span> <span class="s">&quot;PMID_26467218_individual_12_F_Present_study&quot;</span> <span class="s">&quot;PMID_26467218_individual_8_Cirstea_et_al__14&quot;</span> <span class="s">&quot;PMID_26467218_individual_10_Kraoua_et_al__23&quot;</span> <span class="s">&quot;PMID_26467218_individual_7_Cirstea_et_al__14&quot;</span> <span class="p">}</span> <span class="p">.</span>
+        
+        <span class="c"># Find phenotypic features</span>
+        <span class="nv">?id</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000020</span> <span class="nv">?role</span> <span class="p">.</span>
+        <span class="nv">?phenopacket</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000228</span> <span class="nv">?role</span> <span class="p">;</span>
+                    <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_001403</span> <span class="nv">?phenofeat</span> <span class="p">.</span>
+        <span class="nv">?phenofeatval</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000628</span> <span class="nv">?phenofeat</span> <span class="p">;</span>
+                    <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">NCIT_C16977</span> <span class="p">.</span>
+        <span class="nv">?phenofeat</span> <span class="nn">dcterms</span><span class="p">:</span><span class="nt">identifier</span> <span class="nv">?phenofeatid</span> <span class="p">;</span>
+                <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="nv">?phenofeatlabel</span> <span class="p">.</span>
+
+        <span class="c"># Find the phenotypic features that are not excluded</span>
+        <span class="k">OPTIONAL</span> <span class="p">{</span>
+            <span class="nv">?phenofeat</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000008</span> <span class="nv">?excluded</span> <span class="p">.</span>
+            <span class="nv">?excluded</span> <span class="k">a</span> <span class="nn">obo</span><span class="p">:</span><span class="nt">HP_0040285</span> <span class="p">.</span>
+            <span class="nv">?excludedval</span> <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000628</span> <span class="nv">?excluded</span> <span class="p">;</span>
+                        <span class="nn">sio</span><span class="p">:</span><span class="nt">SIO_000300</span> <span class="nv">?excludedlabel</span> <span class="p">.</span> 
+        <span class="p">}</span>
+        
+        <span class="k">FILTER</span> <span class="p">(</span><span class="o">!</span><span class="nf">bound</span><span class="p">(</span><span class="nv">?excluded</span><span class="p">)</span> <span class="o">||</span> <span class="nv">?excludedlabel</span> <span class="o">=</span> <span class="s">&quot;false&quot;</span><span class="o">^^</span><span class="nn">xsd</span><span class="p">:</span><span class="nt">boolean</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -900,64 +1029,64 @@ Load RDF data from directory HPO into RDF graph.
   </thead>
   <tbody>
     <tr>
-      <th>13</th>
+      <th>8</th>
       <td>PMID_26467218_individual_6_Cirstea_et_al__14</td>
-      <td>HP:0000028</td>
-      <td>Cryptorchidism</td>
-    </tr>
-    <tr>
-      <th>97</th>
-      <td>PMID_26467218_individual_9_M_Cirstea_et_al__14</td>
-      <td>HP:0000369</td>
-      <td>Low-set ears</td>
-    </tr>
-    <tr>
-      <th>106</th>
-      <td>PMID_26467218_individual_5_Denayer_et_al__22</td>
-      <td>HP:0000767</td>
-      <td>Pectus excavatum</td>
-    </tr>
-    <tr>
-      <th>113</th>
-      <td>PMID_26467218_individual_12_F_Present_study</td>
-      <td>HP:0000316</td>
-      <td>Hypertelorism</td>
-    </tr>
-    <tr>
-      <th>130</th>
-      <td>PMID_26467218_individual_8_Cirstea_et_al__14</td>
-      <td>HP:0000348</td>
-      <td>High forehead</td>
-    </tr>
-    <tr>
-      <th>138</th>
-      <td>PMID_26467218_individual_10_Kraoua_et_al__23</td>
-      <td>HP:0000316</td>
-      <td>Hypertelorism</td>
-    </tr>
-    <tr>
-      <th>143</th>
-      <td>PMID_26467218_individual_10_Kraoua_et_al__23</td>
-      <td>HP:0004322</td>
-      <td>Short stature</td>
-    </tr>
-    <tr>
-      <th>146</th>
-      <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
-      <td>HP:0004322</td>
-      <td>Short stature</td>
-    </tr>
-    <tr>
-      <th>152</th>
-      <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
       <td>HP:0000358</td>
       <td>Posteriorly rotated ears</td>
     </tr>
     <tr>
-      <th>156</th>
+      <th>11</th>
+      <td>PMID_26467218_individual_6_Cirstea_et_al__14</td>
+      <td>HP:0006699</td>
+      <td>Premature atrial contractions</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>PMID_26467218_individual_3_Denayer_et_al__22</td>
+      <td>HP:0000348</td>
+      <td>High forehead</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>PMID_26467218_individual_3_Denayer_et_al__22</td>
+      <td>HP:0000369</td>
+      <td>Low-set ears</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>PMID_26467218_individual_3_Denayer_et_al__22</td>
+      <td>HP:0000563</td>
+      <td>Keratoconus</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>PMID_26467218_individual_9_Cirstea_et_al__14</td>
+      <td>HP:0032152</td>
+      <td>Keratosis pilaris</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>PMID_26467218_individual_12_Present_study</td>
+      <td>HP:0000957</td>
+      <td>Cafe-au-lait spot</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td>PMID_26467218_individual_2_Runtuwene_et_al__21</td>
+      <td>HP:0000348</td>
+      <td>High forehead</td>
+    </tr>
+    <tr>
+      <th>137</th>
+      <td>PMID_26467218_individual_10_Kraoua_et_al__23</td>
+      <td>HP:0001270</td>
+      <td>Motor delay</td>
+    </tr>
+    <tr>
+      <th>155</th>
       <td>PMID_26467218_individual_7_Cirstea_et_al__14</td>
-      <td>HP:0002212</td>
-      <td>Curly hair</td>
+      <td>HP:0000028</td>
+      <td>Cryptorchidism</td>
     </tr>
   </tbody>
 </table>
@@ -1238,7 +1367,8 @@ Load RDF data from directory HPO into RDF graph.
 </section>
 <section id="question-3">
 <h2>Question 3<a class="headerlink" href="#question-3" title="Link to this heading">#</a></h2>
-<p>Do the found phenotypes overlap with the observed phenotypes found in the undiagnosed child?</p>
+<p><strong>Do the found phenotypes overlap with the observed phenotypes found in the undiagnosed child?</strong></p>
+<p>Given the observed phenotypes, find the HPO identifiers for these labels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">observed_phenotypes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Broad neck&#39;</span><span class="p">,</span> <span class="s1">&#39;Low-set ears&#39;</span><span class="p">,</span> <span class="s1">&#39;Motor delay&#39;</span><span class="p">]</span>
@@ -1257,22 +1387,43 @@ Load RDF data from directory HPO into RDF graph.
     <span class="n">curr_query</span> <span class="o">=</span> <span class="n">query4</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;VAR_PHENOTYPE_NAME&#39;</span><span class="p">,</span> <span class="n">observed_phenotype</span><span class="p">)</span>
     <span class="n">hpo_queries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_query</span><span class="p">)</span>
 
-    <span class="n">glue</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;scenario5_query_q4_</span><span class="si">{</span><span class="n">observation_index</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">curr_query</span><span class="p">)</span>
+    <span class="n">glue</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;scenario5_query_q4_</span><span class="si">{</span><span class="n">observation_index</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">get_prettyprint_sparql_query</span><span class="p">(</span><span class="n">curr_query</span><span class="p">))</span>
     <span class="n">observation_index</span> <span class="o">+=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;\nPREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;\n\nSELECT ?iri\nWHERE {\n    ?iri rdfs:label &#39;Broad neck&#39; .\n}&quot;
+<div class="output text_html"><div class="highlight"><pre><span></span><span class="k">PREFIX</span> <span class="nn">rdfs</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
+
+<span class="k">SELECT</span> <span class="nv">?iri</span>
+<span class="k">WHERE</span> <span class="p">{</span>
+    <span class="k">GRAPH</span> <span class="nl">&lt;http://example.org/HPO&gt;</span> <span class="p">{</span>
+        <span class="nv">?iri</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&#39;Broad neck&#39;</span> <span class="p">.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;\nPREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;\n\nSELECT ?iri\nWHERE {\n    ?iri rdfs:label &#39;Low-set ears&#39; .\n}&quot;
+</div><div class="output text_html"><div class="highlight"><pre><span></span><span class="k">PREFIX</span> <span class="nn">rdfs</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
+
+<span class="k">SELECT</span> <span class="nv">?iri</span>
+<span class="k">WHERE</span> <span class="p">{</span>
+    <span class="k">GRAPH</span> <span class="nl">&lt;http://example.org/HPO&gt;</span> <span class="p">{</span>
+        <span class="nv">?iri</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&#39;Low-set ears&#39;</span> <span class="p">.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&quot;PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;\nPREFIX obo: &lt;http://purl.obolibrary.org/obo/&gt;\n\nSELECT ?iri\nWHERE {\n    ?iri rdfs:label &#39;Motor delay&#39; .\n}&quot;
+</div><div class="output text_html"><div class="highlight"><pre><span></span><span class="k">PREFIX</span> <span class="nn">rdfs</span><span class="p">:</span> <span class="nl">&lt;http://www.w3.org/2000/01/rdf-schema#&gt;</span>
+<span class="k">PREFIX</span> <span class="nn">obo</span><span class="p">:</span> <span class="nl">&lt;http://purl.obolibrary.org/obo/&gt;</span>
+
+<span class="k">SELECT</span> <span class="nv">?iri</span>
+<span class="k">WHERE</span> <span class="p">{</span>
+    <span class="k">GRAPH</span> <span class="nl">&lt;http://example.org/HPO&gt;</span> <span class="p">{</span>
+        <span class="nv">?iri</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&#39;Motor delay&#39;</span> <span class="p">.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1335,6 +1486,7 @@ Load RDF data from directory HPO into RDF graph.
 </table>
 </div></div></div>
 </div>
+<p>Check which observed phenotypes match with the phenotypic features from the found phenopackets.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_phenotypes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">annotated_phenotype_counts_df</span><span class="p">[</span><span class="s1">&#39;phenotype ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
@@ -1370,6 +1522,7 @@ Load RDF data from directory HPO into RDF graph.
 </div>
 </div>
 </div>
+<p>Create distance matrix for all phenotypic features by calculating the shortest path length between each pair of phenotypes. Calculate a two-dimensional representation of this distance matrix for each phenotype using Multidimensional Scaling such that the degree of similarities between the phenotypes can be visualized in a two-dimensional plot.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">extract_values</span><span class="p">(</span><span class="n">g</span><span class="p">:</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">rdflib</span><span class="o">.</span><span class="n">URIRef</span><span class="p">):</span>
