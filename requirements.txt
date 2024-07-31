@@ -3,5 +3,6 @@ matplotlib
 numpy
 rdflib
 oxrdflib
-sklearn
+scikit-learn
 networkx
+pandas
